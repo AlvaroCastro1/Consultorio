@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Borrar Paciente</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/assets/css/styles.css">
+</head>
+<body>
+
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header">
+          <h3 class="mb-0">Borrar Paciente</h3>
+        </div>
+        <div class="card-body">
+          <form id="deleteForm" action="borrar.php" method="POST">
+            <p>¿Estás seguro de que deseas borrar al paciente?</p>
+            <div class="form-group">
+              <button type="submit" class="btn btn-danger">Sí, borrar</button>
+              <a href="javascript:void(0);" class="btn btn-secondary" onclick="cancelDelete()">Cancelar</a>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+  function cancelDelete() {
+    window.location.href = "index.html";
+  }
+</script>
+</body>
+</html>
