@@ -20,23 +20,62 @@
           <form>
             <div class="form-group">
               <label for="nombre">Nombre</label>
-              <input type="text" class="form-control" id="nombre" placeholder="Nombre del paciente" value="Nombre del paciente existente" required>
+              <input type="text" class="form-control" id="nombre" placeholder="Nombre del paciente" required>
             </div>
             <div class="form-group">
-              <label for="apellido">Apellido</label>
-              <input type="text" class="form-control" id="apellido" placeholder="Apellido del paciente" value="Apellido del paciente existente" required>
+              <label for="apellidoPaterno">Apellido Paterno</label>
+              <input type="text" class="form-control" id="apellidoPaterno" placeholder="Apellido paterno del paciente" required>
             </div>
             <div class="form-group">
-              <label for="edad">Edad</label>
-              <input type="number" class="form-control" id="edad" placeholder="Edad del paciente" value="Edad del paciente existente" required>
+              <label for="apellidoMaterno">Apellido Materno</label>
+              <input type="text" class="form-control" id="apellidoMaterno" placeholder="Apellido materno del paciente" required>
+            </div>
+            <div class="form-group">
+              <label for="fechaNacimiento">Fecha de Nacimiento</label>
+              <input type="date" class="form-control" id="fechaNacimiento" placeholder="Fecha de nacimiento del paciente" required>
+            </div>
+            <div class="form-group">
+              <label for="sexo">Sexo</label>
+              <select class="form-control" id="sexo" required>
+                <option value="masculino">Masculino</option>
+                <option value="femenino">Femenino</option>
+              </select>
             </div>
             <div class="form-group">
               <label for="telefono">Teléfono</label>
-              <input type="tel" class="form-control" id="telefono" placeholder="Teléfono del paciente" value="Teléfono del paciente existente" required>
+              <input type="tel" class="form-control" id="telefono" placeholder="Teléfono del paciente" required>
             </div>
             <div class="form-group">
               <label for="correo">Correo Electrónico</label>
-              <input type="email" class="form-control" id="correo" placeholder="Correo electrónico del paciente" value="Correo electrónico del paciente existente" required>
+              <input type="email" class="form-control" id="correo" placeholder="Correo electrónico del paciente" required>
+            </div>
+            <div class="form-group">
+              <label for="pais">País</label>
+              <input type="text" class="form-control" id="pais" placeholder="País del paciente" required>
+            </div>
+            <div class="form-group">
+              <label for="estado">Estado</label>
+              <input type="text" class="form-control" id="estado" placeholder="Estado del paciente" required>
+            </div>
+            <div class="form-group">
+              <label for="municipio">Municipio</label>
+              <input type="text" class="form-control" id="municipio" placeholder="Municipio del paciente" required>
+            </div>
+            <div class="form-group">
+              <label for="localidad">Localidad</label>
+              <input type="text" class="form-control" id="localidad" placeholder="Localidad del paciente" required>
+            </div>
+            <div class="form-group">
+              <label for="numero_ext">Número Exterior</label>
+              <input type="text" class="form-control" id="numero_ext" placeholder="Número exterior del paciente" required>
+            </div>
+            <div class="form-group">
+              <label for="numero_int">Número Interior</label>
+              <input type="text" class="form-control" id="numero_int" placeholder="Número interior del paciente">
+            </div>
+            <div class="form-group">
+              <label for="codigoPostal">Código Postal</label>
+              <input type="text" class="form-control" id="codigoPostal" placeholder="Código postal del paciente" required>
             </div>
             <button type="submit" class="btn-block">Guardar Cambios</button>
           </form>
