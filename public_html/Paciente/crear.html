@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pacientes</title>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/css/barraNav.css">
+    <link rel="stylesheet" href="/assets/css/PacientesStyles.css">
+
+</head>
+
+<body>
+
+    <nav class="header navbar navbar-expand-lg navbar-light bg-primary-custom">
+        <div class="container">
+            <a class="navbar-brand texto-gris-claro" href="#" style="font-size: 25px; font-weight: bold; ">Consultorio
+                Pediatrico</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav" style="font-size: 15px;">
+                    <li class="nav-item">
+                        <a class="nav-link texto-gris-claro" href="#">Expediente</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container2 mt-5">
+        <h1 class="titulo mb-4">Crear nuevo Paciente</h1>
+
+        <form id="formulario-paciente" onsubmit="return crearPaciente(event)">
+            <!-- Campo para el nombre -->
+            <div class="mb-3">
+                <label para="nombre" class="form-label">Nombre</label>
+                <input type="text" class="form-control" id="nombre" required>
+            </div>
+            <!-- Campo para apellido paterno -->
+            <div class="mb-3">
+                <label para="apellido-paterno" class="form-label">Apellido Paterno</label>
+                <input type="text" class="form-control" id="apellido-paterno" required>
+            </div>
+
+            <!-- Campo para apellido materno -->
+            <div class="mb-3">
+                <label para="apellido-materno" class="form-label">Apellido Materno</label>
+                <input type="text" class="form-control" id="apellido-materno" required>
+            </div>
+
+            <!-- Campo para la fecha de nacimiento -->
+            <div class="mb-3">
+                <label para="fecha-nacimiento" class="form-label">Fecha de Nacimiento</label>
+                <input type="date" class="form-control" id="fecha-nacimiento" required>
+            </div>
+
+            <!-- Campo para el sexo -->
+            <div class="mb-3">
+                <label para="sexo" class="form-label">Sexo</label>
+                <select class="form-select" id="sexo" required>
+                    <option value="">Seleccionar</option>
+                    <option value="M">Masculino</option>
+                    <option value="F">Femenino</option>
+                </select>
+            </div>
+
+            <!-- Campo para el teléfono -->
+            <div class="mb-3">
+                <label para="telefono" class="form-label">Teléfono</label>
+                <input type="text" class="form-control" id="telefono" required>
+            </div>
+
+            <!-- Campo para el correo electrónico -->
+            <div class="mb-3">
+                <label para="email" class="form-label">Correo Electrónico</label>
+                <input type="email" class="form-control" id="email" required>
+            </div>
+
+            <!-- Campo para la dirección -->
+            <div class="mb-3">
+                <label para="direccion" class="form-label">Dirección</label>
+                <input type="text" class="form-control" id="direccion" required>
+            </div>
+            <!-- Campo para el expediente -->
+            <div class="mb-3">
+                <label para="expediente" class="form-label">Expediente</label>
+                <div class="row">
+                    <!-- Columna para el campo select -->
+                    <div class="col-8"> <!-- Ajusta este número para cambiar el ancho -->
+                        <select class="form-select" id="expediente" required>
+                            <option value="">Seleccionar</option>
+                            <option value="1">Expediente1</option>
+                            <option value="2">Expediente2</option>
+                        </select>
+                    </div>
+
+                    <!-- Columna para el botón -->
+                    <div class="col-4">
+                        <button type="button" class="btn btn-primary">Crear Expediente</button>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <!-- Campo para el tipo de sangre -->
+            <div class="mb-3">
+                <label para="tipo-sangre" class="form-label">Tipo de Sangre</label>
+                <input type="text" class="form-control" id="tipo-sangre" required>
+            </div>
+            <div class="text-center">
+                <button type="submit" class="btn btn-primary">Crear Paciente</button>
+                <button type="button" class="btn btn-secondary ms-3" onclick="cancelar()">Cancelar</button>
+            </div>
+        </form>
+    </div>
+    <div class="espacio-final"></div>
+    <footer class="bg-dark text-white py-4 footer">
+        <div class="container">
+            <div class="row">
+                <!-- Información de contacto -->
+                <div class="col-md-3">
+                    <h5>Contacto</h5>
+                    <p>© 2024 Mi Sitio Web. Todos los derechos reservados.</p>
+                    <p>Dirección: Calle 123, Ciudad XYZ</p>
+                    <p>Teléfono: (123) 456-7890</p>
+                    <p>Correo Electrónico: info@misitioweb.com</p>
+                </div>
+
+                <!-- Enlaces rápidos -->
+                <div class="col-md-3">
+                    <h5>Enlaces rápidos</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="/" class="text-white">Inicio</a></li>
+                        <li><a href="/about" class="text-white">Sobre nosotros</a></li>
+                        <li><a href="/services" class="text-white">Servicios</a></li>
+                        <li><a href="/contact" class="text-white">Contacto</a></li>
+                    </ul>
+                </div>
+
+                <!-- Redes sociales -->
+                <div class="col-md-3">
+                    <h5>Redes sociales</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="https://facebook.com" class="text-white">Facebook</a></li>
+                        <li><a href="https://twitter.com" class="text-white">Twitter</a></li>
+                        <li><a href="https://instagram.com" class="text-white">Instagram</a></li>
+                    </ul>
+                </div>
+
+                <!-- Boletín informativo -->
+                <div class="col-md-3">
+                    <h5>Boletín informativo</h5>
+                    <p>Suscríbete para recibir las últimas noticias:</p>
+                    <input type="email" class="form-control" placeholder="Tu correo electrónico">
+                    <button class="btn btn-primary mt-2">Suscribirse</button>
+                </div>
+            </div>
+
+            <!-- Información legal -->
+            <div class="row">
+                <div class="col text-center">
+                    <hr class="my-4">
+                    <p><a href="/terms" class="text-white">Términos de servicio</a> | <a href="/privacy"
+                            class="text-white">Política de privacidad</a></p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function cancelar() {
+            window.location.href = "index.html"; 
+        }
+        function agregar() {
+            alert("Se deberia agregar :)")
+        }
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

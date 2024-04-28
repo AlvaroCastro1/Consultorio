@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Actualizar Paciente</title>
+
+    <!-- Incluir Bootstrap y tus estilos personalizados -->
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/css/barraNav.css">
+    <link rel="stylesheet" href="/assets/css/PacientesStyles.css">
+</head>
+
+<body>
+    <!-- Barra de navegación -->
+    <nav class="header navbar navbar-expand-lg navbar-light bg-primary-custom">
+        <div class="container">
+            <a class="navbar-brand texto-gris-claro" href="#" style="font-size: 25px; font-weight: bold;">Consultorio Pediátrico</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav" style="font-size: 15px;">
+                    <li class="nav-item">
+                        <a class="nav-link texto-gris-claro" href="/">Inicio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link texto-gris-claro" href="#">Expediente</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Contenedor para el formulario de actualización -->
+    <div class="container2 mt-5">
+        <h1 class="titulo text-center mb-4">Actualizar Paciente</h1>
+
+        <!-- Formulario para actualizar un paciente -->
+        <form id="formulario-actualizar" onsubmit="return actualizarPaciente(event)">
+            <!-- Campo para el nombre -->
+            <div class="mb-3">
+                <label para="nombre" class="form-label">Nombre</label>
+                <input type="text" class="form-control" id="nombre" value="Juan Pérez" required>
+            </div>
+
+            <!-- Campo para apellido paterno -->
+            <div class="mb-3">
+                <label para="apellido-paterno" class="form-label">Apellido Paterno</label>
+                <input type="text" class="form-control" id="apellido-paterno" value="Pérez" required>
+            </div>
+
+            <!-- Campo para apellido materno -->
+            <div class="mb-3">
+                <label para="apellido-materno" class="form-label">Apellido Materno</label>
+                <input type="text" class="form-control" id="apellido-materno" value="García" required>
+            </div>
+
+            <!-- Campo para la fecha de nacimiento -->
+            <div class="mb-3">
+                <label para="fecha-nacimiento" class="form-label">Fecha de Nacimiento</label>
+                <input type="date" class="form-control" id="fecha-nacimiento" value="1990-01-01" required>
+            </div>
+
+            <!-- Campo para el sexo -->
+            <div class="mb-3">
+                <label para="sexo" class="form-label">Sexo</label>
+                <select class="form-select" id="sexo" required>
+                    <option value="M" selected>Masculino</option>
+                    <option value="F">Femenino</option>
+                </select>
+            </div>
+
+            <!-- Campo para el teléfono -->
+            <div class="mb-3">
+                <label para="telefono" class="form-label">Teléfono</label>
+                <input type="text" class="form-control" id="telefono" value="123-456-7890" required>
+            </div>
+
+            <!-- Campo para el correo electrónico -->
+            <div class="mb-3">
+                <label para="email" class="form-label">Correo Electrónico</label>
+                <input type="email" class="form-control" id="email" value="juan.perez@example.com" required>
+            </div>
+
+            <!-- Campo para la dirección -->
+            <div class="mb-3">
+                <label para="direccion" class="form-label">Dirección</label>
+                <input type="text" class="form-control" id="direccion" value="Calle 123, Ciudad XYZ" required>
+            </div>
+
+            <!-- Campo para el expediente -->
+            <div class="mb-3">
+                <label para="expediente" class="form-label">Expediente</label>
+                <select class="form-select" id="expediente" required>
+                    <option value="1">Expediente1</option>
+                    <option value="2">Expediente2</option>
+                </select>
+            </div>
+
+            <!-- Campo para el tipo de sangre -->
+            <div class="mb-3">
+                <label para="tipo-sangre" class="form-label">Tipo de Sangre</label>
+                <input type="text" class="form-control" id="tipo-sangre" value="O+" required>
+            </div>
+
+            <!-- Botones para guardar cambios y cancelar -->
+            <div class="text-center">
+                <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+                <button type="button" class="btn btn-secondary ms-3" onclick="cancelar()">Cancelar</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Pie de página reutilizado -->
+    <footer class="bg-dark text-white py-4 footer">
+        <div class="container">
+            <!-- Información de contacto -->
+            <div class="row">
+                <!-- Aquí puedes poner el contenido del pie de página -->
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts para manejar el formulario -->
+    <script>
+        function actualizarPaciente(event) {
+            alert("Se debio actualizar :)")
+        }
+
+        function cancelar() {
+            window.location.href = "index.html";  // Redirige a la página de inicio
+        }
+    </script>
+
+    <!-- Bootstrap -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

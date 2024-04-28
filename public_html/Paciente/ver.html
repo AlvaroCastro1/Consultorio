@@ -1,130 +1,104 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Detalles del Paciente</title>
+
+    <!-- Incluir Bootstrap y tus estilos personalizados -->
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-
-    <style>
-        .container {
-            margin-top: 50px;
-        }
-
-        .titulo {
-            background-color: #2CC59C;
-            color: #ffffff;
-            padding: 10px;
-            border-radius: 5px;
-            text-align: center;
-        }
-
-        .detalle {
-            margin-bottom: 15px;
-        }
-
-        .detalle label {
-            font-weight: bold;
-        }
-
-        .detalle span {
-            display: block;
-        }
-
-        .btn-imprimir {
-            background-color: #007bff;
-            color: #ffffff;
-            border-color: #007bff;
-            display: block;
-            margin: 0 auto;
-            width: 150px;
-        }
-
-        .btn-imprimir:hover {
-            background-color: #0056b3;
-            border-color: #0056b3;
-        }
-        .fixed-bottom-center {
-            bottom: 20px; /* Ajusta esta propiedad según tu preferencia */
-            left: 0;
-            width: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-    </style>
+    <link rel="stylesheet" href="/assets/css/barraNav.css">
+    <link rel="stylesheet" href="/assets/css/PacientesStyles.css">
 </head>
 
 <body>
-    <div class="container">
-        <h1 class="titulo mb-4">Detalles del Paciente</h1>
-        <div class="row">
-            <div class="col-sm-6">
-                <div class="detalle">
-                    <label for="nombre" class="form-label">Nombre:</label>
-                    <span id="nombre">Juan</span>
-                </div>
-                <div class="detalle">
-                    <label for="apellidoPaterno" class="form-label">Apellido Paterno:</label>
-                    <span id="apellidoPaterno">Pérez</span>
-                </div>
-                <div class="detalle">
-                    <label for="apellidoMaterno" class="form-label">Apellido Materno:</label>
-                    <span id="apellidoMaterno">López</span>
-                </div>
-                <div class="detalle">
-                    <label for="fechaNacimiento" class="form-label">Fecha de Nacimiento:</label>
-                    <span id="fechaNacimiento">12/05/1985</span>
-                </div>
-                <div class="detalle">
-                    <label for="sexo" class="form-label">Sexo:</label>
-                    <span id="sexo">Masculino</span>
-                </div>
-                <div class="detalle">
-                    <label for="telefono" class="form-label">Teléfono:</label>
-                    <span id="telefono">555-123-4567</span>
-                </div>
-            </div>
-            <div class="col-sm-6">
-                <div class="detalle">
-                    <label for="correo" class="form-label">Correo Electrónico:</label>
-                    <span id="correo">juan.perez@example.com</span>
-                </div>
-                <div class="detalle">
-                    <label for="pais" class="form-label">País:</label>
-                    <span id="pais">México</span>
-                </div>
-                <div class="detalle">
-                    <label for="estado" class="form-label">Estado:</label>
-                    <span id="estado">Jalisco</span>
-                </div>
-                <div class="detalle">
-                    <label for="municipio" class="form-label">Municipio:</label>
-                    <span id="municipio">Guadalajara</span>
-                </div>
-                <div class="detalle">
-                    <label for="localidad" class="form-label">Localidad:</label>
-                    <span id="localidad">Centro</span>
-                </div>
-                <div class="detalle">
-                    <label for="numero_ext" class="form-label">Número Exterior:</label>
-                    <span id="numero_ext">123</span>
-                </div>
-                <div class="detalle">
-                    <label for="numero_int" class="form-label">Número Interior:</label>
-                    <span id="numero_int">2A</span>
-                </div>
-                <div class="detalle">
-                    <label for="codigoPostal" class="form-label">Código Postal:</label>
-                    <span id="codigoPostal">44100</span>
-                </div>
+
+    <!-- Barra de navegación -->
+    <nav class="header navbar navbar-expand-lg navbar-light bg-primary-custom">
+        <div class="container">
+            <a class="navbar-brand texto-gris-claro" href="#" style="font-size: 25px; font-weight: bold;">Consultorio Pediátrico</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav" style="font-size: 15px;">
+                    <li class="nav-item">
+                        <a class="nav-link texto-gris-claro" href="/">Inicio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link texto-gris-claro" href="#">Expediente</a>
+                    </li>
+                </ul>
             </div>
         </div>
-        <button type="button" class="btn btn-primary">Imprimir</button>
-        <a href="index.html" class="btn btn-secondary">Volver al Inicio</a>
+    </nav>
+
+    <!-- Contenedor para mostrar detalles del paciente -->
+    <div class="container2 mt-5">
+        <h1 class="titulo text-center mb-4">Detalles del Paciente</h1>
+
+        <!-- Información del paciente usando filas y columnas -->
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <strong>Nombre:</strong> Juan Pérez
+            </div>
+            <div class="col-md-6">
+                <strong>Apellido Paterno:</strong> Pérez
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <strong>Apellido Materno:</strong> García
+            </div>
+            <div class="col-md-6">
+                <strong>Fecha de Nacimiento:</strong> 01/01/1990
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <strong>Sexo:</strong> Masculino
+            </div>
+            <div class="col-md-6">
+                <strong>Teléfono:</strong> 123-456-7890
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <strong>Correo Electrónico:</strong> juan.perez@example.com
+            </div>
+            <div class="col-md-6">
+                <strong>Dirección:</strong> Calle 123, Ciudad XYZ
+            </div>
+        </div>
+
+        <!-- Botones para regresar al índice e imprimir -->
+        <div class="text-center">
+            <button type="button" class="btn btn-secondary" onclick="regresar()">Regresar al Índice</button>
+            <button type="button" class="btn btn-primary ms-3" onclick="imprimir()">Imprimir</button>
+        </div>
     </div>
 
+    <!-- Pie de página -->
+    <footer class="bg-dark text-white py-4 footer">
+        <div class="container">
+            <!-- Reutiliza tu pie de página aquí -->
+        </div>
+    </footer>
+
+    <!-- Script para redirigir y para imprimir -->
+    <script>
+        function regresar() {
+            window.location.href = "index.html";  // Regresa a index
+        }
+
+        function imprimir() {
+            window.print();  // Imprimir la página
+        }
+    </script>
+
+    <!-- Incluir Bootstrap -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 

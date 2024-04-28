@@ -1,106 +1,178 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pacientes</title>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/css/barraNav.css">
+    <link rel="stylesheet" href="/assets/css/PacientesStyles.css">
+    <!-- SweetAlert2 CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
 
-    <style>
-        .titulo {
-            background-color: #2CC59C;
-            color: #ffffff;
-            padding: 10px;
-            border-radius: 5px;
-        }
+    <!-- SweetAlert2 JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-        .table th,
-        .table td {
-            vertical-align: middle;
-        }
-
-        .table thead th {
-            background-color: #2CC59C;
-            color: #ffffff;
-            border-color: #2CC59C;
-        }
-
-        .table-bordered th,
-        .table-bordered td {
-            border: 1px solid #dee2e6;
-        }
-
-        .table-bordered thead th,
-        .table-bordered thead td {
-            border-bottom-width: 2px;
-        }
-
-        .btn-primary {
-            background-color: #2CC59C;
-            border-color: #2CC59C;
-        }
-
-        .btn-primary:hover {
-            background-color: #66cc88;
-            border-color: #66cc88;
-        }
-
-        .btn-danger {
-            background-color: #FF0000;
-            border-color: #FF0000;
-        }
-
-        .btn-danger:hover {
-            background-color: #FF3333;
-            border-color: #FF3333;
-        }
-
-        .espacio-final {
-            margin-bottom: 50px;
-        }
-    </style>
 </head>
+
 <body>
-    <div class="container mt-5">
+
+    <nav class="header navbar navbar-expand-lg navbar-light bg-primary-custom">
+        <div class="container">
+            <a class="navbar-brand texto-gris-claro" href="#" style="font-size: 25px; font-weight: bold; ">Consultorio
+                Pediatrico</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav" style="font-size: 15px;">
+                    <li class="nav-item">
+                        <a class="nav-link texto-gris-claro" href="#">Expediente</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container2 mt-5">
         <h1 class="titulo mb-4">Pacientes</h1>
-        <!-- Botón "Agregar" -->
-        <button type="button" class="btn btn-primary mb-3" onclick="window.location.href='agregar'">Agregar</button>
-        
-        <!-- Barra de búsqueda -->
+
+        <button type="button" class="btn btn-primary mb-3" onclick="agregarRegistro()">Agregar</button>
+
         <div class="input-group mb-3">
-            <input type="text" class="form-control" placeholder="Buscar por Nombre" id="input-busqueda">
+            <input type="text" class="form-control" placeholder="Buscar por nombre" id="input-busqueda">
             <button class="btn btn-outline-secondary" type="button" onclick="buscar()">Buscar</button>
         </div>
 
         <div class="table-responsive">
-            <table class="table table-bordered table-hover" id="tabla-antecedentes">
+            <table class="table table-bordered table-hover" id="tabla-alergias">
                 <thead>
                     <tr>
-                        <th>ID del Paciente</th>
-                        <th>Nombre del Paciente</th>
-                        <th>Edad del Paciente</th>
+                        <th>ID</th>
+                        <th>Nombre</th>
+                        <th>Expediente</th>
                         <th>Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <!-- Aquí se cargarán los antecedentes médicos desde la base de datos -->
-                    <tr>
-                        <td contenteditable="false">Ejemplo 1</td>
-                        <td contenteditable="false">Ejemplo 1</td>
-                        <td contenteditable="false">Ejemplo 1</td>
+                    <!-- Fila con evento de clic para redirigir -->
+                    <tr style="cursor: pointer;" onclick="verDetalle()">  <!-- El evento se detendrá si se hace clic en los botones -->
+                        <td>Ejemplo de ID</td>
+                        <td>Ejemplo de Nombre</td>
+                        <td>Ejemplo de Expediente</td>
                         <td>
-                            <button type="button" class="btn btn-danger me-2" onclick="window.location.href='eliminar'">Eliminar</button>
-                            <button type="button" class="btn btn-primary" onclick="window.location.href='editar'">Modificar</button>
-                            <button type="button" class="btn btn-success" onclick="window.location.href='ver'">Ver</button>
+                            <!-- Detener propagación para evitar que el clic en el botón active el evento de la fila -->
+                            <button type="button" class="btn btn-danger" onclick="eliminarRegistro(event)">Eliminar</button>
+                            <button type="button" class="btn btn-primary" onclick="modificarPaciente(event)">Modificar</button>
                         </td>
                     </tr>
-                    <!-- Puedes agregar más filas con datos de ejemplo o cargar desde la base de datos -->
+        
+                    <!-- Puedes agregar más filas aquí -->
                 </tbody>
             </table>
         </div>
         <div class="espacio-final"></div>
     </div>
+    <div class="espacio-final"></div>
+    <footer class="bg-dark text-white py-4 footer">
+        <div class="container">
+            <div class="row">
+                <!-- Información de contacto -->
+                <div class="col-md-3">
+                    <h5>Contacto</h5>
+                    <p>© 2024 Mi Sitio Web. Todos los derechos reservados.</p>
+                    <p>Dirección: Calle 123, Ciudad XYZ</p>
+                    <p>Teléfono: (123) 456-7890</p>
+                    <p>Correo Electrónico: info@misitioweb.com</p>
+                </div>
+
+                <!-- Enlaces rápidos -->
+                <div class="col-md-3">
+                    <h5>Enlaces rápidos</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="/" class="text-white">Inicio</a></li>
+                        <li><a href="/about" class="text-white">Sobre nosotros</a></li>
+                        <li><a href="/services" class="text-white">Servicios</a></li>
+                        <li><a href="/contact" class="text-white">Contacto</a></li>
+                    </ul>
+                </div>
+
+                <!-- Redes sociales -->
+                <div class="col-md-3">
+                    <h5>Redes sociales</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="https://facebook.com" class="text-white">Facebook</a></li>
+                        <li><a href="https://twitter.com" class="text-white">Twitter</a></li>
+                        <li><a href="https://instagram.com" class="text-white">Instagram</a></li>
+                    </ul>
+                </div>
+
+                <!-- Boletín informativo -->
+                <div class="col-md-3">
+                    <h5>Boletín informativo</h5>
+                    <p>Suscríbete para recibir las últimas noticias:</p>
+                    <input type="email" class="form-control" placeholder="Tu correo electrónico">
+                    <button class="btn btn-primary mt-2">Suscribirse</button>
+                </div>
+            </div>
+
+            <!-- Información legal -->
+            <div class="row">
+                <div class="col text-center">
+                    <hr class="my-4">
+                    <p><a href="/terms" class="text-white">Términos de servicio</a> | <a href="/privacy"
+                            class="text-white">Política de privacidad</a></p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function agregarRegistro() {
+            window.location.href = "crear.html";
+        }
+
+        function eliminarRegistro() {
+            event.stopPropagation();  // Evita que el evento se propague a la fila
+            // Mostrar un cuadro de diálogo bonito para confirmar la eliminación
+            Swal.fire({
+                title: '¿Estás seguro?',
+                text: 'Esta acción no se puede deshacer.',
+                icon: 'warning',  // Icono de advertencia
+                showCancelButton: true,  // Botón para cancelar
+                confirmButtonText: 'Eliminar',  // Texto del botón de confirmación
+                cancelButtonText: 'Cancelar',  // Texto del botón de cancelación
+                confirmButtonColor: '#d33',  // Color del botón de confirmación (rojo)
+                cancelButtonColor: '#aaa',  // Color del botón de cancelación (gris)
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // El usuario confirmó la eliminación
+                    console.log('Registro eliminado');
+                    // Aquí puedes añadir el código para eliminar el registro
+                } else {
+                    // El usuario canceló la eliminación
+                    console.log('Eliminación cancelada');
+                }
+            });
+        }
+
+        function verDetalle() {
+            window.location.href = "ver.html";
+        }
+
+        function modificarPaciente() {
+            event.stopPropagation();  // Evita que el evento se propague a la fila
+            window.location.href = "actualizar.html";
+        }
+
+
+    </script>
 </body>
+
 </html>
