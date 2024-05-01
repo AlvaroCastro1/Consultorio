@@ -30,7 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         move_uploaded_file($_FILES['logo']['tmp_name'], $target_file);
 
         // Añadir la ruta del archivo a la configuración
-        $config['logo'] = "/".$target_file;
+        $config['logo'] = "/configuracion/".$target_file;
     }
 
     // Guardar la configuración en el archivo JSON
