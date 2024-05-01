@@ -15,6 +15,7 @@
     <link href="https://fonts.googleapis.com/css2?family=DynaPuff:wght@400..700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/assets/css/graficarStyles.css">
     <link rel="stylesheet" href="/assets/css/barraNav.css">
+    <script src="/assets/js/header.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
@@ -27,24 +28,14 @@
         cargarYMostrarGrafica('indiceMasaCorporal', idExpediente, 'cargarMasaCorporal', 'red');
         cargarYMostrarGrafica('circunferenciaDelCraneo', idExpediente, 'cargarCircunferenciaCraneo', 'purple');
     </script>
-    <nav class="navbar navbar-expand-lg navbar-light bg-primary-custom">
-        <div class="container">
-            <a class="navbar-brand texto-gris-claro" href="..//Expediente/expediente.html" style="font-size: 20px; font-weight: bold; ">Expediente Médico</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link texto-gris-claro" href="..//Control/control.html" onclick="abrirPagina('control')">Control de crecimiento</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link texto-blanco-activo" href="..//Graficar/index.html" onclick="abrirPagina('index')">Gráficas</a>
-                    </li>  
-                </ul>
-            </div>
-        </div>
-    </nav>
+    <script>
+        const navItems = [
+            {name: "Control de crecimiento", uri: "..//Control/control.html"},
+            {name: "Gráficas", uri: "..//Graficar/index.html"}
+        ];
+
+        createHeader(navItems);
+    </script>
     <div class="container2 mt-5">
         <div class="panel panel-primary border-panel">
             <div class="titulo text-center">
