@@ -1,0 +1,113 @@
+
+        .titulo-Expediente {
+            text-align: center; 
+            font-size: 28px; 
+            margin-bottom: 20px; 
+            font-family: Arial, sans-serif;
+            font-weight: bold;
+            color: black; 
+        }
+
+        body {
+            background-image: url('/assets/Imagenes/fondoExpediente.png');
+            background-size: cover; 
+            background-repeat: no-repeat; 
+            background-attachment: fixed; 
+
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            margin: 0;
+        }
+        .btn-vacunas {
+            background-color: #ff96df;
+            border-color: #ff96df;
+        }
+        
+        .btn-vacunas:hover {
+            background-color: #fd81d8;
+            border-color: #fd81d8;
+        }
+        
+        .btn-estudios {
+            background-color: #d574d8;
+            border-color: #d574d8;
+        }
+        
+        .btn-estudios:hover {
+            background-color: #c154c5;
+            border-color: #c154c5;
+        }
+        
+        .btn-alergias {
+            background-color: #ff9456;
+            border-color: #ff9456;
+        }
+        
+        .btn-alergias:hover {
+            background-color: #ff8843;
+            border-color: #ff8843;
+        }
+
+        .btn-antecedentes {
+            background-color: #4ebcf3;
+            border-color: #4ebcf3;
+        }
+        
+        .btn-antecedentes:hover {
+            background-color: #559af4;
+            border-color: #559af4;
+        }
+        
+        .btn-signos {
+            background-color: #ff7575;
+            border-color: #ff7575;
+        }
+        
+        .btn-signos:hover {
+            background-color:#fd3e3e;
+            border-color: #fd3e3e;
+        }
+        
+        .btn-tratamiento {
+            background-color: #76a3db;
+            border-color: #76a3db;
+        }
+        
+        .btn-tratamiento:hover {
+            background-color: #76a3db;
+            border-color: #76a3db;
+        }
+        
+        .btn-procedimiento {
+            background-color: #fff675;
+            border-color: #fff675;
+        }
+        
+        .btn-procedimiento:hover {
+            background-color: #fdf259;
+            border-color: #fdf259;
+        }
+
+        .btn-control {
+            background-color: #81ff75;
+            border-color: #81ff75;
+        }
+
+        .btn-control:hover {
+            background-color: #57ff48;
+            border-color: #57ff48;
+        }
+
+        
+        .espacio-final {
+            margin-bottom: 50px;
+        }
+
+        footer {
+            margin-top: auto;
+            background-color:#76a3db;
+            color: rgb(24, 23, 23);
+            text-align: center;
+            padding: 10px 0;
+        }

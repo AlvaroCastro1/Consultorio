@@ -21,19 +21,19 @@
 }
 
 .texto-gris-claro {
-    color: #1f1f1f; 
+    color: #1f1f1f !important; 
 }
 
 .texto-gris-claro:hover {
-    color: #ffffff; 
+    color: #ffffff !important; 
 }
 
 .texto-blanco-activo {
     font-weight: bold;
-    color: #ffffff ; 
+    color: #ffffff  !important; 
 
 }
 
 .texto-blanco-activo:hover {
-    color: #1f1f1f; 
+    color: #1f1f1f !important; 
 }

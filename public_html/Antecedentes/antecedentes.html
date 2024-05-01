@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Antecedentes Médicos</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/css/AntecedentesStyles.css">
+    <link rel="stylesheet" href="/assets/css/barraNav.css">
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-primary-custom">
+        <div class="container">
+            <a class="navbar-brand texto-gris-claro" href="../Expediente/expediente.html" style="font-size: 20px; font-weight: bold; ">Expediente Médico</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link texto-gris-claro" href="../Vacunas/vacunas.html" onclick="abrirPagina('vacunas')">Vacunas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link texto-gris-claro" href="../Estudios/estudios.html" onclick="abrirPagina('estudios')">Estudios</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link texto-gris-claro" href="../Alergias/alergias.html" onclick="abrirPagina('alergias')">Alergias</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link texto-blanco-activo" href="../Antecedentes/antecedentes.html" onclick="abrirPagina('antecedentes')">Antecedentes</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link texto-gris-claro" href="../Signos/Signos.html" onclick="abrirPagina('signos')">Signos Vitales</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link texto-gris-claro" href="../Tratamiento/Tratamiento.html" onclick="abrirPagina('tratamiento')">Tratamiento</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link texto-gris-claro" href="..//Procedimiento/procedimiento.html" onclick="abrirPagina('procedimiento')">Procedimiento</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link texto-gris-claro" href="..//Control/control.html" onclick="abrirPagina('control')">Control de Crecimiento</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container2 mt-5">
+        <h1 class="titulo-antecedentes mb-4">Antecedentes Médicos</h1>
+        
+        <div class="input-group mb-3">
+            <input type="text" class="form-control" placeholder="Buscar por Tipo" id="input-busqueda">
+            <button class="btn btn-outline-secondary" type="button" onclick="buscar()">Buscar</button>
+        </div>
+
+        <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#modalAgregar">Agregar</button>
+
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover" id="tabla-antecedentes">
+                <thead>
+                    <tr>
+                        <th>Tipo de antecdente</th>
+                        <th>Nombre del padecimiento</th>
+                        <th>Descripción</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    
+                    <tr>
+                        <td contenteditable="false">Ejemplo de tipo</td>
+                        <td contenteditable="false">Ejemplo de padecimiento</td>
+                        <td contenteditable="false">Ejemplo de descripción</td>
+                        <td>
+                            <button type="button" class="btn btn-danger me-2" onclick="eliminarAntecedente()">Eliminar</button>
+                            <button type="button" class="btn btn-primary" onclick="modificarAntecedente(this)">Modificar</button>
+                        </td>
+                    </tr>
+                    
+                </tbody>
+            </table>
+        </div>
+        <div class="espacio-final"></div>
+    </div>
+
+    <div class="modal fade" id="modalAgregar" tabindex="-1" aria-labelledby="modalAgregarLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalAgregarLabel">Registro de Antecedentes</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="text" class="form-control mb-3" id="tipoAntecedenteInput" placeholder="Tipo de antecedente">
+                    <input type="text" class="form-control mb-3" id="padecimientoInput" placeholder="Padecimiento">
+                    <input type="text" class="form-control mb-3" id="descripcionInput" placeholder="Descripción">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger me-2" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-primary" onclick="agregarAntecedenteDesdeModal()">Aceptar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
+    <footer>
+        <div class="container3">
+            <p>Pie de página</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function agregarAntecedenteDesdeModal() {
+            // Obtener los valores de los campos del formulario
+            const tipoAntecedente = document.getElementById('tipoAntecedenteInput').value;
+            const padecimiento= document.getElementById('padecimientoInput').value;
+            const descripcion = document.getElementById('descripcionInput').value;
+    
+            // Insertar una nueva fila en la tabla con los datos de la alergia
+            const tabla = document.getElementById('tabla-antecedente').getElementsByTagName('tbody')[0];
+            const newRow = tabla.insertRow(tabla.rows.length);
+            newRow.innerHTML = `
+                <td>${tipoAntecedente}</td>
+                <td>${padecimiento}</td>
+                <td>${descripcion}</td>
+                <td>
+                    <button type="button" class="btn btn-danger me-2" onclick="eliminarAntecedente(this)">Eliminar</button>
+                    <button type="button" class="btn btn-primary" onclick="modificarAntecedente(this)">Modificar</button>
+                </td>
+            `;
+    
+            // Cerrar el modal después de agregar la alergia
+            const modal = bootstrap.Modal.getInstance(document.getElementById('modalAgregar'));
+            modal.hide();
+    
+            // Limpiar los campos del formulario
+            document.getElementById('tipoAntecedenteInput').value = '';
+            document.getElementById('padecimientoInput').value = '';
+            document.getElementById('descripcionInput').value = '';
+        }
+    
+        function buscar() {
+            const input = document.getElementById('input-busqueda').value;
+            console.log("Buscar registros con término:", input);
+        }
+    
+        function eliminarAntecedente(button) {
+            var fila = button.closest('tr');
+            fila.remove();
+            console.log("Eliminar Antecedente");
+        }
+
+        function modificarAntecedente(button) {
+            const row = button.closest('tr');
+            const cells = row.querySelectorAll('td');
+            cells.forEach(cell => {
+                cell.contentEditable = true;
+            });
+            
+            button.textContent = "Guardar";
+            button.classList.remove('btn-primary');
+            button.classList.add('btn-success');
+            button.setAttribute('onclick', 'guardarAntecedente(this)');
+        }
+    
+        function guardarAntecedente(button) {
+            const row = button.closest('tr');
+            const cells = row.querySelectorAll('td');
+            cells.forEach(cell => {
+                cell.contentEditable = false;
+            });
+            button.textContent = "Modificar";
+            button.classList.remove('btn-success');
+            button.classList.add('btn-primary');
+            button.setAttribute('onclick', 'modificarAntecedente(this)');
+            console.log("Guardar antecedente");
+        }
+    </script>
+</body>
+</html>

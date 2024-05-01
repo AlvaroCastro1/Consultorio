@@ -1,0 +1,207 @@
+.titulo {
+  background-color: #df99e0;
+  color: #ffffff;
+  padding: 10px;
+  border-radius: 5px;
+  text-align: center;
+  display: flex; 
+  align-items: center; 
+  justify-content: center;
+  font-weight: bold; 
+
+  /* Ocultar imagen en pantallas pequeñas */
+  @media screen and (max-width: 767px) {
+      background-image: none;
+  }
+
+  /* Ícono izquierdo */
+  &::before {
+      content: url('/assets/Iconos/graficasIcono.png'); 
+      margin-right: 5px; 
+  }
+
+  /* Ícono derecho */
+  &::after {
+      content: url('/assets/Iconos/graficasIcono.png'); 
+      margin-left: 5px; 
+  }
+}
+
+
+
+.tituloAltura {
+    background-color: #83b5f1;
+    color: #ffffff;
+    padding: 10px;
+    text-align: center;
+    border-radius: 5px;
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+
+    /* Ocultar imagen en pantallas pequeñas */
+    @media screen and (max-width: 767px) {
+        background-image: none;
+    }
+
+    /* Ícono izquierdo */
+    &::before {
+        content: url('/assets/Iconos/alturaIcono.png'); 
+        margin-right: 180px; 
+    }
+
+    /* Ícono derecho */
+    &::after {
+        content: url('/assets/Iconos/alturaIcono.png'); 
+        margin-left: 180px; 
+    }
+    
+    
+}
+.tituloPeso {
+    background-color: #85f785;
+    color: #ffffff;
+    padding: 10px;
+    text-align: center;
+    border-radius: 5px;
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+
+    /* Ocultar imagen en pantallas pequeñas */
+    @media screen and (max-width: 767px) {
+        background-image: none;
+    }
+
+    /* Ícono izquierdo */
+    &::before {
+        content: url('/assets/Iconos/pesoIcono.png'); 
+        margin-right: 180px; 
+    }
+
+    /* Ícono derecho */
+    &::after {
+        content: url('/assets/Iconos/pesoIcono.png'); 
+        margin-left: 180px; 
+    }
+    
+}
+.tituloMasaCorporal {
+    background-color: #ffa061;
+    color: #ffffff;
+    padding: 10px;
+    text-align: center;
+    border-radius: 5px;
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+
+    /* Ocultar imagen en pantallas pequeñas */
+    @media screen and (max-width: 767px) {
+        background-image: none;
+    }
+
+    /* Ícono izquierdo */
+    &::before {
+        content: url('/assets/Iconos/masaCorporalIcono.png'); 
+        margin-right: 120px; 
+    }
+
+    /* Ícono derecho */
+    &::after {
+        content: url('/assets/Iconos/masaCorporalIcono.png'); 
+        margin-left: 120px; 
+    }
+    
+    
+    
+}
+.tituloCircunferenciaDelCraneo {
+    background-color: #ff5151;
+    color: #ffffff;
+    padding: 10px;
+    text-align: center;
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+
+    /* Ocultar imagen en pantallas pequeñas */
+    @media screen and (max-width: 767px) {
+        background-image: none;
+    }
+
+    /* Ícono izquierdo */
+    &::before {
+        content: url('/assets/Iconos/craneoIcono.png'); 
+        margin-right: 50px; 
+    }
+
+    /* Ícono derecho */
+    &::after {
+        content: url('/assets/Iconos/craneoIcono.png'); 
+        margin-left: 50px; 
+    }
+    
+    
+    
+}
+/* Estilos generales del cuerpo */
+body {
+    margin: 40px 10px;
+    padding: 0;
+    font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
+    font-size: 16px;
+    background-image: url('/assets/Imagenes/graficas_fondo.png');
+    background-size: cover; 
+    background-repeat: no-repeat; 
+    background-attachment: fixed; 
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    margin: 0;
+    border-radius: 5px;
+  }
+/* Estilos para el contenedor principal */
+.container2 {
+    background-color: white; 
+    padding: 20px; 
+    border-radius: 10px; 
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); 
+    margin-left: 100px; 
+    margin-right: 100px;
+    border-radius: 5px;
+  }
+  @media screen and (max-width: 767px) {
+    .container2 {
+      margin-left: 0;
+      margin-right: 0;
+    }
+    
+    
+
+  }
+
+.espacio-final {
+    margin-bottom: 50px;
+}
+.panel-body {
+    height: 100%;
+}
+
+.grafica-container {
+    width: 100%;
+    height: 100%;
+}
+
+#cargarAltura, #cargarPeso, #cargarMasaCorporal {
+    
+    width: 100%;
+    height: 100%;
+}
+footer {
+    margin-top: auto;
+    background-color: #76a3db;
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+}

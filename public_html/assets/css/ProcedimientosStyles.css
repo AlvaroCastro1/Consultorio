@@ -1,0 +1,100 @@
+
+        .titulo-Procedimientos {
+            background-color: #B8D5D8;
+            color: #ffffff;
+            padding: 10px;
+            border-radius: 5px;
+
+            background-image: url('/assets/Iconos/procedimiento.png');
+            background-repeat: no-repeat;
+            background-position: right center;
+        }
+
+        body {
+            background-image: url('/assets/Imagenes/fondoProcedimiento.png');
+            background-size: cover; 
+            background-repeat: no-repeat; 
+            background-attachment: fixed; 
+
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        .container2 {
+            background-color: white; 
+            padding: 20px; 
+            border-radius: 10px; 
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); 
+            margin-left: 100px; 
+            margin-right: 100px;
+        }
+
+        .table th,
+        .table td {
+            vertical-align: middle;
+            white-space: nowrap;
+        }
+
+        .table thead th {
+            background-color: #B8D5D8;
+            color: #ffffff;
+            border-color: #B8D5D8 ;
+        }
+
+        .table-bordered th,
+        .table-bordered td {
+            border: 1px solid #dee2e6;
+        }
+
+        .table-bordered thead th,
+        .table-bordered thead td {
+            border-bottom-width: 2px;
+        }
+
+        .btn-primary {
+            background-color: #a9e9a4;
+            border-color: #a9e9a4;
+        }
+
+        .btn-primary:hover {
+            background-color: #66cc88;
+            border-color: #66cc88;
+        }
+
+        .btn-danger {
+            background-color: #ff958c;
+            border-color: #ff958c;
+        }
+
+        .btn-danger:hover {
+            background-color: #f96356;
+            border-color: #f96356;
+        }
+
+        .btn-success {
+            background-color: #a0c4ff ;
+            border-color: #a0c4ff  ;
+        }
+        .btn-success:hover {
+            background-color: #a0c4ff  ;
+            border-color: #a0c4ff ;
+        }
+        
+
+        .bg-custom {
+            background-color: #84b6f4;
+        }
+
+        .espacio-final {
+            margin-bottom: 50px;
+        }
+
+        footer {
+            margin-top: auto;
+            background-color: #76a3db;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+        }

@@ -1,0 +1,100 @@
+
+.titulo-antecedentes {
+    background-color: #BDB5DA;
+    color: #ffffff;
+    padding: 10px;
+    border-radius: 5px;
+
+    background-image: url('/assets/Iconos/antecedente.png');
+    background-repeat: no-repeat;
+    background-position: right center;
+}
+
+body {
+    background-image: url('/assets/Imagenes/antecedentes_fondo.png');
+    background-size: cover; 
+    background-repeat: no-repeat; 
+    background-attachment: fixed; 
+
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    margin: 0;
+}
+
+.container2 {
+    background-color: white; 
+    padding: 20px; 
+    border-radius: 10px; 
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); 
+    margin-left: 100px; 
+    margin-right: 100px;
+}
+
+.table th,
+.table td {
+    vertical-align: middle;
+    white-space: nowrap;
+}
+
+.table thead th {
+    background-color: #BDB5DA;
+    color: #ffffff;
+    border-color: #BDB5DA;
+}
+
+.table-bordered th,
+.table-bordered td {
+    border: 1px solid #dee2e6;
+}
+
+.table-bordered thead th,
+.table-bordered thead td {
+    border-bottom-width: 2px;
+}
+
+.btn-primary {
+    background-color: #A7D5C2;
+    border-color: #A7D5C2;
+}
+
+.btn-primary:hover {
+    background-color: #86c7ac;
+    border-color: #86c7ac;
+}
+
+.btn-danger {
+    background-color: #EFBBD5;
+    border-color: #EFBBD5;
+}
+
+.btn-danger:hover {
+    background-color: #f2a9ce;
+    border-color: #f2a9ce;
+}
+
+.btn-success {
+    background-color: #a0c4ff ;
+    border-color: #a0c4ff  ;
+}
+.btn-success:hover {
+    background-color: #a0c4ff  ;
+    border-color: #a0c4ff ;
+}
+
+
+.bg-custom {
+    background-color: #84b6f4;
+}
+
+.espacio-final {
+    margin-bottom: 50px;
+}
+
+footer {
+    margin-top: auto;
+    background-color: #76a3db;
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+}

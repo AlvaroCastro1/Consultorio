@@ -1,0 +1,106 @@
+
+        .titulo-inicio {
+            background-color: #7ab7ec;
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+
+            background-image: url('/assets/Iconos/result.png');
+            background-repeat: no-repeat;
+            background-position: right center;
+            background-size: 50px;
+        }
+
+        body {
+            background-image: url('/assets/Imagenes/Resultados.png');
+            background-size: cover; 
+            background-repeat: no-repeat; 
+            background-attachment: fixed; 
+
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        .container2 {
+            background-color: white; 
+            padding: 20px; 
+            border-radius: 10px; 
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); 
+            margin-left: 100px; 
+            margin-right: 100px;
+        }
+
+        .table th,
+        .table td {
+            vertical-align: middle;
+            white-space: nowrap;
+        }
+
+        .table thead th {
+            background-color: #7ab7ec ;
+            color: #ffffff;
+            border-color: #449eed ;
+        }
+
+        .table-bordered th,
+        .table-bordered td {
+            border: 1px solid #dee2e6;
+        }
+
+        .table-bordered thead th,
+        .table-bordered thead td {
+            border-bottom-width: 2px;
+        }
+
+        .btn-primary {
+            background-color: #59dae3;
+            border-color: #59dae3 ;
+        }
+
+        .btn-primary:hover {
+            background-color: #49b4bb;
+            border-color: #43a3aa;
+        }
+
+        .btn-danger {
+            background-color: rgb(245, 111, 111);
+            border-color: rgb(245, 111, 111);
+        }
+
+        .btn-reslt {
+            background-color: #8cc2ff;
+            border-color: #8cc2ff;
+        }
+
+        .btn-danger:hover {
+            background-color: rgb(231, 101, 101);
+            border-color: rgb(231, 101, 101);
+        }
+
+        .btn-success {
+            background-color: #a0c4ff ;
+            border-color: #a0c4ff  ;
+        }
+        .btn-success:hover {
+            background-color: #a0c4ff  ;
+            border-color: #a0c4ff ;
+        }
+        
+
+        .bg-custom {
+            background-color: #84b6f4;
+        }
+
+        .espacio-final {
+            margin-bottom: 50px;
+        }
+
+        footer {
+            margin-top: auto;
+            background-color: #76a3db;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+        }
