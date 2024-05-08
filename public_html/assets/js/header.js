@@ -1,5 +1,5 @@
 function createHeader(navItems) {
-    const configUrl = "../../configuracion/config/configurations.json";
+    const configUrl = "../configuracion/config/configurations.json";
     fetch(configUrl)
         .then((response) => response.json())
         .then((data) => {

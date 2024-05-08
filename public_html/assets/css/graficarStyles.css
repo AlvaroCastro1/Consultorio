@@ -16,13 +16,13 @@
 
   /* Ícono izquierdo */
   &::before {
-      content: url('/assets/Iconos/graficasIcono.png'); 
+      content: url('../Iconos/graficasIcono.png'); 
       margin-right: 5px; 
   }
 
   /* Ícono derecho */
   &::after {
-      content: url('/assets/Iconos/graficasIcono.png'); 
+      content: url('../Iconos/graficasIcono.png'); 
       margin-left: 5px; 
   }
 }
@@ -46,13 +46,13 @@
 
     /* Ícono izquierdo */
     &::before {
-        content: url('/assets/Iconos/alturaIcono.png'); 
+        content: url('../Iconos/alturaIcono.png'); 
         margin-right: 180px; 
     }
 
     /* Ícono derecho */
     &::after {
-        content: url('/assets/Iconos/alturaIcono.png'); 
+        content: url('../Iconos/alturaIcono.png'); 
         margin-left: 180px; 
     }
     
@@ -75,13 +75,13 @@
 
     /* Ícono izquierdo */
     &::before {
-        content: url('/assets/Iconos/pesoIcono.png'); 
+        content: url('../Iconos/pesoIcono.png'); 
         margin-right: 180px; 
     }
 
     /* Ícono derecho */
     &::after {
-        content: url('/assets/Iconos/pesoIcono.png'); 
+        content: url('../Iconos/pesoIcono.png'); 
         margin-left: 180px; 
     }
     
@@ -103,13 +103,13 @@
 
     /* Ícono izquierdo */
     &::before {
-        content: url('/assets/Iconos/masaCorporalIcono.png'); 
+        content: url('../Iconos/masaCorporalIcono.png'); 
         margin-right: 120px; 
     }
 
     /* Ícono derecho */
     &::after {
-        content: url('/assets/Iconos/masaCorporalIcono.png'); 
+        content: url('../Iconos/masaCorporalIcono.png'); 
         margin-left: 120px; 
     }
     
@@ -132,13 +132,13 @@
 
     /* Ícono izquierdo */
     &::before {
-        content: url('/assets/Iconos/craneoIcono.png'); 
+        content: url('../Iconos/craneoIcono.png'); 
         margin-right: 50px; 
     }
 
     /* Ícono derecho */
     &::after {
-        content: url('/assets/Iconos/craneoIcono.png'); 
+        content: url('../Iconos/craneoIcono.png'); 
         margin-left: 50px; 
     }
     
@@ -151,7 +151,7 @@ body {
     padding: 0;
     font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
     font-size: 16px;
-    background-image: url('/assets/Imagenes/graficas_fondo.png');
+    background-image: url('../Imagenes/graficas_fondo.png');
     background-size: cover; 
     background-repeat: no-repeat; 
     background-attachment: fixed; 

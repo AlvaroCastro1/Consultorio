@@ -5,13 +5,13 @@
             padding: 10px;
             border-radius: 5px;
 
-            background-image: url('/assets/Iconos/alergia.png');
+            background-image: url('../Iconos/alergia.png');
             background-repeat: no-repeat;
             background-position: right center;
         }
 
         body {
-            background-image: url('/assets/Imagenes/alergias_fondo.png');
+            background-image: url('../Imagenes/alergias_fondo.png');
             background-size: cover; 
             background-repeat: no-repeat; 
             background-attachment: fixed; 
