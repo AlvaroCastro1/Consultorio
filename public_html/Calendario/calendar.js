@@ -21,6 +21,8 @@ document.addEventListener('DOMContentLoaded', function() {
           $('#addEventModal').modal('show');
           $('#addEventForm').trigger('reset');
           document.getElementById('eventDate').value = info.dateStr;
+          var fechaSeleccionada = $('#eventDate').val();
+            cargarHorarios('#eventTime', fechaSeleccionada,null,null);
       },
 
       dayCellDidMount: function(info) {
@@ -126,35 +128,37 @@ document.addEventListener('DOMContentLoaded', function() {
   calendar.render();
 
   document.getElementById('saveButton').addEventListener('click', function() {
-      var patientId = document.getElementById('eventPatientId').value;
-      var eventDate = document.getElementById('eventDate').value;
-      var eventTime = document.getElementById('eventTime').value;
-      var eventAttendance = document.getElementById('eventAttendance').checked ? 1 : 0;
+    var patientId = document.getElementById('eventPatientId').value;
+    var eventDate = document.getElementById('eventDate').value;
+    var eventTime = document.getElementById('eventTime').value;
+    var eventAttendance = document.getElementById('eventAttendance').checked ? 1 : 0;
 
-      if (!patientId || !eventDate || !eventTime) {
-          alert('Por favor, completa todos los campos obligatorios.');
-          return;
-      }
+    if (!patientId || !eventDate || !eventTime) {
+        alert('Por favor, completa todos los campos obligatorios.');
+        return;
+    }
 
-      var data = {
-          patientId: patientId,
-          eventDate: eventDate,
-          eventTime: eventTime,
-          eventAttendance: eventAttendance
-      };
+    var data = {
+        patientId: patientId,
+        eventDate: eventDate,
+        eventTime: eventTime,
+        eventAttendance: eventAttendance
+    };
 
-      $.ajax({
-          url: 'guardar_cita.php',
-          type: 'POST',
-          data: data,
-          success: function(response) {
-              alert('Cita Guardada correctamente');
-              location.reload();
-          },
-          error: function(xhr, status, error) {
-              alert('Error al guardar la cita');
-              console.error(xhr.responseText);
-          }
-      });
-  });
+    $.ajax({
+        url: 'guardar_cita.php',
+        type: 'POST',
+        data: data,
+        success: function(response) {
+            alert('Cita Guardada correctamente');
+            $('#eventTime').empty(); // Limpiar el comboBox eventTime
+            location.reload();
+        },
+        error: function(xhr, status, error) {
+            alert('Error al guardar la cita');
+            console.error(xhr.responseText);
+        }
+    });
+});
+
 });

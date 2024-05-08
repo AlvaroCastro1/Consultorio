@@ -27,6 +27,7 @@ document.addEventListener('DOMContentLoaded', function() {
 // Función para cargar los horarios disponibles
 function cargarHorarios(idComboBox, fechaSeleccionada, fechaActual, horarioExtra) {
     console.log(fechaActual)
+    console.log(horarioExtra)
     var data = { 
         date: fechaSeleccionada // Agregar la fecha actual a los datos
     };
@@ -36,15 +37,20 @@ function cargarHorarios(idComboBox, fechaSeleccionada, fechaActual, horarioExtra
     if (fechaActual !== null) {
         data.fechaActual = fechaActual;
     }
+    
+    // Agregar timestamp para evitar caché
+    var timestamp = new Date().getTime();
+    var url = 'obtener_horarios_disponibles.php?timestamp=' + timestamp;
+
     $.ajax({
-        url: 'obtener_horarios_disponibles.php',
+        url: url,
         method: 'POST',
         data: data,
         dataType: 'json',
         success: function(response) {
             if (response.horarios && Array.isArray(response.horarios)) {
                 var comboBox = $(idComboBox);
-                
+                console.log(response.horarios)
                 comboBox.empty();
                 comboBox.append('<option value="">Seleccionar hora</option>');
                 response.horarios.forEach(function(time) {
@@ -61,4 +67,3 @@ function cargarHorarios(idComboBox, fechaSeleccionada, fechaActual, horarioExtra
         }
     });
 }
-
