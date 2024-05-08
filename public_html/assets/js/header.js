@@ -85,3 +85,36 @@ function createHeader(navItems) {
             console.error("Error al cargar la configuración:", error);
         });
 }
+
+document.addEventListener("DOMContentLoaded", function() {
+    // Ruta del archivo JSON
+    const configUrl = "../../configuracion/config/configurations.json";
+
+    // Cargar el archivo JSON para obtener el favicon
+    fetch(configUrl)
+        .then((response) => response.json())
+        .then((data) => {
+            if (data.logo) {
+                // Obtener la ruta del favicon desde el JSON
+                const faviconUrl = data.logo;
+                alert("aqui")
+
+                // Configurar el favicon en la sección <head>
+                let favicon = document.querySelector("link[rel='icon']");
+
+                if (!favicon) {
+                    // Si no existe, crear uno
+                    favicon = document.createElement("link");
+                    favicon.rel = "icon";
+                    favicon.type = "image/x-icon"; // Cambia según el tipo de archivo
+                    document.querySelector("head").appendChild(favicon);
+                }
+
+                // Establecer la ruta del favicon
+                favicon.href = faviconUrl;
+            }
+        })
+        .catch((error) => {
+            console.error("Error al cargar el configurations.json:", error);
+        });
+});
