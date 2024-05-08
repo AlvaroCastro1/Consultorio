@@ -97,7 +97,6 @@ document.addEventListener("DOMContentLoaded", function() {
             if (data.logo) {
                 // Obtener la ruta del favicon desde el JSON
                 const faviconUrl = data.logo;
-                alert("aqui")
 
                 // Configurar el favicon en la sección <head>
                 let favicon = document.querySelector("link[rel='icon']");
