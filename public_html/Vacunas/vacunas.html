@@ -11,20 +11,43 @@
 </head>
 <body>
 
-    <script>
-        const navItems = [
-        {name: "Vacuna", uri: "../Vacunas/vacunas.html"},
-        {name: "Estudios", uri: "../Estudios/estudios.html"},
-        {name: "Alergia", uri: "../Alergias/alergias.html"},
-        {name: "Antecedente", uri: "../Antecedentes/antecedentes.html"},
-        {name: "Signos Vitale", uri: "../Signos/Signos.html"},
-        {name: "Tratamiento", uri: "../Tratamiento/Tratamiento.html"},
-        {name: "Procedimient", uri: "../Procedimiento/procedimiento.html"},
-        {name: "Control de Crecimiento", uri: "..//Control/control.html"}
-        ];
-    
-        createHeader(navItems);
-    </script>
+    <nav class="navbar navbar-expand-lg navbar-light bg-primary-custom">
+        <div class="container">
+            <a class="navbar-brand texto-gris-claro" href="..//Expediente/expediente.html" style="font-size: 20px; font-weight: bold; ">Expediente Médico</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link texto-blanco-activo" href="..//Vacunas/vacunas.html" onclick="abrirPagina('vacunas')">Vacunas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link texto-gris-claro" href="..//Estudios/estudios.html" onclick="abrirPagina('estudios')">Estudios</a>
+                    </li>
+                    
+                    <li class="nav-item">
+                        <a class="nav-link texto-gris-claro" href="..//Alergias/alergias.html" onclick="abrirPagina('alergias')">Alergias</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link texto-gris-claro" href="../Antecedentes/antecedentes.html" onclick="abrirPagina('antecedentes')">Antecedentes</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link texto-gris-claro" href="..//Signos/Signos.html" onclick="abrirPagina('signos')">Signos Vitales</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link texto-gris-claro" href="..//Tratamiento/Tratamiento.html" onclick="abrirPagina('tratamiento')">Tratamiento</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link texto-gris-claro" href="..//Procedimiento/procedimiento.html" onclick="abrirPagina('procedimiento')">Procedimiento</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link texto-gris-claro" href="..//Control/control.html" onclick="abrirPagina('control')">Control de Crecimiento</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
 
     <div class="container2 mt-5">
         <h1 class="titulo-vacunas mb-4">Vacunas</h1>
@@ -41,37 +64,34 @@
             <table class="table table-bordered table-hover" id="tabla-vacunas">
                 <thead>
                     <tr>
+                        <th>Id Signo</th>
                         <th>Sustancia Activa</th>
-                        <th>Dosis</th>
                         <th>Enfermedad</th>
-                        <th>Fecha de Aplicación</th>
-                        <th>Fecha Caducidad</th>
-                        <th>Lote</th>
                         <th>Formula</th>
                         <th>Laboratorio</th>
+                        <th>Dosis</th>
                         <th>Gramaje</th>
+                        <th>Lote</th>
+                        <th>Fecha Caducidad</th>
                         <th>Acciones</th>
                     </tr>
                 </thead>
-                <tbody>
-                    
+                <tbody id="content">
                     <tr>
-                        <td contenteditable="false">Ejemplo de sustancia activa</td>
-                        <td contenteditable="false">Ejemplo de dosis</td>
-                        <td contenteditable="false">Ejemplo de enfermedad</td>
-                        <td contenteditable="false">2024-04-16</td>
-                        <td contenteditable="false">2024-04-16</td>
-                        <td contenteditable="false">0000</td>
-                        <td contenteditable="false">Ejemplo de formula</td>
-                        <td contenteditable="false">Ejemplo de Laboratorio</td>
+                        <td contenteditable="false">0</td>
+                        <td contenteditable="false">Amoxicilina</td>
+                        <td contenteditable="false">Influenza</td>
+                        <td contenteditable="false">Amoxicilina</td>
+                        <td contenteditable="false">Amsa</td>
+                        <td contenteditable="false">10</td>
                         <td contenteditable="false">0g</td>
-
+                        <td contenteditable="false">0000</td>
+                        <td><input type="date" class="form-control" value="2024-04-17" readonly></td>
                         <td>
-                            <button type="button" class="btn btn-danger me-2" onclick="eliminarVacuna()">Eliminar</button>
-                            <button type="button" class="btn btn-primary" onclick="modificarVacuna(this)">Modificar</button>
+                            <button type="button" class="btn btn-danger me-2" onclick="eliminarFila(this)">Eliminar</button>
+                            <button type="button" class="btn btn-primary" onclick="modificarControl(this)">Modificar</button>
                         </td>
                     </tr>
-                    
                 </tbody>
             </table>
         </div>
@@ -86,19 +106,20 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <input type="text" class="form-control mb-3" id="sustanciaActivaInput" placeholder="Sustancia Activa">
-                    <input type="text" class="form-control mb-3" id="dosisInput" placeholder="Dosis">
-                    <input type="text" class="form-control mb-3" id="enfermedadInput" placeholder="Enfermedad">
-                    <input type="date" class="form-control mb-3" id="fechaAplicacionInput" placeholder="Fecha de Aplicación">
-                    <input type="date" class="form-control mb-3" id="fechaCaducidadInput" placeholder="Fecha de Caducidad">
-                    <input type="text" class="form-control mb-3" id="loteInput" placeholder="Lote">
-                    <input type="text" class="form-control mb-3" id="formulaInput" placeholder="Fórmula">
-                    <input type="text" class="form-control mb-3" id="laboratorioInput" placeholder="Laboratorio">
-                    <input type="text" class="form-control mb-3" id="gramajeInput" placeholder="Gramaje">
+                    <form id="formulario-vacunas"></form>
+                        <input type="text" class="form-control mb-3" id="sustanciaActivaInput" placeholder="Sustancia Activa">
+                        <input type="text" class="form-control mb-3" id="enfermedadInput" placeholder="Enfermedad">
+                        <input type="text" class="form-control mb-3" id="formulaInput" placeholder="Fórmula">
+                        <input type="text" class="form-control mb-3" id="laboratorioInput" placeholder="Laboratorio">
+                        <input type="number" class="form-control mb-3" id="dosisInput" placeholder="Dosis">
+                        <input type="number" class="form-control mb-3" id="gramajeInput" placeholder="Gramaje">
+                        <input type="number" class="form-control mb-3" id="loteInput" placeholder="Lote">
+                        <input type="date" class="form-control mb-3" id="fechaCaducidadInput" placeholder="Fecha de Caducidad">
+                    </form>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-danger me-2" data-bs-dismiss="modal">Cerrar</button>
-                    <button type="button" class="btn btn-primary" onclick="agregarVacunaDesdeModal()">Aceptar</button>
+                    <button id = "botonGuardarModal" type="button" class="btn btn-primary" onclick="agregarVacunaDesdeModal()">Aceptar</button>
                 </div>
             </div>
         </div>
@@ -116,84 +137,207 @@
         function agregarVacunaDesdeModal() {
             // Obtener los valores de los campos del formulario
             const sustanciaActiva = document.getElementById('sustanciaActivaInput').value;
-            const dosis = document.getElementById('dosisInput').value;
             const enfermedad = document.getElementById('enfermedadInput').value;
-            const fechaAplicacion = document.getElementById('fechaAplicacionInput').value;
-            const fechaCaducidad = document.getElementById('fechaCaducidadInput').value;
-            const lote = document.getElementById('loteInput').value;
             const formula = document.getElementById('formulaInput').value;
             const laboratorio = document.getElementById('laboratorioInput').value;
+            const dosis = document.getElementById('dosisInput').value;
             const gramaje = document.getElementById('gramajeInput').value;
-    
-            // Insertar una nueva fila en la tabla con los datos de la vacuna
-            const tabla = document.getElementById('tabla-vacunas').getElementsByTagName('tbody')[0];
-            const newRow = tabla.insertRow(tabla.rows.length);
-            newRow.innerHTML = `
-                <td>${sustanciaActiva}</td>
-                <td>${dosis}</td>
-                <td>${enfermedad}</td>
-                <td>${fechaAplicacion}</td>
-                <td>${fechaCaducidad}</td>
-                <td>${lote}</td>
-                <td>${formula}</td>
-                <td>${laboratorio}</td>
-                <td>${gramaje}</td>
-                <td>
-                    <button type="button" class="btn btn-danger me-2" onclick="eliminarVacuna(this)">Eliminar</button>
-                    <button type="button" class="btn btn-primary" onclick="modificarVacuna(this)">Modificar</button>
-                </td>
-            `;
-    
-            // Cerrar el modal después de agregar la vacuna
+            const lote = document.getElementById('loteInput').value;
+            const fechaCaducidad = document.getElementById('fechaCaducidadInput').value;
+            
+            var fechaFormato = formatoFecha();
+
+            fetch('../Vacunas/guardar.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: `sustanciaActiva=${sustanciaActiva}&enfermedad=${enfermedad}&formula=${formula}&laboratorio=${laboratorio}&dosis=${dosis}&gramaje=${gramaje}&lote=${lote}&fechaCaducidad=${fechaFormato}`
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Mostrar mensaje de éxito o error
+                if (data.success) {
+                    alert(data.message);
+                    // Actualizar la tabla o hacer cualquier otra acción necesaria
+                    buscar();
+                } else {
+                    alert(data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Error al guardar los datos');
+            });
+        
+            // Cerrar el modal después de agregar el registro
             const modal = bootstrap.Modal.getInstance(document.getElementById('modalAgregar'));
             modal.hide();
     
             // Limpiar los campos del formulario
             document.getElementById('sustanciaActivaInput').value = '';
-            document.getElementById('dosisInput').value = '';
             document.getElementById('enfermedadInput').value = '';
-            document.getElementById('fechaAplicacionInput').value = '';
-            document.getElementById('fechaCaducidadInput').value = '';
-            document.getElementById('loteInput').value = '';
             document.getElementById('formulaInput').value = '';
             document.getElementById('laboratorioInput').value = '';
+            document.getElementById('dosisInput').value = '';
             document.getElementById('gramajeInput').value = '';
+            document.getElementById('loteInput').value = '';
+            document.getElementById('fechaCaducidadInput').value = '';
+            
+
         }
     
-        function buscarVacunas() {
-            const input = document.getElementById('input-busqueda').value;
-            console.log("Buscar registros de vacunas:", input);
+        buscar()
+        //document.getElementById("input-busqueda").addEventListener("keyup", buscar)
+        function buscar() {
+  
+            let input = document.getElementById("input-busqueda").value
+            console.log("Buscar por sustancia vacunas:", input);
+            let content = document.getElementById("content")
+            let url = "../Vacunas/buscar.php"
+            let formaData = new FormData()
+            formaData.append('input-busqueda', input)
+
+            fetch(url, {
+                method: "POST",
+                boby: formaData
+            }).then(Response => Response.json())
+            .then(data => {
+                content.innerHTML = data
+
+            }).catch(err => console.log(err))
         }
-    
-        function eliminarVacuna(button) {
-            var fila = button.closest('tr');
-            fila.remove();
-            console.log("Eliminar vacuna");
+
+        function eliminarFila(button) {
+            // Obtener el ID de la fila
+            const row = button.closest('tr');
+            const idVacunas = row.querySelector('td:first-child').textContent;
+            console.log("la id que a eliminar es: ", idVacunas);
+
+            
+            // Realizar la solicitud AJAX para guardar los datos
+            fetch('../Vacunas/eliminar.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: `idVacunas=${idVacunas}`
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Mostrar mensaje de éxito o error
+                if (data.success) {
+                    alert(data.message);
+                    // Actualizar la tabla o hacer cualquier otra acción necesaria
+                    buscar();
+                } else {
+                    alert(data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Error al eliminar los datos');
+            });
+        
+
         }
-    
-        function modificarVacuna(button) {
+
+        function modificarVacunas(button) {
             const row = button.closest('tr');
             const cells = row.querySelectorAll('td');
+            contador = 0;
             cells.forEach(cell => {
-                cell.contentEditable = true;
+                if (contador ==0){
+                    cell.contentEditable = false;
+                    contador = contador +1;
+
+                }else{
+                    cell.contentEditable = true;
+                }
             });
             button.textContent = "Guardar";
             button.classList.remove('btn-primary');
             button.classList.add('btn-success');
-            button.setAttribute('onclick', 'guardarVacuna(this)');
+            button.setAttribute('onclick', 'guardarVacunas(this)');
         }
-    
-        function guardarVacuna(button) {
+
+        function guardarVacunas(button) {
             const row = button.closest('tr');
             const cells = row.querySelectorAll('td');
-            cells.forEach(cell => {
-                cell.contentEditable = false;
+
+
+            const idVacunas = cells[0].innerText;
+            const sustanciaActiva= cells[1].innerText;
+            const enfermedad = cells[2].innerText;
+            const formula = cells[3].innerText;
+            const laboratorio = cells[4].innerText;
+            const dosis = cells[5].innerText;
+            const gramaje = cells[6].innerText;
+            const lote = cells[7].innerText;
+            const fechaCaducidad = cells[8].innerText;
+            
+
+
+            console.log("Dato 1:", idVacunas);
+            console.log("Dato 2:", sustanciaActiva);
+            console.log("Dato 3:", dosis);
+
+
+
+            fetch('../Vacunas/modificar.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: `sustanciaActiva=${sustanciaActiva}&enfermedad=${enfermedad}&formula=${formula}&laboratorio=${laboratorio}&dosis=${dosis}&gramaje=${gramaje}&lote=${lote}&fechaCaducidad=${fechaCaducidad}&idVacunas=${idVacunas}`
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Mostrar mensaje de éxito o error
+                if (data.success) {
+                    alert(data.message);
+                    // Actualizar la tabla o hacer cualquier otra acción necesaria
+                    buscar();
+                } else {
+                    alert(data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Error al guardar los datos');
             });
-            button.textContent = "Modificar";
-            button.classList.remove('btn-success');
-            button.classList.add('btn-primary');
-            button.setAttribute('onclick', 'modificarVacuna(this)');
-            console.log("Guardar vacuna");
+        }
+        
+
+
+        function formatoFecha() {
+            // Obtener el input de fecha
+            var fechaInput = document.getElementById("fechaCaducidadInput");
+
+            // Obtener el valor del input (fecha seleccionada por el usuario)
+            var fechaSeleccionada = fechaInput.value;
+
+            // Verificar si se ha seleccionado una fecha
+            if (fechaSeleccionada) {
+                // Convertir la fecha a un objeto Date
+                var fechaObj = new Date(fechaSeleccionada);
+
+                // Obtener los componentes de la fecha (año, mes, día)
+                var año = fechaObj.getFullYear();
+                var mes = (fechaObj.getMonth() + 1).toString().padStart(2, '0'); // Agregar un cero al mes si es necesario
+                var dia = fechaObj.getDate().toString().padStart(2, '0'); // Agregar un cero al día si es necesario
+
+                // Crear el formato deseado (año-mes-día)
+                var formatoDeseado = año + "-" + mes + "-" + dia;
+
+                // Asignar el formato deseado al valor del input
+                fechaInput.value = formatoDeseado;
+            }
+
+            // Retornar el valor del input modificado
+            console.log("se obtuvo el valor= ",fechaInput.value);
+
+            return fechaInput.value;
         }
     </script>
 </body>
