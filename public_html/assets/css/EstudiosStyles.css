@@ -5,13 +5,13 @@
             padding: 10px;
             border-radius: 5px;
 
-            background-image: url('/assets/Iconos/estudios.png');
+            background-image: url('../Iconos/estudios.png');
             background-repeat: no-repeat;
             background-position: right center;
         }
 
         body {
-            background-image: url('/assets/Imagenes/fondo2.jpg');
+            background-image: url('../Imagenes/fondo2.jpg');
             background-size: cover; 
             background-repeat: no-repeat; 
             background-attachment: fixed; 

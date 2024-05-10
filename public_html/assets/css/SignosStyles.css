@@ -5,13 +5,13 @@
             padding: 10px;
             border-radius: 5px;
 
-            background-image: url('/assets/Iconos/signos.png');
+            background-image: url('../Iconos/signos.png');
             background-repeat: no-repeat;
             background-position: right center;
         }
 
         body {
-            background-image: url('/assets/Imagenes/signos_fondo.png');
+            background-image: url('../Imagenes/signos_fondo.png');
             background-size: cover; 
             background-repeat: no-repeat; 
             background-attachment: fixed; 

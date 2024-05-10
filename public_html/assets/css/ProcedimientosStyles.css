@@ -5,13 +5,13 @@
             padding: 10px;
             border-radius: 5px;
 
-            background-image: url('/assets/Iconos/procedimiento.png');
+            background-image: url('../Iconos/procedimiento.png');
             background-repeat: no-repeat;
             background-position: right center;
         }
 
         body {
-            background-image: url('/assets/Imagenes/fondoProcedimiento.png');
+            background-image: url('../Imagenes/fondoProcedimiento.png');
             background-size: cover; 
             background-repeat: no-repeat; 
             background-attachment: fixed; 

@@ -27,8 +27,8 @@ include 'citas.php'; // Incluye el contenido de cita.php
 
 
 
-<link rel="stylesheet" href="/assets/css/CalendarioStyles.css">
-<link rel="stylesheet" href="/assets/css/barraNav.css">
+<link rel="stylesheet" href="../assets/css/CalendarioStyles.css">
+<link rel="stylesheet" href="../assets/css/barraNav.css">
 
     
 </head>
