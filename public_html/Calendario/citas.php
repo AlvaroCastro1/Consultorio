@@ -47,10 +47,10 @@ $conn->close();
       $fecha_actual = date("Y-m-d");
 
             // Leer las horas de inicio y fin desde el archivo
-      $lines = file('horarios.txt', FILE_IGNORE_NEW_LINES);
-      $hora_inicio = $lines[0];
-      $hora_fin = $lines[1];
-      $dif=$hora_fin-$hora_inicio;
+      $horarios = json_decode(file_get_contents('../configuracion/config/configurations.json'), true);
+      $hora_inicio = floatval($horarios['startTime']);
+      $hora_fin = floatval($horarios['endTime']);
+      $dif = abs($hora_fin - $hora_inicio);
       $mitadHoras = floor(floor($dif / 0.5)/2);
 
 ?>
@@ -60,5 +60,4 @@ $conn->close();
   var fecha_actual = '<?php echo $fecha_actual; ?>';
   var horasTotales = <?php echo $dif; ?>;
   var mitadTotales = '<?php echo $mitadHoras; ?>';
-  
-</script>
+  </script>
