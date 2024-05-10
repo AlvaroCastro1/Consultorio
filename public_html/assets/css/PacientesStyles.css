@@ -7,13 +7,13 @@
     padding: 10px;
     border-radius: 5px;
 
-    background-image: url('/assets/icons/paciente.png');
+    background-image: url('../icons/paciente.png');
     background-repeat: no-repeat;
     background-position: right center;
 }
 
 body {
-    background-image: url('/assets/images/fondo.png');
+    background-image: url('../images/fondo.png');
     background-size: cover;
     background-repeat: no-repeat;
     background-attachment: fixed;

@@ -5,14 +5,14 @@
             padding: 10px;
             border-radius: 5px;
 
-            background-image: url('/assets/Iconos/result.png');
+            background-image: url('../Iconos/result.png');
             background-repeat: no-repeat;
             background-position: right center;
             background-size: 50px;
         }
 
         body {
-            background-image: url('/assets/Imagenes/Resultados.png');
+            background-image: url('../Imagenes/Resultados.png');
             background-size: cover; 
             background-repeat: no-repeat; 
             background-attachment: fixed; 

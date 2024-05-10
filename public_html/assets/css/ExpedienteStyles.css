@@ -9,7 +9,7 @@
         }
 
         body {
-            background-image: url('/assets/Imagenes/fondoExpediente.png');
+            background-image: url('../Imagenes/fondoExpediente.png');
             background-size: cover; 
             background-repeat: no-repeat; 
             background-attachment: fixed; 
