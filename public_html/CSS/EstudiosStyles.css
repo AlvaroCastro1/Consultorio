@@ -1,0 +1,100 @@
+
+        .titulo-inicio {
+            background-color: #d292d4;
+            color: #ffffff;
+            padding: 10px;
+            border-radius: 5px;
+
+            background-image: url('Iconos/estudios.png');
+            background-repeat: no-repeat;
+            background-position: right center;
+        }
+
+        body {
+            background-image: url('Imagenes/fondo2.jpg');
+            background-size: cover; 
+            background-repeat: no-repeat; 
+            background-attachment: fixed; 
+
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        .container2 {
+            background-color: white; 
+            padding: 20px; 
+            border-radius: 10px; 
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); 
+            margin-left: 100px; 
+            margin-right: 100px;
+        }
+
+        .table th,
+        .table td {
+            vertical-align: middle;
+            white-space: nowrap;
+        }
+
+        .table thead th {
+            background-color: #da85da ;
+            color: #ffffff;
+            border-color: #ac76a4 ;
+        }
+
+        .table-bordered th,
+        .table-bordered td {
+            border: 1px solid #dee2e6;
+        }
+
+        .table-bordered thead th,
+        .table-bordered thead td {
+            border-bottom-width: 2px;
+        }
+
+        .btn-primary {
+            background-color: #a4abe9;
+            border-color: #a4b4e9;
+        }
+
+        .btn-primary:hover {
+            background-color: #93dfe9;
+            border-color: #66ccb6;
+        }
+
+        .btn-danger {
+            background-color: #8cffd9;
+            border-color: #8cffd3;
+        }
+
+        .btn-danger:hover {
+            background-color: #d3f398;
+            border-color: #d6ce83;
+        }
+
+        .btn-success {
+            background-color: #a0c4ff ;
+            border-color: #a0c4ff  ;
+        }
+        .btn-success:hover {
+            background-color: #a0c4ff  ;
+            border-color: #a0c4ff ;
+        }
+        
+
+        .bg-custom {
+            background-color: #84b6f4;
+        }
+
+        .espacio-final {
+            margin-bottom: 50px;
+        }
+
+        footer {
+            margin-top: auto;
+            background-color: #76a3db;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+        }
