@@ -21,8 +21,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
         header("location: ../index.html");// Redirigir a la página de bienvenida
     } else {
         // Credenciales incorrectas
-        $error = "SELECT * FROM Usuario WHERE Nombre_Usuario='$nombreUsuario' AND Contrasena='$contrasena'";
-        header("location: ../includes/error_sesion.php?error=$error"); // Redirigir de nuevo a la página de login con un mensaje de error
+        $error = "Nombre de usuario o contraseña incorrectos.";
+        header("location: ../includes/error_sesion.php?error=$error");
     }
 }
 
