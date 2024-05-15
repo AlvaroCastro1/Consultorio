@@ -8,19 +8,27 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
     $nombreUsuario = $_POST['nombre_usuario'];
     $contrasena = $_POST['contrasena'];
 
-    // Consulta SQL para verificar las credenciales del usuario
-    $sql = "SELECT * FROM Usuario WHERE Nombre_Usuario='$nombreUsuario' AND Contrasena='$contrasena'";
-    echo $sql;
+    // Consulta SQL para obtener la contraseña almacenada del usuario
+    $sql = "SELECT Contrasena FROM Usuario WHERE Nombre_Usuario='$nombreUsuario'";
     $result = $conn->query($sql);
 
-    // Verificar si se encontró un usuario con las credenciales proporcionadas
     if ($result->num_rows > 0) {
-        // Inicio de sesión exitoso
-        session_start();
-        $_SESSION['nombre_usuario'] = $nombreUsuario;
-        header("location: ../index.html");// Redirigir a la página de bienvenida
+        $row = $result->fetch_assoc();
+        $contrasena_hash = $row['Contrasena'];
+
+        // Verificar si la contraseña ingresada coincide con la contraseña almacenada
+        if (password_verify($contrasena, $contrasena_hash)) {
+            // Inicio de sesión exitoso
+            session_start();
+            $_SESSION['nombre_usuario'] = $nombreUsuario;
+            header("location: ../index.html");// Redirigir a la página de bienvenida
+        } else {
+            // Credenciales incorrectas
+            $error = "Nombre de usuario o contraseña incorrectos.";
+            header("location: ../includes/error_sesion.php?error=$error");
+        }
     } else {
-        // Credenciales incorrectas
+        // El usuario no existe
         $error = "Nombre de usuario o contraseña incorrectos.";
         header("location: ../includes/error_sesion.php?error=$error");
     }
