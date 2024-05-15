@@ -20,7 +20,8 @@
         {name: "Signos Vitales", uri: "../Signos/Signos.html"},
         {name: "Tratamiento", uri: "../Tratamiento/Tratamiento.html"},
         {name: "Procedimiento", uri: "../Procedimiento/procedimiento.html"},
-        {name: "Control de Crecimiento", uri: "../Control/control.html"}
+        {name: "Control de Crecimiento", uri: "../Control/control.html"},
+        {name: "Elementos", uri: "../Elementos/elementos.html"}
         ];
     
         createHeader(navItems);
@@ -46,7 +47,9 @@
                     </div>
                     <div class="modal-body">
                         <!-- Aquí van los campos para agregar un nuevo registro -->
+                        <input type="text" class="form-control mb-3" id="tipoEstudioInput" placeholder="Tipo">
                         <input type="text" class="form-control mb-3" id="nombreEstudioInput" placeholder="Nombre">
+                        <input type="text" class="form-control mb-3" id="descripcionEstudioInput" placeholder="Descripcion">
                         <input type="date" class="form-control mb-3" id="fechaInput">
                     </div>
                     <div class="modal-footer">
@@ -63,20 +66,24 @@
             <table class="table table-bordered table-hover" id="tabla-estudios">
                 <thead>
                     <tr>
+                        <th>Tipo</th>
                         <th>Nombre</th>
-                        <th>Resultado</th>
+                        <th>Descripción</th>
                         <th>Fecha</th>
+                        <th>Elementos</th>
                         <th>Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
                     
                     <tr>
-                        <td contenteditable="false">Ejemplo de estudio</td>
-                        <td>
-                             <button type="button" class="btn btn-primary" onclick="verResultado(this)">Ver Resultados</button>
-                            </td>
+                        <td contenteditable="false">Ejemplo Tipo</td>
+                        <td contenteditable="false">Ejemplo Nombre</td>
+                        <td contenteditable="false">Ejemplo Descripción</td>
                         <td contenteditable="false">2024-04-16</td>
+                        <td>
+                            <button type="button" class="btn btn-primary" onclick="verElementos(this)">Ver Elementos</button>
+                           </td>
                         <td>
                             <button type="button" class="btn btn-danger me-2" onclick="eliminarEstudio(this)">Eliminar</button>
                             <button type="button" class="btn btn-primary" onclick="modificarEstudio(this)">Modificar</button>
@@ -100,14 +107,16 @@
         }
 
         function agregarEstudio() {
+            const tipoEstudio = document.getElementById('tipoEstudioInput').value;
             const nombreEstudio = document.getElementById('nombreEstudioInput').value;
-            const resultado = document.getElementById('resultadoInput').value;
+            const descripcionEstudio = document.getElementById('descripcionEstudioInput').value;
             const fecha = formatDate(document.getElementById('fechaInput').value);
             const tabla = document.getElementById('tabla-estudios').getElementsByTagName('tbody')[0];
             const newRow = tabla.insertRow(tabla.rows.length);
             newRow.innerHTML = `
+                <td>${tipoEstudio}</td>
                 <td>${nombreEstudio}</td>
-                <td>${resultado}</td>
+                <td>${descripcionEstudio}</td>
                 <td>${fecha}</td>
                 
                 <td>
@@ -119,8 +128,9 @@
             // Cerrar el modal después de agregar el registro
             const modal = bootstrap.Modal.getInstance(document.getElementById('modalAgregar'));
             modal.hide();
+            document.getElementById('tipoEstudioInput').value = '';
             document.getElementById('nombreEstudioInput').value = '';
-            document.getElementById('resultadoInput').value = '';
+            document.getElementById('descripcionEstudioInput').value = '';
             document.getElementById('fechaInput').value = '';
           
         }
@@ -130,8 +140,8 @@
             console.log("Buscar registros con término:", input);
         }
 
-        function verResultado() {
-            window.location.href = "..//Resultados/resultados.html";
+        function verElementos() {
+            window.location.href = "..//Elementos/elementos.html";
         }
 
         function eliminarEstudio(button) {
