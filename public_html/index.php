@@ -19,7 +19,7 @@ session_start();
         <?php if (isset($_SESSION['nombre_usuario'])): ?>
             <h1 class="text-center mb-5 titulo">¡Bienvenido, <?php echo htmlspecialchars($_SESSION['nombre_usuario']); ?>!</h1>
             <div class="text-center">
-                <a href="../Login/logout.php" class="btn btn-danger">Cerrar Sesión</a>
+                <a id="cerrar" href="../Login/logout.php" class="btn btn-danger">Cerrar Sesión</a>
             </div>    
         <?php else: ?>
             <h1 class="text-center mb-5 titulo">¡Bienvenido!</h1>
