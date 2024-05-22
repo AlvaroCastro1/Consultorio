@@ -85,6 +85,7 @@ $conn->close();
                   <button type="submit" class="btn btn-primary btn-block">Iniciar Sesión</button>
                 </form>
               </div>
+              <a href="../Login/crear.php" class="btn btn-danger">Crear Usuario</a>
             </div>
           </div>
         </div>
