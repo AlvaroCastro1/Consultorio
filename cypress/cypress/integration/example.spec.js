@@ -1,10 +1,10 @@
-// @ts-check
-/* eslint-env mocha */
-describe('todos API', () => {
+describe('Visitar Google', () => {
+  it('Debería visitar la página principal de Google', () => {
+    // Visitar la página principal de Google
+    cy.visit('https://www.google.com/');
 
-  it('loads the initial items', () => {
-    getItems()
-      .should('deep.eq', initialItems)
-  })
+    // Verificar el título de la página
+    cy.title().should('eq', 'Google');
 
-})
+  });
+});
