@@ -18,6 +18,9 @@ session_start();
     <div class="container2 mt-5">
         <?php if (isset($_SESSION['nombre_usuario'])): ?>
             <h1 class="text-center mb-5 titulo">¡Bienvenido, <?php echo htmlspecialchars($_SESSION['nombre_usuario']); ?>!</h1>
+            <div class="text-center">
+                <a href="../Login/logout.php" class="btn btn-danger">Cerrar Sesión</a>
+            </div>    
         <?php else: ?>
             <h1 class="text-center mb-5 titulo">¡Bienvenido!</h1>
             <h3 class="text-center mb-5">Por favor, inicie sesión para continuar.</h3>
