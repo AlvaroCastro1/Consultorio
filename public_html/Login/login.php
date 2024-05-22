@@ -82,7 +82,7 @@ $conn->close();
                     <label for="password">Contraseña</label>
                     <input type="password" class="form-control" id="password" name="contrasena" placeholder="Ingrese su contraseña" required>
                   </div>
-                  <button type="submit" class="btn btn-primary btn-block">Iniciar Sesión</button>
+                  <button type="submit" class="btn btn-primary btn-block" id="iniciar">Iniciar Sesión</button>
                 </form>
               </div>
               <a href="../Login/crear.php" class="btn btn-danger">Crear Usuario</a>
