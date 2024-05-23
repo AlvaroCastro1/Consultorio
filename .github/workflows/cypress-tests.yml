@@ -6,19 +6,16 @@ on:
       - e2e
 
 jobs:
-  cypress-tests:
+  cypress-test:
+    name: Cypress
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
+    - name: Checkout del código
+      uses: actions/checkout@v2
 
-      - name: Setup Docker
-        env:
-          NODE_ENV: test
-          CI: true
-        run: |
-          docker run -it --rm \
-          -v ${{ github.workspace }}/cypress:/e2e/cypress \
-          -v ${{ github.workspace }}/cypress.config.js:/e2e/cypress.config.js \
-          -w /e2e cypress/included:latest run
+    - name: Ejecutar pruebas con Cypress
+      uses: cypress/included@latest
+      with:
+        working-directory: /github/workspace
+        command: run
