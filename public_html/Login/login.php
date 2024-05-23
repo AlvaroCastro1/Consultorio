@@ -80,9 +80,14 @@ $conn->close();
                   </div>
                   <div class="form-group">
                     <label for="password">Contraseña</label>
-                    <input type="password" class="form-control" id="password" name="contrasena" placeholder="Ingrese su contraseña" required>
+                    <div class="input-group">
+                      <input type="password" class="form-control" id="password" name="contrasena" placeholder="Ingrese su contraseña" required>
+                      <div class="input-group-append">
+                        <button type="button" class="btn btn-outline-secondary" onclick="togglePasswordVisibility('password')">Mostrar</button>
+                      </div>
+                    </div>
                   </div>
-                  <button type="submit" class="btn btn-primary btn-block">Iniciar Sesión</button>
+                  <button type="submit" class="btn btn-primary btn-block" id="iniciar">Iniciar Sesión</button>
                 </form>
               </div>
               <a href="../Login/crear.php" class="btn btn-danger">Crear Usuario</a>
@@ -94,5 +99,16 @@ $conn->close();
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+function togglePasswordVisibility(fieldId) {
+    var field = document.getElementById(fieldId);
+    var fieldType = field.getAttribute('type');
+    if (fieldType === 'password') {
+        field.setAttribute('type', 'text');
+    } else {
+        field.setAttribute('type', 'password');
+    }
+}
+</script>
 </body>
 </html>
