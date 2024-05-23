@@ -30,8 +30,8 @@ session_start();
         <?php endif; ?>
         <div class="espacio-final"></div>
         <div class="text-center">
-            <button class="btn" onclick="window.location.href='./Login/index.html'"><i class="fas fa-child"></i> Inicio</button>
             <button type="button" class="btn btn-secondary ms-3" onclick="window.location.href='./configuracion/index.html'">Configuración</button>
+            <button type="button" class="btn btn-secondary ms-3" onclick="window.location.href='./Login/update_password.php'">Cambiar contraseña</button>
         </div>
       </div>
       <div class="espacio-final"></div>
