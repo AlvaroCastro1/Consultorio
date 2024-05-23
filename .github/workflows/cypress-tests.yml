@@ -1,19 +1,14 @@
-name: Run Cypress Tests with Docker
-
-on:
-  push:
-    branches:
-      - e2e
-
+name: Cypress tests
+on: push
 jobs:
-  container-test-job:
-    runs-on: ubuntu-latest
-    container:
-      image: cypress/included:latest
-      volumes:
-        - ${{ github.workspace }}/cypress.config.js:/e2e/cypress.config.js
-        - ${{ github.workspace }}/cypress:/e2e/cypress
-      options: --cpus 1
+  cypress-run:
+    name: Cypress run
+    runs-on: ubuntu-22.04
     steps:
-      - name: Check for dockerenv file
-        run: (ls /.dockerenv && echo Found dockerenv) || (echo No dockerenv)
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Cypress run
+        uses: cypress-io/github-action@v6
+        with:
+          spec: cypress/e2e/spec1.cy.js
