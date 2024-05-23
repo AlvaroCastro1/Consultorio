@@ -1,3 +1,10 @@
+# How to execute a test e2e
+
+
 ```bash
-docker run -it -v $PWD:/e2e -w /e2e cypress/included:3.2.0
+docker run -it --rm \
+  -v $(pwd)/cypress:/e2e/cypress \
+  -w /e2e \
+  cypress/included:latest \
+  run
 ```
