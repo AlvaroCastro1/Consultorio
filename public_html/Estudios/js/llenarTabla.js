@@ -11,6 +11,7 @@ document.addEventListener("DOMContentLoaded", function() {
     xhr.onload = function() {
         if (xhr.status === 200) {
             const estudios = JSON.parse(xhr.responseText);
+            let rowIndex = 1; // Comienza en 1 para omitir la fila de encabezado
             estudios.forEach(estudio => {
                 const row = tabla.insertRow();
                 row.innerHTML = `
@@ -22,15 +23,17 @@ document.addEventListener("DOMContentLoaded", function() {
                         <button type="button" class="btn btn-primary" onclick="verElementos(this)">Ver Elementos</button>
                     </td>
                     <td>
-                        <button type="button" class="btn btn-danger me-2" onclick="eliminarEstudio(this)">Eliminar</button>
+                        <button type="button" class="btn btn-danger me-2" onclick="eliminarEstudio(${estudio.idEstudio}, ${estudio.idDetalleEstudio}, ${rowIndex})">Eliminar</button>
                         <button type="button" class="btn btn-primary" onclick="modificarEstudio(this)">Modificar</button>
                     </td>
                 `;
+                rowIndex++;
             });
         }
     };
     xhr.send();
 });
+
 
 function buscar() {
     const inputBusqueda = document.getElementById("input-busqueda").value;
@@ -47,6 +50,7 @@ function buscar() {
             }
 
             const estudios = JSON.parse(xhr.responseText);
+            let rowIndex = 1; // Comienza en 1 para omitir la fila de encabezado
             estudios.forEach(estudio => {
                 const row = tabla.insertRow();
                 row.innerHTML = `
@@ -58,12 +62,14 @@ function buscar() {
                         <button type="button" class="btn btn-primary" onclick="verElementos(this)">Ver Elementos</button>
                     </td>
                     <td>
-                        <button type="button" class="btn btn-danger me-2" onclick="eliminarEstudio(this)">Eliminar</button>
+                        <button type="button" class="btn btn-danger me-2" onclick="eliminarEstudio(${estudio.idEstudio}, ${estudio.idDetalleEstudio}, ${rowIndex})">Eliminar</button>
                         <button type="button" class="btn btn-primary" onclick="modificarEstudio(this)">Modificar</button>
                     </td>
                 `;
+                rowIndex++;
             });
         }
     };
     xhr.send();
 }
+

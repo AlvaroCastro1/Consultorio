@@ -6,8 +6,7 @@ $idExpediente = $_GET["idExpediente"];
 $busqueda = $_GET["busqueda"];
 
 // Consulta SQL para buscar los estudios por nombre o fecha
-$sql = "SELECT tipoEstudio, nombreEstudio, descripcionEstudio, fechaEstudio FROM Estudios e INNER JOIN detalleEstudios de ON e.idEstudios = de.idEstudiosDE WHERE de.idExpedienteDE = $idExpediente AND (e.tipoEstudio LIKE '%$busqueda%' OR e.nombreEstudio LIKE '%$busqueda%' OR de.fechaEstudio = '$busqueda')";
-
+$sql = "SELECT e.idEstudios as idEstudio, tipoEstudio, nombreEstudio, descripcionEstudio, fechaEstudio FROM Estudios e INNER JOIN detalleEstudios de ON e.idEstudios = de.idEstudiosDE WHERE de.idExpedienteDE = $idExpediente AND (e.tipoEstudio LIKE '%$busqueda%' OR de.fechaEstudio = '$busqueda')";
 $result = $conn->query($sql);
 
 $estudios = array();
