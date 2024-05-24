@@ -1,64 +1,88 @@
+let contadorElementos = 0;
 
 function generarCamposElementos() {
-    const cantidad = document.getElementById('cantidadElementosInput').value;
-    const container = document.getElementById('elementosContainer');
-    container.innerHTML = '';
-
-    for (let i = 0; i < cantidad; i++) {
-        const elementDiv = document.createElement('div');
-        elementDiv.className = 'elemento-item mb-3';
-        elementDiv.innerHTML = `
-            <label>Número de Elemento: ${i+1}</label>
-            <input type="text" class="form-control mb-1" placeholder="Nombre del Elemento" id="nombreElemento${i}">
-            <input type="text" class="form-control mb-1" placeholder="Rango" id="rangoElemento${i}">
-            <input type="number" class="form-control mb-1" placeholder="Valor" id="valorElemento${i}">
-            <input type="text" class="form-control mb-1" placeholder="Interpretación" id="interpretacionElemento${i}">
-        `;
-        container.appendChild(elementDiv);
+    let div = document.createElement('div');
+    div.id = 'Elemento' + (contadorElementos + 1);
+    div.innerHTML = `
+        <label>Número de Elemento: ${contadorElementos + 1}</label>
+        <input type="text" class="form-control mb-1" placeholder="Nombre del Elemento" id="nombreElemento${contadorElementos+1}">
+        <input type="text" class="form-control mb-1" placeholder="Rango" id="rangoElemento${contadorElementos+1}">
+        <input type="number" class="form-control mb-1" placeholder="Valor" id="valorElemento${contadorElementos+1}">
+        <input type="text" class="form-control mb-1" placeholder="Interpretación" id="interpretacionElemento${contadorElementos+1}">
+    `;
+    if (contadorElementos > 0) {
+        div.innerHTML += `<button type="button" class="btn btn-secondary mb-3" id="EliminarElemento${contadorElementos+1}" onclick="eliminarElemento(${contadorElementos+1})">Eliminar Elemento</button>`;
     }
+    document.querySelector('.modal-body').appendChild(div);
+    contadorElementos++;
+     // Mover el botón "Agregar Datos" al final del cuerpo del modal
+    let agregarDatosBtn = document.getElementById("AgregarElemento0");
+    document.querySelector('.modal-body').appendChild(agregarDatosBtn);
 }
 
-function agregarEstudio() {
-    const tipoEstudio = document.getElementById('tipoEstudioInput').value;
-    const nombreEstudio = document.getElementById('nombreEstudioInput').value;
-    const descripcionEstudio = document.getElementById('descripcionEstudioInput').value;
-    const fecha = document.getElementById('fechaInput').value;
-    const cantidadElementos = document.getElementById('cantidadElementosInput').value;
 
-    let elementos = [];
-    for (let i = 0; i < cantidadElementos; i++) {
-        let elemento = {
-            nombre: document.getElementById(`nombreElemento${i}`).value,
-            rango: document.getElementById(`rangoElemento${i}`).value,
-            valor: document.getElementById(`valorElemento${i}`).value,
-            interpretacion: document.getElementById(`interpretacionElemento${i}`).value
-        };
-        elementos.push(elemento);
+function reiniciarModal() {
+    // Obtén los elementos del modal por su id
+    var tipoEstudioInput = document.getElementById('tipoEstudioInput');
+    var nombreEstudioInput = document.getElementById('nombreEstudioInput');
+    var descripcionEstudioInput = document.getElementById('descripcionEstudioInput');
+    var fechaInput = document.getElementById('fechaInput');
+
+    // Reinicia los valores de los elementos
+    tipoEstudioInput.value = '';
+    nombreEstudioInput.value = '';
+    descripcionEstudioInput.value = '';
+    fechaInput.value = '';
+
+    // Elimina los campos inyectados
+    var modalBody = document.querySelector('.modal-body');
+    while (modalBody.firstChild) {
+        modalBody.removeChild(modalBody.firstChild);
     }
 
-    const data = {
-        tipoEstudio: tipoEstudio,
-        nombreEstudio: nombreEstudio,
-        descripcionEstudio: descripcionEstudio,
-        fecha: fecha,
-        elementos: elementos
-    };
+    // Agrega los campos originales al cuerpo del modal
+    modalBody.innerHTML = `
+        <input type="text" class="form-control mb-3" id="tipoEstudioInput" placeholder="Tipo">
+        <input type="text" class="form-control mb-3" id="nombreEstudioInput" placeholder="Nombre">
+        <input type="text" class="form-control mb-3" id="descripcionEstudioInput" placeholder="Descripción">
+        <input type="date" class="form-control mb-3" id="fechaInput">
+        <button type="button" class="btn btn-secondary mb-3" id="AgregarElemento0" onclick="generarCamposElementos()">Agregar Elemento</button>
+    `;
 
-    fetch('ruta/a/tu/script.php', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data)
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.success) {
-            alert('Estudio agregado con éxito');
-            location.reload(); // Recargar la página para reflejar los cambios
-        } else {
-            alert('Error al agregar estudio');
-        }
-    })
-    .catch(error => console.error('Error:', error));
+    // Reinicia el contador de elementos
+    contadorElementos = 0;
+
+    // Cierra el modal
+    var modalAgregar = new bootstrap.Modal(document.getElementById('modalAgregar'));
+    modalAgregar.hide();
+    generarCamposElementos()
 }
+
+function eliminarElemento(indice) {
+    // Elimina el elemento
+    var elemento = document.getElementById('Elemento' + indice);
+    elemento.parentNode.removeChild(elemento);
+
+    // Actualiza los índices de los demás elementos
+    for (var i = indice + 1; i <= contadorElementos; i++) {
+        var elementoActual = document.getElementById('Elemento' + i);
+        elementoActual.id = 'Elemento' + (i - 1);
+        elementoActual.querySelector('label').textContent = 'Número de Elemento: ' + (i-1);
+        elementoActual.querySelector('#nombreElemento' + i).id = 'nombreElemento' + (i - 1);
+        elementoActual.querySelector('#rangoElemento' + i).id = 'rangoElemento' + (i - 1);
+        elementoActual.querySelector('#valorElemento' + i).id = 'valorElemento' + (i - 1);
+        elementoActual.querySelector('#interpretacionElemento' + i).id = 'interpretacionElemento' + (i - 1);
+        elementoActual.querySelector('#EliminarElemento' + i).id = 'EliminarElemento' + (i - 1);
+        elementoActual.querySelector('#EliminarElemento' + (i - 1)).setAttribute('onclick', 'eliminarElemento(' + (i - 1) + ')');
+    }
+
+    // Decrementa el contador de elementos
+    contadorElementos--;
+}
+
+
+document.getElementById("btnAgregar").addEventListener("click", function() {
+    reiniciarModal()
+});
+
+document.getElementById("AgregarElemento0").addEventListener("click", generarCamposElementos);

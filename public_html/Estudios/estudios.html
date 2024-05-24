@@ -38,18 +38,16 @@
 
         <button type="button" class="btn btn-primary mb-3" id="btnAgregar" data-bs-toggle="modal" data-bs-target="#modalAgregar">Agregar</button>
         <script>
+            
             document.getElementById("btnAgregar").addEventListener("click", function() {
-                document.getElementById("tipoEstudioInput").value = "";
-                document.getElementById("nombreEstudioInput").value = "";
-                document.getElementById("descripcionEstudioInput").value = "";
-                document.getElementById("fechaInput").value = "";
-                document.getElementById("cantidadElementosInput").value = "0";
-                generarCamposElementos()
-                document.getElementById("cantidadElementosInput").value = "1";
-
+                reiniciarModal();
+                
             
             });
+            
         </script>
+
+        
         <!--Modal-->
         <div class="modal fade" id="modalAgregar" tabindex="-1" aria-labelledby="modalAgregarLabel" aria-hidden="true">
             <div class="modal-dialog">
@@ -63,14 +61,13 @@
                         <input type="text" class="form-control mb-3" id="nombreEstudioInput" placeholder="Nombre">
                         <input type="text" class="form-control mb-3" id="descripcionEstudioInput" placeholder="Descripción">
                         <input type="date" class="form-control mb-3" id="fechaInput">
-                        <input type="number" class="form-control mb-3" id="cantidadElementosInput" placeholder="Cantidad de elementos" value="1" min="1">
-                        <button type="button" class="btn btn-secondary mb-3" onclick="generarCamposElementos()">Generar Elementos</button>
-                        <div id="elementosContainer"></div>
+                        <button type="button" class="btn btn-secondary mb-3" id="AgregarElemento0" onclick="generarCamposElementos()">Agregar Elemento</button>
+                        
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-primary" onclick="verResultado()">Agregar Resultados</button>
+                        
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                        <button type="button" class="btn btn-primary" onclick="agregarEstudio()">Aceptar</button>
+                        <button type="button" class="btn btn-primary" id="GuardarEstudio"onclick="agregarEstudio()">Guardar Todo</button>
                     </div>
                 </div>
             </div>
