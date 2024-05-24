@@ -58,10 +58,8 @@
             <!-- Campo para el sexo -->
             <div class="mb-3">
                 <label para="sexo" class="form-label">Sexo</label>
-                <select class="form-select" id="sexo" required>
-                    <option value="M" selected>Masculino</option>
-                    <option value="F">Femenino</option>
-                </select>
+                <input type="text" class="form-control" id="sexo" value="García" required>
+
             </div>
 
             <!-- Campo para el teléfono -->
@@ -111,7 +109,7 @@
             <!-- Número interior -->
             <div class="mb-3">
                 <label for="numeroInt" class="form-label">Número Interior</label>
-                <input type="number" class="form-control" id="numeroInt">
+                <input type="double" class="form-control" id="numeroInt">
             </div>
 
             <!-- Código Postal -->
@@ -132,6 +130,7 @@
                 <button type="submit" class="btn btn-primary">Guardar Cambios</button>
                 <button type="button" class="btn btn-secondary ms-3" onclick="cancelar()">Cancelar</button>
             </div>
+            
         </form>
     </div>
     <div class="espacio-final"></div>
@@ -144,10 +143,156 @@
 
 
     <!-- Scripts para manejar el formulario -->
+    
     <script>
-        function actualizarPaciente(event) {
-            alert("Se debio actualizar :)")
+
+    function actualizarPaciente(event) {
+        // Prevenir el envío del formulario por defecto
+        event.preventDefault();
+
+        // Obtener los datos de sessionStorage
+        const datos = JSON.parse(sessionStorage.getItem('datosPaciente'));
+
+        if (datos) {
+            const idPaciente = datos.idPacienteE;
+            // Obtener los valores actualizados de cada campo del formulario
+            const nombre = document.getElementById('nombre').value;
+            const apellidoPaterno = document.getElementById('apellido-paterno').value;
+            const apellidoMaterno = document.getElementById('apellido-materno').value;
+            const fechaNacimiento = document.getElementById('fecha-nacimiento').value;
+            const sexo = document.getElementById('sexo').value;
+            const telefono = document.getElementById('telefono').value;
+            const email = document.getElementById('email').value;
+            const pais = document.getElementById('pais').value;
+            const estado = document.getElementById('estado').value;
+            const municipio = document.getElementById('municipio').value;
+            const localidad = document.getElementById('localidad').value;
+            const numero_ext = document.getElementById('numeroExt').value;
+            const numero_int = document.getElementById('numeroInt').value;
+            const codigoPostal = document.getElementById('cp').value;
+            const tipoSangre = document.getElementById('tipo-sangre').value;
+
+            // Crear un objeto FormData para enviar los datos al servidor
+            const formData = new FormData();
+            formData.append('idPaciente', idPaciente);
+            formData.append('nombre', nombre);
+            formData.append('apellidoPaterno', apellidoPaterno);
+            formData.append('apellidoMaterno', apellidoMaterno);
+            formData.append('fechaNacimiento', fechaNacimiento);
+            formData.append('sexo', sexo);
+            formData.append('telefono', telefono);
+            formData.append('email', email);
+            formData.append('pais', pais);
+            formData.append('estado', estado);
+            formData.append('municipio', municipio);
+            formData.append('localidad', localidad);
+            formData.append('numero_ext', numero_ext);
+            formData.append('numero_int', numero_int);
+            formData.append('codigoPostal', codigoPostal);
+            formData.append('tipoSangre', tipoSangre);
+
+            // Enviar los datos al archivo PHP que maneja la actualización en la base de datos
+            fetch('../Paciente/modificar.php', {
+                method: 'POST',
+                body: formData,
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // Mostrar mensaje de éxito al usuario
+                    alert(data.message);
+                    // O realizar alguna otra acción, como redirigir a otra página
+                } else {
+                    // Mostrar mensaje de error al usuario
+                    alert(data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error); // Imprimir error en la consola
+            });
+        } else {
+            console.log('No se encontraron datos en sessionStorage');
         }
+    }
+
+
+
+
+
+        buscarSolo1()
+        function buscarSolo1() {
+
+            // Obtener los datos de sessionStorage
+            const datos = JSON.parse(sessionStorage.getItem('datosPaciente'));
+
+            if (datos) {
+                const idPaciente = datos.idPacienteE;
+        
+
+                // Usar los datos como necesites
+                console.log('se obtuvo el dato idpaciente = :', idPaciente);
+
+                // Borrar los datos de sessionStorage después de usarlos
+                //sessionStorage.removeItem('datosPaciente');
+                console.log("La ID que quiero buscar es: ", idPaciente);
+
+                const formData = new FormData();
+                formData.append('idPaciente', idPaciente); // Añadir el ID del paciente al formulario
+
+                fetch('../Paciente/buscar.php', {
+                    method: 'POST',
+                    body: formData,
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        const paciente = data.data; // Guardar los datos del paciente en una variable
+                          // Asignar los datos obtenidos a cada campo del formulario
+                        document.getElementById('nombre').value = paciente.nombre;
+                        document.getElementById('apellido-paterno').value = paciente.apellidoPaterno;
+                        document.getElementById('apellido-materno').value = paciente.apellidoMaterno;
+                        document.getElementById('fecha-nacimiento').value = paciente.fechaNacimiento;
+                        document.getElementById('sexo').value = paciente.sexo;
+                        document.getElementById('telefono').value = paciente.telefono;
+                        document.getElementById('email').value = paciente.email;
+                        document.getElementById('pais').value = paciente.pais;
+                        document.getElementById('estado').value = paciente.estado;
+                        document.getElementById('municipio').value = paciente.municipio;
+                        document.getElementById('localidad').value = paciente.localidad;
+                        document.getElementById('numeroExt').value = paciente.numero_ext;
+                        document.getElementById('numeroInt').value = paciente.numero_int;
+                        document.getElementById('cp').value = paciente.codigoPostal;
+                        document.getElementById('tipo-sangre').value = paciente.tipoSangre;
+                        /* Guardar cada dato del paciente en una variable individual
+                        const nombre = paciente.nombre;                         const apellidoPaterno = paciente.apellidoPaterno;
+                        const apellidoMaterno = paciente.apellidoMaterno;                        const fechaNacimiento = paciente.fechaNacimiento;
+                        const sexo = paciente.sexo;                        const telefono = paciente.telefono;
+                        const email = paciente.email;                        const pais = paciente.pais;
+                        const estado = paciente.estado;                        const municipio = paciente.municipio;
+                        const localidad = paciente.localidad;                        const numero_ext = paciente.numero_ext;
+                        const numero_int = paciente.numero_int;                        const codigoPostal = paciente.codigoPostal;
+                        const tipoSangre = paciente.tipoSangre;                        // Imprimir los datos en la consola
+                        console.log("Nombre:", nombre);                        console.log("Apellido Paterno:", apellidoPaterno);
+                        console.log("Apellido Materno:", apellidoMaterno);                        console.log("Fecha de Nacimiento:", fechaNacimiento);
+                        console.log("Sexo:", sexo);                        console.log("Teléfono:", telefono);
+                        console.log("Email:", email);                        console.log("País:", pais);
+                        console.log("Estado:", estado);                        console.log("Municipio:", municipio);
+                        console.log("Localidad:", localidad);                        console.log("Número exterior:", numero_ext);
+                        console.log("Número interior:", numero_int);                        console.log("Código Postal:", codigoPostal);
+                        console.log("Tipo de Sangre:", tipoSangre);                        */
+                    } else {
+                        console.error(data.message); // Imprimir mensaje de error en la consola
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error); // Imprimir error en la consola
+                });
+
+            } else {
+                console.log('No se encontraron datos en sessionStorage');
+            }
+        }
+
 
         function cancelar() {
             window.location.href = "index.html";  // Redirige a la página de inicio
@@ -156,6 +301,7 @@
 
     <!-- Bootstrap -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    
 </body>
 
 </html>
