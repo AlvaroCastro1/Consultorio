@@ -10,6 +10,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $descripcion = $_POST['descripcion'];
     $fecha = $_POST['fecha'];
     $elementos = $_POST['elementos'];
+    $idExpedienteDE = $_POST['idExpediente'];
 
     // Inserta el estudio en la tabla Estudios
     $stmt = $conn->prepare('INSERT INTO Estudios (nombreEstudio, tipoEstudio, descripcionEstudio) VALUES (?, ?, ?)');
@@ -20,7 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Inserta el detalle del estudio en la tabla detalleEstudios
     $stmt = $conn->prepare('INSERT INTO detalleEstudios (idEstudiosDE, idExpedienteDE, fechaEstudio) VALUES (?, ?, ?)');
-    $idExpedienteDE = 1; // Reemplaza con el ID del expediente real
+    
     $stmt->bind_param('iis', $idEstudio, $idExpedienteDE, $fecha);
     $stmt->execute();
     $idDetalleEstudio = $stmt->insert_id;

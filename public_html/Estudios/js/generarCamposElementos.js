@@ -99,7 +99,8 @@ function agregarEstudio() {
         nombre: nombreEstudioInput.value,
         descripcion: descripcionEstudioInput.value,
         fecha: fechaInput.value,
-        elementos: []
+        elementos: [],
+        idExpediente: 1
     };
 
     // Recopila los datos de los elementos
@@ -123,7 +124,7 @@ function agregarEstudio() {
         };
         data.elementos.push(elemento);
     }
-
+    console.log(data)
     // Realiza la solicitud AJAX para guardar los datos en la base de datos
     $.ajax({
         url: 'AgregarEstudio.php',
