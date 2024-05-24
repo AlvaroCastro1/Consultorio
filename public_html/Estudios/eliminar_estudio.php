@@ -18,7 +18,6 @@ if ($conn->query($sqlEliminarEstudio)) {
     echo "Error al eliminar el estudio: " . $conn->error;
 }
 
-
 // Cerrar la conexión
 $conn->close();
 ?>
