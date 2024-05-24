@@ -80,9 +80,70 @@ function eliminarElemento(indice) {
     contadorElementos--;
 }
 
+function agregarEstudio() {
+    // Obtén los elementos del modal por su id
+    var tipoEstudioInput = document.getElementById('tipoEstudioInput');
+    var nombreEstudioInput = document.getElementById('nombreEstudioInput');
+    var descripcionEstudioInput = document.getElementById('descripcionEstudioInput');
+    var fechaInput = document.getElementById('fechaInput');
 
-document.getElementById("btnAgregar").addEventListener("click", function() {
-    reiniciarModal()
-});
+    // Comprueba que todos los campos estén llenos
+    if (!tipoEstudioInput.value || !nombreEstudioInput.value || !descripcionEstudioInput.value || !fechaInput.value) {
+        alert('Por favor, llena todos los campos.');
+        return;
+    }
 
-document.getElementById("AgregarElemento0").addEventListener("click", generarCamposElementos);
+    // Recopila los datos del formulario
+    var data = {
+        tipo: tipoEstudioInput.value,
+        nombre: nombreEstudioInput.value,
+        descripcion: descripcionEstudioInput.value,
+        fecha: fechaInput.value,
+        elementos: []
+    };
+
+    // Recopila los datos de los elementos
+    for (var i = 1; i <= contadorElementos; i++) {
+        var nombreElemento = document.getElementById('nombreElemento' + i);
+        var rangoElemento = document.getElementById('rangoElemento' + i);
+        var valorElemento = document.getElementById('valorElemento' + i);
+        var interpretacionElemento = document.getElementById('interpretacionElemento' + i);
+
+        // Comprueba que todos los campos del elemento estén llenos
+        if (!nombreElemento.value || !rangoElemento.value || !valorElemento.value || !interpretacionElemento.value) {
+            alert('Por favor, llena todos los campos del elemento ' + i + '.');
+            return;
+        }
+
+        var elemento = {
+            nombre: nombreElemento.value,
+            rango: rangoElemento.value,
+            valor: valorElemento.value,
+            interpretacion: interpretacionElemento.value
+        };
+        data.elementos.push(elemento);
+    }
+
+    // Realiza la solicitud AJAX para guardar los datos en la base de datos
+    $.ajax({
+        url: 'AgregarEstudio.php',
+        type: 'POST',
+        data: data,
+        success: function(response) {
+            if(response.message === 'Estudio guardado exitosamente.') {
+                alert('Estudio guardado exitosamente.');
+                reiniciarModal();
+                location.reload();
+            } else {
+                console.error('Error al guardar el estudio:', response.message);
+                alert('Ocurrió un error al guardar el estudio.');
+            }
+        },
+        error: function(xhr, status, error) {
+            console.error('Error al guardar el estudio:', xhr.responseText);
+            alert('Ocurrió un error al guardar el estudio.');
+        }
+    });
+    
+}
+
