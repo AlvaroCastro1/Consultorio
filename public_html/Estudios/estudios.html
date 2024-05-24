@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="../assets/css/EstudiosStyles.css">
     <link rel="stylesheet" href="../assets/css/barraNav.css">
     <script src="../assets/js/header.js"></script>
+    <script src="js/generarCamposElementos.js"></script>
    
 </head>
 <body>
@@ -35,8 +36,20 @@
             <button class="btn btn-outline-secondary" type="button" onclick="buscar()">Buscar</button>
         </div>
 
-        <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#modalAgregar">Agregar</button>
+        <button type="button" class="btn btn-primary mb-3" id="btnAgregar" data-bs-toggle="modal" data-bs-target="#modalAgregar">Agregar</button>
+        <script>
+            document.getElementById("btnAgregar").addEventListener("click", function() {
+                document.getElementById("tipoEstudioInput").value = "";
+                document.getElementById("nombreEstudioInput").value = "";
+                document.getElementById("descripcionEstudioInput").value = "";
+                document.getElementById("fechaInput").value = "";
+                document.getElementById("cantidadElementosInput").value = "0";
+                generarCamposElementos()
+                document.getElementById("cantidadElementosInput").value = "1";
 
+            
+            });
+        </script>
         <!--Modal-->
         <div class="modal fade" id="modalAgregar" tabindex="-1" aria-labelledby="modalAgregarLabel" aria-hidden="true">
             <div class="modal-dialog">
@@ -46,11 +59,13 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <!-- Aquí van los campos para agregar un nuevo registro -->
                         <input type="text" class="form-control mb-3" id="tipoEstudioInput" placeholder="Tipo">
                         <input type="text" class="form-control mb-3" id="nombreEstudioInput" placeholder="Nombre">
-                        <input type="text" class="form-control mb-3" id="descripcionEstudioInput" placeholder="Descripcion">
+                        <input type="text" class="form-control mb-3" id="descripcionEstudioInput" placeholder="Descripción">
                         <input type="date" class="form-control mb-3" id="fechaInput">
+                        <input type="number" class="form-control mb-3" id="cantidadElementosInput" placeholder="Cantidad de elementos" value="1" min="1">
+                        <button type="button" class="btn btn-secondary mb-3" onclick="generarCamposElementos()">Generar Elementos</button>
+                        <div id="elementosContainer"></div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-primary" onclick="verResultado()">Agregar Resultados</button>
@@ -60,7 +75,8 @@
                 </div>
             </div>
         </div>
-
+        
+        
 
         <div class="table-responsive">
             <table class="table table-bordered table-hover" id="tabla-estudios">
@@ -75,7 +91,6 @@
                     </tr>
                 </thead>
                 <tbody>
-                    
                     <tr>
                         <td contenteditable="false">Ejemplo Tipo</td>
                         <td contenteditable="false">Ejemplo Nombre</td>
@@ -89,98 +104,18 @@
                             <button type="button" class="btn btn-primary" onclick="modificarEstudio(this)">Modificar</button>
                         </td>
                     </tr>
-                    
                 </tbody>
             </table>
         </div>
         <div class="espacio-final"></div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
-        function formatDate(dateString) {
-            const date = new Date(dateString);
-            const year = date.getFullYear();
-            const month = (date.getMonth() + 1).toString().padStart(2, '0');
-            const day = date.getDate().toString().padStart(2, '0');
-            return `${year}-${month}-${day}`;
-        }
-
-        function agregarEstudio() {
-            const tipoEstudio = document.getElementById('tipoEstudioInput').value;
-            const nombreEstudio = document.getElementById('nombreEstudioInput').value;
-            const descripcionEstudio = document.getElementById('descripcionEstudioInput').value;
-            const fecha = formatDate(document.getElementById('fechaInput').value);
-            const tabla = document.getElementById('tabla-estudios').getElementsByTagName('tbody')[0];
-            const newRow = tabla.insertRow(tabla.rows.length);
-            newRow.innerHTML = `
-                <td>${tipoEstudio}</td>
-                <td>${nombreEstudio}</td>
-                <td>${descripcionEstudio}</td>
-                <td>${fecha}</td>
-                
-                <td>
-                    <button type="button" class="btn btn-danger me-2" onclick="eliminarEstudio(this)">Eliminar</button>
-                    <button type="button" class="btn btn-primary" onclick="modificarEstudio(this)">Modificar</button>
-                </td>
-            `;
-
-            // Cerrar el modal después de agregar el registro
-            const modal = bootstrap.Modal.getInstance(document.getElementById('modalAgregar'));
-            modal.hide();
-            document.getElementById('tipoEstudioInput').value = '';
-            document.getElementById('nombreEstudioInput').value = '';
-            document.getElementById('descripcionEstudioInput').value = '';
-            document.getElementById('fechaInput').value = '';
-          
-        }
-
-        function buscar() {
-            const input = document.getElementById('input-busqueda').value;
-            console.log("Buscar registros con término:", input);
-        }
-
-        function verElementos() {
-            window.location.href = "..//Elementos/elementos.html";
-        }
-
-        function eliminarEstudio(button) {
-            var fila = button.closest('tr');
-            fila.remove();
-            console.log("Eliminar estudio");
-        }
-
-        function modificarEstudio(button) {
-            const row = button.closest('tr');
-            const cells = row.querySelectorAll('td');
-            cells.forEach(cell => {
-                cell.contentEditable = true;
-            });
-            
-            button.textContent = "Guardar";
-            button.classList.remove('btn-primary');
-            button.classList.add('btn-success');
-            button.setAttribute('onclick', 'guardarEstudio(this)');
-        }
-
-        function guardarEstudio(button) {
-            const row = button.closest('tr');
-            const cells = row.querySelectorAll('td');
-            cells.forEach(cell => {
-                cell.contentEditable = false;
-            });
-            button.textContent = "Modificar";
-            button.classList.remove('btn-success');
-            button.classList.add('btn-primary');
-            button.setAttribute('onclick', 'modificarEstudio(this)');
-            console.log("Guardar estudio");
-        }
-
-    </script>
     <footer>
         <div class="container3">
             <p>Pie de página</p>
         </div>
     </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
