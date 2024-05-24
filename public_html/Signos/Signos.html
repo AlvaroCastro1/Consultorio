@@ -127,6 +127,52 @@
 
             var fechaFormato = formatoFecha();
 
+            // Validar que los campos no estén vacíos
+            if (!temperatura) {
+                alert('Por favor, ingresa la temperatura.');
+                return; // Detener el proceso si el campo está vacío
+            }
+            if (!frecuenciaR) {
+                alert('Por favor, ingresa la frecuencia respiratoria.');
+                return; // Detener el proceso si el campo está vacío
+            }
+            if (!frecuenciaC) {
+                alert('Por favor, ingresa la recuencia cardiaca.');
+                return; // Detener el proceso si el campo está vacío
+            }
+            if (!oxigenacion) {
+                alert('Por favor, ingresa la oxigenacion.');
+                return; // Detener el proceso si el campo está vacío
+            }
+            if (!presionArterial) {
+                alert('Por favor, ingresa la presion arterial.');
+                return; // Detener el proceso si el campo está vacío
+            }
+            if (!edoHidratacion) {
+                alert('Por favor, ingresa el estado de hidratacion.');
+                return; // Detener el proceso si el campo está vacío
+            }
+            if (!edoConciencia) {
+                alert('Por favor, ingresa el estado de conciencia.');
+                return; // Detener el proceso si el campo está vacío
+            }
+            if (!edoNeurologico) {
+                alert('Por favor, ingresa el estado neurologico.');
+                return; // Detener el proceso si el campo está vacío
+            }
+            if (!fechaSignos) {
+                alert('Por favor, ingresa la fecha del registro de los signos.');
+                return; // Detener el proceso si el campo está vacío
+            }
+
+            // Validar que los campos no estén vacíos
+            if (temperatura < 35.0 || temperatura > 42.0) {
+                alert('Por favor, ingresa un valor de temperatura adecuado.');
+                return; // Detener el proceso si el campo está vacío
+            }
+
+
+
             // Realizar la solicitud AJAX para guardar los datos
             fetch('../Signos/guardar.php', {
                 method: 'POST',
@@ -178,7 +224,7 @@
 
             fetch(url, {
                 method: "POST",
-                boby: formaData
+                body: formaData
             }).then(Response => Response.json())
             .then(data => {
                 content.innerHTML = data
@@ -252,6 +298,44 @@
             const edoConciencia = cells[7].innerText;
             const edoNeurologico = cells[8].innerText;
             const fechaSignos = cells[9].innerText;
+
+
+            if (!temperatura) {
+                alert('Por favor, ingresa la temperatura.');
+                return; // Detener el proceso si el campo está vacío
+            }
+            if (!frecuenciaR) {
+                alert('Por favor, ingresa la frecuencia respiratoria.');
+                return; // Detener el proceso si el campo está vacío
+            }
+            if (!frecuenciaC) {
+                alert('Por favor, ingresa la recuencia cardiaca.');
+                return; // Detener el proceso si el campo está vacío
+            }
+            if (!oxigenacion) {
+                alert('Por favor, ingresa la oxigenacion.');
+                return; // Detener el proceso si el campo está vacío
+            }
+            if (!presionArterial) {
+                alert('Por favor, ingresa la presion arterial.');
+                return; // Detener el proceso si el campo está vacío
+            }
+            if (!edoHidratacion) {
+                alert('Por favor, ingresa el estado de hidratacion.');
+                return; // Detener el proceso si el campo está vacío
+            }
+            if (!edoConciencia) {
+                alert('Por favor, ingresa el estado de conciencia.');
+                return; // Detener el proceso si el campo está vacío
+            }
+            if (!edoNeurologico) {
+                alert('Por favor, ingresa el estado neurologico.');
+                return; // Detener el proceso si el campo está vacío
+            }
+            if (!fechaSignos) {
+                alert('Por favor, ingresa la fecha del registro de los signos.');
+                return; // Detener el proceso si el campo está vacío
+            }
 
 
             console.log("Dato 1:", idSignos);

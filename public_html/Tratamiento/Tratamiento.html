@@ -107,6 +107,25 @@
             const fechaTratamiento = document.getElementById('fechaTratamientoInput').value;
             var fechaFormato = formatoFecha();
 
+            // Validar que los campos no estén vacíos
+            if (!descripcionTratamiento) {
+                alert('Por favor, ingresa la descripción del tratamiento.');
+                return; // Detener el proceso si el campo está vacío
+            }
+            if (!duracion) {
+                alert('Por favor, ingresa la duración.');
+                return; // Detener el proceso si el campo está vacío
+            }
+            if (!diagnostico) {
+                alert('Por favor, ingresa el diagnóstico.');
+                return; // Detener el proceso si el campo está vacío
+            }
+            if (!fechaTratamiento) {
+                alert('Por favor, ingresa la fecha del tratamiento.');
+                return; // Detener el proceso si el campo está vacío
+            }
+
+
             // Realizar la solicitud AJAX para guardar los datos
             fetch('../Tratamiento/guardar.php', {
                 method: 'POST',
@@ -153,7 +172,7 @@
 
             fetch(url, {
                 method: "POST",
-                boby: formaData
+                body: formaData
             }).then(Response => Response.json())
             .then(data => {
                 content.innerHTML = data
