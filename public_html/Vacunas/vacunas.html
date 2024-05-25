@@ -200,7 +200,7 @@
 
             fetch(url, {
                 method: "POST",
-                boby: formaData
+                body: formaData
             }).then(Response => Response.json())
             .then(data => {
                 content.innerHTML = data
