@@ -12,7 +12,19 @@
     <script src="../assets/js/header.js"></script>
 </head>
 <body>
-
+    <div id="alerta">
+        <div aria-live="polite" aria-atomic="true" class="bg-body-secondary position-relative bd-example-toasts rounded-3">
+            <div class="toast-container p-3 top-0 end-0" id="toastPlacement">
+                <div class="toast align-items-center border-0" role="alert" aria-live="assertive" aria-atomic="true">
+                    <div class="d-flex">
+                      <div class="toast-body">
+                      </div>
+                      <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+                    </div>
+                  </div>
+            </div>
+        </div>              
+    </div>
     <script>
         const navItems = [
             {name: "Vacunas", uri: "../Vacunas/vacunas.html"},
@@ -34,7 +46,7 @@
         <h1 class="titulo-control mb-4">Control de crecimiento</h1>
         
         <div class="input-group mb-3">
-            <input type="text" class="form-control" placeholder="Buscar por Fecha" id="input-busqueda">
+            <input type="date" class="form-control"  id="input-busqueda">
             <button class="btn btn-outline-secondary" type="button" onclick="buscar()">Buscar</button>
         </div>  
         
@@ -53,19 +65,8 @@
                         <th>Acciones</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr>
-                        <td contenteditable="false">1.20</td>
-                        <td contenteditable="false">25</td>
-                        <td contenteditable="false">30</td>
-                        <td contenteditable="false">11.5</td>
-                        <td contenteditable="false">Sobrepeso</td>
-                        <td><input type="date" class="form-control" value="2024-04-15" readonly></td>
-                        <td>
-                            <button type="button" class="btn btn-danger me-2" onclick="eliminarFila(this)">Eliminar</button>
-                            <button type="button" class="btn btn-primary" onclick="modificarControl(this)">Modificar</button>
-                        </td>
-                    </tr>
+                <tbody id="tabla-estudios-body">
+                    
                 </tbody>
             </table>
         </div>
@@ -80,16 +81,21 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <input type="number" class="form-control mb-3" id="alturaInput" placeholder="Altura">
-                    <input type="number" class="form-control mb-3" id="pesoInput" placeholder="Peso">
-                    <input type="number" class="form-control mb-3" id="perimetroCInput" placeholder="Perimetro Cefálico">
-                    <input type="number" class="form-control mb-3" id="imcInput" placeholder="IMC">
-                    <input type="text" class="form-control mb-3" id="evaluacionInput" placeholder="Evaluación">
-                    <input type="date" class="form-control mb-3" id="fechaControlInput" placeholder="Fecha de Registro">
+                    <form method="POST" action="../Control/insertarControl.php" id="registroEstudio">
+                        <input type="number" class="form-control mb-3" id="altura" name="altura" placeholder="Altura" min="40" step="0.01" >
+                        <input type="number" class="form-control mb-3" id="peso" name="peso" placeholder="Peso" min="1" step="0.001">
+                        <input type="number" class="form-control mb-3" id="circunferenciaDelCraneo" name="circunferenciaDelCraneo" placeholder="Perimetro Cefálico" min="20" step="0.01">
+                        <input type="number" class="form-control mb-3" id="indiceMasaCorporal" name="indiceMasaCorporal" placeholder="IMC" min="18" step="0.1">
+                        <input type="date" class="form-control mb-3" id="fechaControl" name="fechaControl" placeholder="Fecha de Registro">
+                        <textarea class="form-control mb-3" id="evaluacion" name="evaluacion" placeholder="Evaluación" maxlength="30"></textarea>
+                        
+                    </form>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-danger me-2" data-bs-dismiss="modal">Cerrar</button>
-                    <button type="button" class="btn btn-primary" onclick="agregarDesdeModal()">Aceptar</button>
+                    <button type="button" class="btn btn-primary" id="btnAceptar" onclick="insertaControl()">Aceptar</button>
+                    <button type="submit" class="btn btn-primary d-none"
+                        onclick="modificar()" id="btnActualizar">Actualizar</button>
                 </div>
             </div>
         </div>
@@ -211,9 +217,8 @@
                 .catch(error => {
                     console.error('Error al insertar el control de crecimiento:', error);
                 });
-            }
         }
-
+    }
 
     function buscar() {
             let fechaControlBuscar = document.getElementById('input-busqueda').value;
@@ -240,7 +245,6 @@
             .then(data => {
                 // Obtenemos el cuerpo de la tabla
                 let tableBody = document.getElementById("tabla-estudios-body");
-
                 // Limpiamos el contenido actual del cuerpo de la tabla
                 tableBody.innerHTML = '';
                 this.listaCrecimientos = [];
