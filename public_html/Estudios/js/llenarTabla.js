@@ -1,13 +1,19 @@
-function cargarEstudios() {
+import { idPaciente, idExpediente, obtenerDatosSession } from './obtenerExpediente.js';
+
+// Llama a obtenerDatosSession antes de definir las funciones para asegurarte de que las variables estén inicializadas
+obtenerDatosSession();
+
+window.cargarEstudios = function() {
     // Obtener la tabla
     const tabla = document.getElementById("tabla-estudios");
-
+    $("#tabla-estudios tbody").empty();
+    
     // ID del expediente
-    const idExpediente = 1; // Aquí debes poner el idExpediente deseado
+    const idE = idExpediente; // Aquí debes poner el idExpediente deseado
 
     // Petición AJAX para obtener los datos de la base de datos
     const xhr = new XMLHttpRequest();
-    xhr.open("GET", `obtener_estudios.php?idExpediente=${idExpediente}`, true);
+    xhr.open("GET", `obtener_estudios.php?idExpediente=${idE}`, true);
     xhr.onload = function() {
         if (xhr.status === 200) {
             const estudios = JSON.parse(xhr.responseText);
@@ -32,20 +38,15 @@ function cargarEstudios() {
         }
     };
     xhr.send();
-}
-function limpiar() {
-    document.getElementById('input-busqueda').value = '';
-    cargarEstudios();
-}
+};
 
-
-function buscar() {
+window.buscar = function() {
     const inputBusqueda = document.getElementById("input-busqueda").value;
     const tabla = document.getElementById("tabla-estudios");
-    const idExpediente = 1; // ID del expediente deseado
+    const idE = idExpediente; // ID del expediente deseado
 
     const xhr = new XMLHttpRequest();
-    xhr.open("GET", `buscar_estudios.php?idExpediente=${idExpediente}&busqueda=${inputBusqueda}`, true);
+    xhr.open("GET", `buscar_estudios.php?idExpediente=${idE}&busqueda=${inputBusqueda}`, true);
     xhr.onload = function() {
         if (xhr.status === 200) {
             // Limpiar la tabla antes de mostrar los resultados
@@ -68,7 +69,6 @@ function buscar() {
                     <td>
                         <button type="button" class="btn btn-danger me-2" onclick="eliminarEstudio(${estudio.idEstudio}, ${estudio.idDetalleEstudio}, ${rowIndex})">Eliminar</button>
                         <button type="button" class="btn btn-primary" onclick="modificarEstudio(${estudio.idEstudio},${rowIndex} )">Modificar</button>
-                    
                     </td>
                 `;
                 rowIndex++;
@@ -76,5 +76,9 @@ function buscar() {
         }
     };
     xhr.send();
-}
+};
 
+window.limpiar = function() {
+    document.getElementById('input-busqueda').value = '';
+    location.reload();
+};

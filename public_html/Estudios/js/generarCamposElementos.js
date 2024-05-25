@@ -1,6 +1,11 @@
 let contadorElementos = 0;
 
-function generarCamposElementos() {
+import { idPaciente, idExpediente, obtenerDatosSession } from './obtenerExpediente.js';
+
+
+// Llama a obtenerDatosSession para asegurarte de que idExpediente se ha inicializado
+obtenerDatosSession();
+window.generarCamposElementos = function () {
     let div = document.createElement('div');
     div.id = 'Elemento' + (contadorElementos + 1);
     div.innerHTML = `
@@ -21,7 +26,7 @@ function generarCamposElementos() {
 }
 
 
-function reiniciarModal() {
+window.reiniciarModal = function reiniciarModal() {
     // Obtén los elementos del modal por su id
     var tipoEstudioInput = document.getElementById('tipoEstudioInput');
     var nombreEstudioInput = document.getElementById('nombreEstudioInput');
@@ -58,7 +63,7 @@ function reiniciarModal() {
     generarCamposElementos()
 }
 
-function eliminarElemento(indice) {
+window.eliminarElemento = function (indice) {
     // Elimina el elemento
     var elemento = document.getElementById('Elemento' + indice);
     elemento.parentNode.removeChild(elemento);
@@ -80,7 +85,7 @@ function eliminarElemento(indice) {
     contadorElementos--;
 }
 
-function agregarEstudio() {
+window.agregarEstudio = function agregarEstudio() {
     // Obtén los elementos del modal por su id
     var tipoEstudioInput = document.getElementById('tipoEstudioInput');
     var nombreEstudioInput = document.getElementById('nombreEstudioInput');
@@ -100,7 +105,7 @@ function agregarEstudio() {
         descripcion: descripcionEstudioInput.value,
         fecha: fechaInput.value,
         elementos: [],
-        idExpediente: 1
+        idExpediente: idExpediente
     };
 
     // Recopila los datos de los elementos

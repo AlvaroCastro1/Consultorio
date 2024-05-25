@@ -21,7 +21,7 @@
     <script>
         const navItems = [
         {name: "Estudios", uri: "../Estudios/estudios.html"},
-        {name: "Elementos", uri: "..//Elementos/elementos.html"}
+        
         ];
     
         createHeader(navItems);
@@ -37,8 +37,16 @@
             <button class="btn btn-outline-secondary" type="button" onclick="limpiar()">Limpiar</button>
         </div>
         
-
-        <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#modalAgregar">Agregar</button>
+        <button type="button" class="btn btn-primary mb-3" id="btnAgregar" data-bs-toggle="modal" data-bs-target="#modalAgregar">Agregar</button>
+        <script>
+            
+            document.getElementById("btnAgregar").addEventListener("click", function() {
+                reiniciarModal();
+                
+            });
+            
+        </script>
+        
         <!--Modal-->
         <div class="modal fade" id="modalAgregar" tabindex="-1" aria-labelledby="modalAgregarLabel" aria-hidden="true">
             <div class="modal-dialog">
@@ -102,9 +110,7 @@
                 <tbody>
                     
                     
-                    <tr>
-                        
-                    </tr>
+                    
                     
                 </tbody>
             </table>
