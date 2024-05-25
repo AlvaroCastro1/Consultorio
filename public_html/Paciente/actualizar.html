@@ -146,15 +146,29 @@
     
     <script>
 
-    function actualizarPaciente(event) {
-        // Prevenir el envío del formulario por defecto
-        event.preventDefault();
+    var idPaciente = null;
+    var idExpediente = null; 
 
+    obtenerDatosSession()
+    function obtenerDatosSession(){
         // Obtener los datos de sessionStorage
         const datos = JSON.parse(sessionStorage.getItem('datosPaciente'));
 
         if (datos) {
-            const idPaciente = datos.idPacienteE;
+            idPaciente = datos.idPacienteE;
+            idExpediente = datos.idExpedienteE
+
+            console.log("se obtuvieron los datos idPaciente: ", idPaciente, "idExpediente: ", idExpediente);
+        } else {
+            console.log('No se encontraron datos en sessionStorage');
+        }
+    }
+
+    function actualizarPaciente(event) {
+        // Prevenir el envío del formulario por defecto
+        event.preventDefault();
+
+
             // Obtener los valores actualizados de cada campo del formulario
             const nombre = document.getElementById('nombre').value;
             const apellidoPaterno = document.getElementById('apellido-paterno').value;
@@ -210,9 +224,7 @@
             .catch(error => {
                 console.error('Error:', error); // Imprimir error en la consola
             });
-        } else {
-            console.log('No se encontraron datos en sessionStorage');
-        }
+
     }
 
 
@@ -222,12 +234,6 @@
         buscarSolo1()
         function buscarSolo1() {
 
-            // Obtener los datos de sessionStorage
-            const datos = JSON.parse(sessionStorage.getItem('datosPaciente'));
-
-            if (datos) {
-                const idPaciente = datos.idPacienteE;
-        
 
                 // Usar los datos como necesites
                 console.log('se obtuvo el dato idpaciente = :', idPaciente);
@@ -263,23 +269,7 @@
                         document.getElementById('numeroInt').value = paciente.numero_int;
                         document.getElementById('cp').value = paciente.codigoPostal;
                         document.getElementById('tipo-sangre').value = paciente.tipoSangre;
-                        /* Guardar cada dato del paciente en una variable individual
-                        const nombre = paciente.nombre;                         const apellidoPaterno = paciente.apellidoPaterno;
-                        const apellidoMaterno = paciente.apellidoMaterno;                        const fechaNacimiento = paciente.fechaNacimiento;
-                        const sexo = paciente.sexo;                        const telefono = paciente.telefono;
-                        const email = paciente.email;                        const pais = paciente.pais;
-                        const estado = paciente.estado;                        const municipio = paciente.municipio;
-                        const localidad = paciente.localidad;                        const numero_ext = paciente.numero_ext;
-                        const numero_int = paciente.numero_int;                        const codigoPostal = paciente.codigoPostal;
-                        const tipoSangre = paciente.tipoSangre;                        // Imprimir los datos en la consola
-                        console.log("Nombre:", nombre);                        console.log("Apellido Paterno:", apellidoPaterno);
-                        console.log("Apellido Materno:", apellidoMaterno);                        console.log("Fecha de Nacimiento:", fechaNacimiento);
-                        console.log("Sexo:", sexo);                        console.log("Teléfono:", telefono);
-                        console.log("Email:", email);                        console.log("País:", pais);
-                        console.log("Estado:", estado);                        console.log("Municipio:", municipio);
-                        console.log("Localidad:", localidad);                        console.log("Número exterior:", numero_ext);
-                        console.log("Número interior:", numero_int);                        console.log("Código Postal:", codigoPostal);
-                        console.log("Tipo de Sangre:", tipoSangre);                        */
+
                     } else {
                         console.error(data.message); // Imprimir mensaje de error en la consola
                     }
@@ -288,9 +278,6 @@
                     console.error('Error:', error); // Imprimir error en la consola
                 });
 
-            } else {
-                console.log('No se encontraron datos en sessionStorage');
-            }
         }
 
 

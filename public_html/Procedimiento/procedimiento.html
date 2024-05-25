@@ -98,6 +98,25 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
+
+        var idPaciente = null;
+        var idExpediente = null; 
+
+        obtenerDatosSession()
+        function obtenerDatosSession(){
+            // Obtener los datos de sessionStorage
+            const datos = JSON.parse(sessionStorage.getItem('datosPaciente'));
+
+            if (datos) {
+                idPaciente = datos.idPacienteE;
+                idExpediente = datos.idExpedienteE
+
+                console.log("se obtuvieron los datos idPaciente: ", idPaciente, "idExpediente: ", idExpediente);
+            } else {
+                console.log('No se encontraron datos en sessionStorage');
+            }
+        }
+
         function agregarProcedimientoDesdeModal() {
             // Obtener los valores de los campos del formulario
             const nombreProcedimiento = document.getElementById('nombreProcedimientoInput').value;

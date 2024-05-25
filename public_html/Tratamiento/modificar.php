@@ -5,21 +5,20 @@ require '../includes/conexion.php';
 // Verificar si se ha enviado algún dato por POST
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Obtener los datos del formulario de manera segura
-    $idDetalleTratamiento = isset($_POST['idDetalleTratamiento']) ? $_POST['idDetalleTratamiento'] : '';
-    $idTratamientoDT = isset($_POST['idTratamientoDT']) ? $_POST['idTratamientoDT'] : '';
+    $idTratamiento = isset($_POST['idTratamiento']) ? $_POST['idTratamiento'] : '';
     $descripcionTratamiento = isset($_POST['descripcionTratamiento']) ? $_POST['descripcionTratamiento'] : '';
     $duracion = isset($_POST['duracion']) ? $_POST['duracion'] : '';
+    $diagnostico = isset($_POST['diagnostico']) ? $_POST['diagnostico'] : '';
     $fechaTratamiento = isset($_POST['fechaTratamiento']) ? $_POST['fechaTratamiento'] : '';
 
-
     // Preparar la consulta SQL utilizando consultas preparadas
-    $sql = "UPDATE detalleTratamiento SET  idTratamientoDT=?, descripcionTratamiento=?, duracion=? WHERE idDetalleTratamiento=?";
+    $sql = "UPDATE Tratamiento SET descripcionTratamiento=?, duracion=?, diagnostico=?, fechaTratamiento=? WHERE idTratamiento=?";
 
     // Preparar la sentencia
     $stmt = $conn->prepare($sql);
 
     // Vincular parámetros
-    $stmt->bind_param("issi", $idTratamientoDT, $descripcionTratamiento, $duracion, $idDetalleTratamiento); // Suponiendo que tienes un campo 'id' en tu formulario para identificar el registro a modificar
+    $stmt->bind_param("ssssi", $descripcionTratamiento, $duracion, $diagnostico, $fechaTratamiento, $idTratamiento);
 
     // Ejecutar la sentencia
     if ($stmt->execute()) {
@@ -34,4 +33,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Si no se reciben datos por POST, devolver un mensaje de error
     echo json_encode(array("success" => false, "message" => "No se han recibido datos por POST"));
 }
+
+// Cerrar la conexión
+$conn->close();
 ?>

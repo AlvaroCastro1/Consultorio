@@ -68,6 +68,7 @@
                         <td>
                             <!-- Detener propagación para evitar que el clic en el botón active el evento de la fila -->
                             <button type="button" class="btn btn-danger" onclick="eliminarRegistro(this)">Eliminar</button>
+                            <button type="button" class="btn btn-danger" onclick="verDetallesPaciente(this)">Ver Detalles</button>
                             <button type="button" class="btn btn-primary" onclick="modificarPaciente(this)">Modificar</button>
                             <button type="button" class="btn btn-primary" onclick="seleccionarExpediente(this)">Expediente</button>
 
@@ -156,19 +157,34 @@
             }     
         }
 
-        function verDetalle() {
+        function verDetallesPaciente(button) {
+            const row = button.closest('tr');
+            const cells = row.querySelectorAll('td');
+
+            const idPaciente = cells[0].innerText;
+            const idExpediente = cells[4].innerText;
+
+            const datos = {
+                idPacienteE: idPaciente,
+                idExpedienteE: idExpediente
+            };
+
+            // Guardar los datos en sessionStorage
+            sessionStorage.setItem('datosPaciente', JSON.stringify(datos));
+
             window.location.href = "ver.html";
         }
 
         function modificarPaciente(button) {
             const row = button.closest('tr');
-            const idPaciente = row.querySelector('td:first-child').textContent;
-            console.log("La ID que quiero eliminar es: ", idPaciente);
+            const cells = row.querySelectorAll('td');
 
-  
+            const idPaciente = cells[0].innerText;
+            const idExpediente = cells[4].innerText;
 
             const datos = {
-                idPacienteE: idPaciente
+                idPacienteE: idPaciente,
+                idExpedienteE: idExpediente
             };
 
             // Guardar los datos en sessionStorage
@@ -180,13 +196,21 @@
             //buscarSolo1(button)
         }
         function seleccionarExpediente(button){
-            //const row = button.closest('tr');
-            //const cells = row.querySelectorAll('td');
+            const row = button.closest('tr');
+            const cells = row.querySelectorAll('td');
 
-            //const idPaciente = cells[0].innerText;
-            //const nombre = cells[1].innerText;
-            //const idExpediente = cells[2].innerText;
-            //console.log("se seleccionaron los valores= ",idPaciente.value, nombre.value, idExpediente.value);
+            const idPaciente = cells[0].innerText;
+            const idExpediente = cells[4].innerText;
+
+            const datos = {
+                idPacienteE: idPaciente,
+                idExpedienteE: idExpediente
+            };
+
+            // Guardar los datos en sessionStorage
+            sessionStorage.setItem('datosPaciente', JSON.stringify(datos));
+
+            
             window.location.href = "../Expediente/expediente.html";
         }
         function limpiar(){
