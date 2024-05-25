@@ -25,7 +25,7 @@ document.addEventListener("DOMContentLoaded", function() {
                         <td>${elemento.interpretacion}</td>
                         <td>
                             <button type="button" class="btn btn-danger me-2" onclick="eliminarElementosIndividual(${elemento.idElementos}, ${rowIndex})">Eliminar</button>
-                            <button type="button" class="btn btn-primary" onclick="modificarElementosIndividual(${elemento.idElementos} )">Modificar</button>
+                            <button type="button" class="btn btn-primary" onclick="modificarElementosIndividual(${elemento.idElementos}, ${rowIndex})">Modificar</button>
                         </td>
                     `;
                     rowIndex++;
@@ -67,7 +67,7 @@ function buscar() {
                     <td>${elemento.interpretacion}</td>
                     <td>
                         <button type="button" class="btn btn-danger me-2" onclick="eliminarElementosIndividual(${elemento.idElementos}, ${rowIndex})">Eliminar</button>
-                        <button type="button" class="btn btn-primary" onclick="modificarElementosIndividual(${elemento.idElementos})">Modificar</button>
+                        <button type="button" class="btn btn-primary" onclick="modificarElementosIndividual(${elemento.idElementos}, ${rowIndex})">Modificar</button>
                     </td>
                 `;
                 rowIndex++;
