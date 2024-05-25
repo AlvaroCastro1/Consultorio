@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded", function() {
         if (xhr.status === 200) {
             const estudios = JSON.parse(xhr.responseText);
             let rowIndex = 1; // Comienza en 1 para omitir la fila de encabezado
-            estudios.forEach(estudio => {
+            estudios.forEach((estudio, index) => {
                 const row = tabla.insertRow();
                 row.innerHTML = `
                     <td>${estudio.tipoEstudio}</td>
@@ -20,14 +20,13 @@ document.addEventListener("DOMContentLoaded", function() {
                     <td>${estudio.descripcionEstudio}</td>
                     <td>${estudio.fechaEstudio}</td>
                     <td>
-                        <button type="button" class="btn btn-primary" onclick="verElementos(this)">Ver Elementos</button>
+                        <button type="button" class="btn btn-primary" onclick="verElementos(${estudio.idEstudio})">Ver Elementos</button>
                     </td>
                     <td>
-                        <button type="button" class="btn btn-danger me-2" onclick="eliminarEstudio(${estudio.idEstudio}, ${estudio.idDetalleEstudio}, ${rowIndex})">Eliminar</button>
-                        <button type="button" class="btn btn-primary" onclick="modificarEstudio(${estudio.idEstudio},${rowIndex} )">Modificar</button>
+                        <button type="button" class="btn btn-danger me-2" onclick="eliminarEstudio(${estudio.idEstudio}, ${estudio.idDetalleEstudio}, ${index})">Eliminar</button>
+                        <button type="button" class="btn btn-primary" onclick="modificarEstudio(${estudio.idEstudio},${index})">Modificar</button>
                     </td>
                 `;
-                rowIndex++;
             });
         }
     };
