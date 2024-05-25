@@ -10,19 +10,23 @@
    
 </head>
 <body>
-    <div id="alerta">
-        <div aria-live="polite" aria-atomic="true" class="bg-body-secondary position-relative bd-example-toasts rounded-3">
-            <div class="toast-container p-3 top-0 end-0" id="toastPlacement">
-                <div class="toast align-items-center border-0" role="alert" aria-live="assertive" aria-atomic="true">
-                    <div class="d-flex">
-                      <div class="toast-body">
-                      </div>
-                      <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
-                    </div>
-                  </div>
-            </div>
-        </div>              
-    </div>
+
+    <script>
+        const navItems = [
+        {name: "Vacunas", uri: "../Vacunas/vacunas.html"},
+        {name: "Estudios", uri: "../Estudios/estudios.html"},
+        {name: "Alergias", uri: "../Alergias/alergias.html"},
+        {name: "Antecedentes", uri: "..Antecedentes/antecedentes.html"},
+        {name: "Signos Vitales", uri: "../Signos/Signos.html"},
+        {name: "Tratamiento", uri: "../Tratamiento/Tratamiento.html"},
+        {name: "Procedimiento", uri: "../Procedimiento/procedimiento.html"},
+        {name: "Control de Crecimiento", uri: "../Control/control.html"},
+        {name: "Elementos", uri: "../Elementos/elementos.html"}
+        ];
+    
+        createHeader(navItems);
+    </script>
+
     <div class="container2 mt-5">
         <h1 class="titulo-inicio mb-4">Estudios</h1>
             <div class="input-group mb-3">
@@ -40,6 +44,7 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
+
                         <form method="POST" action="../Estudios/insertarEstudios.php" id="registroEstudio">
                             <!-- Aquí van los campos para agregar un nuevo registro -->
                             <input type="text" class="form-control mb-3" id="nombreEstudio" name="nombreEstudio" placeholder="Nombre del Estudio" maxlength="45">
@@ -65,20 +70,30 @@
             <table class="table table-bordered table-hover" id="tabla-estudios">
                 <thead>
                     <tr>
+                        <th>Tipo</th>
                         <th>Nombre</th>
-                        <th>Resultado</th>
+                        <th>Descripción</th>
                         <th>Fecha</th>
+                        <th>Elementos</th>
                         <th>Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
                     
                     <tr>
+
                         <td contenteditable="false">Ejemplo de estudio</td>
                         <td>
                              <button type="button" class="btn btn-primary" onclick="verResultado(this)">Ver Resultados</button>
                         </td>
+                        <td contenteditable="false">Ejemplo Tipo</td>
+                        <td contenteditable="false">Ejemplo Nombre</td>
+                        <td contenteditable="false">Ejemplo Descripción</td>
+
                         <td contenteditable="false">2024-04-16</td>
+                        <td>
+                            <button type="button" class="btn btn-primary" onclick="verElementos(this)">Ver Elementos</button>
+                           </td>
                         <td>
                             <button type="button" class="btn btn-danger me-2" onclick="eliminarEstudio(this)">Eliminar</button>
                             <button type="button" class="btn btn-primary" onclick="obtenerEstudioid(this)">Modificar</button>
@@ -118,6 +133,7 @@
             alerta.show();
         }
 
+
         function validarRegistro(){
             let nombre=document.getElementById('nombreEstudio');
             if (nombre.value === '') {
@@ -138,6 +154,35 @@
             }
 
             return true;
+
+        function agregarEstudio() {
+            const tipoEstudio = document.getElementById('tipoEstudioInput').value;
+            const nombreEstudio = document.getElementById('nombreEstudioInput').value;
+            const descripcionEstudio = document.getElementById('descripcionEstudioInput').value;
+            const fecha = formatDate(document.getElementById('fechaInput').value);
+            const tabla = document.getElementById('tabla-estudios').getElementsByTagName('tbody')[0];
+            const newRow = tabla.insertRow(tabla.rows.length);
+            newRow.innerHTML = `
+                <td>${tipoEstudio}</td>
+                <td>${nombreEstudio}</td>
+                <td>${descripcionEstudio}</td>
+                <td>${fecha}</td>
+                
+                <td>
+                    <button type="button" class="btn btn-danger me-2" onclick="eliminarEstudio(this)">Eliminar</button>
+                    <button type="button" class="btn btn-primary" onclick="modificarEstudio(this)">Modificar</button>
+                </td>
+            `;
+
+            // Cerrar el modal después de agregar el registro
+            const modal = bootstrap.Modal.getInstance(document.getElementById('modalAgregar'));
+            modal.hide();
+            document.getElementById('tipoEstudioInput').value = '';
+            document.getElementById('nombreEstudioInput').value = '';
+            document.getElementById('descripcionEstudioInput').value = '';
+            document.getElementById('fechaInput').value = '';
+          
+
         }
 
         function insertaEstudio(){
@@ -185,8 +230,8 @@
             }
         }
 
-        function verResultado() {
-            window.location.href = "..//Resultados/resultados.html";
+        function verElementos() {
+            window.location.href = "..//Elementos/elementos.html";
         }
 
         function buscar() {
