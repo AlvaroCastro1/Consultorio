@@ -11,20 +11,48 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap-datepicker@1.9.0/dist/js/bootstrap-datepicker.min.js"></script>
 
-    <link rel="stylesheet" href="../assets/css/CitasStyles.css">
-    <link rel="stylesheet" href="../assets/css/barraNav.css">
-    <script src="../assets/js/header.js"></script>
+    <script>
+        // Aquí van tus otras funciones JavaScript
+
+        function buscar() {
+            const idCita = document.getElementById('input-busqueda').value;
+
+            $.ajax({
+                url: 'Buscar_cita.php',
+                type: 'post',
+                data: {buscarCita: true, idCita: idCita},
+                success: function(response) {
+                    // Aquí puedes manejar la respuesta de tu script PHP
+                    console.log(response);
+                }
+            });
+        }
+    </script>
+
+    <link rel="stylesheet" href="..//CSS/CitasStyles.css">
+    <link rel="stylesheet" href="..//CSS/barraNav.css">
 
 </head>
 <body>
-    <script>
-        const navItems = [
-            {name: "Citas" ,uri: "../Citas/Citas.html"},
-            {name: "Calendario" ,uri: "../Calendario/calendario.php"},
-        ];
-    
-        createHeader(navItems);
-    </script>
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-primary-custom">
+        <div class="container">
+            <a class="navbar-brand texto-gris-claro" href="..//Paciente/paciente.html" style="font-size: 20px; font-weight: bold; ">Paciente</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link texto-blanco-activo" href="..//Citas/Citas.html" onclick="abrirPagina('citas')">Citas</a>
+                    </li> 
+                    <li class="nav-item">
+                        <a class="nav-link texto-gris-claro" href="..//Calendario/calendario.php" onclick="abrirPagina('calendario')">Calendario</a>
+                    </li>  
+                </ul>
+            </div>
+        </div>
+    </nav>
 
     <div class="container2 mt-5">
         <h1 class="titulo-Citas mb-4">Citas</h1>
@@ -83,7 +111,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="modalAgregarLabel">Registro de Vacunas</h5>
+                    <h5 class="modal-title" id="modalAgregarLabel">Registro de Cita</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">

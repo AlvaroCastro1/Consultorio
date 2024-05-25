@@ -39,6 +39,8 @@
         <div class="input-group mb-3">
             <input type="text" class="form-control" placeholder="Buscar por nombre" id="input-busqueda">
             <button class="btn btn-outline-secondary" type="button" onclick="buscar()">Buscar</button>
+            <button class="btn btn-outline-secondary" type="button" onclick="limpiar()">Limpiar</button>
+
         </div>
 
         <div class="table-responsive">
@@ -47,20 +49,28 @@
                     <tr>
                         <th>ID</th>
                         <th>Nombre</th>
+                        <th>Apellido Paterno</th>
+                        <th>Apellido Materno</th>
                         <th>Expediente</th>
                         <th>Acciones</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody id="content">
                     <!-- Fila con evento de clic para redirigir -->
-                    <tr style="cursor: pointer;" onclick="verDetalle()">  <!-- El evento se detendrá si se hace clic en los botones -->
-                        <td>Ejemplo de ID</td>
+                    <tr style="cursor: pointer;">  <!-- El evento se detendrá si se hace clic en los botones -->
+                    <!-- <tr style="cursor: pointer;" onclick="verDetalle()">   El evento se detendrá si se hace clic en los botones -->
+
+                        <td>0</td>
                         <td>Ejemplo de Nombre</td>
-                        <td>Ejemplo de Expediente</td>
+                        <td>paterno</td>
+                        <td>materno</td>
+                        <td>0</td>
                         <td>
                             <!-- Detener propagación para evitar que el clic en el botón active el evento de la fila -->
-                            <button type="button" class="btn btn-danger" onclick="eliminarRegistro(event)">Eliminar</button>
-                            <button type="button" class="btn btn-primary" onclick="modificarPaciente(event)">Modificar</button>
+                            <button type="button" class="btn btn-danger" onclick="eliminarRegistro(this)">Eliminar</button>
+                            <button type="button" class="btn btn-primary" onclick="modificarPaciente(this)">Modificar</button>
+                            <button type="button" class="btn btn-primary" onclick="seleccionarExpediente(this)">Expediente</button>
+
                         </td>
                     </tr>
         
@@ -82,41 +92,108 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
+
         function agregarRegistro() {
             window.location.href = "crear.html";
         }
 
-        function eliminarRegistro() {
-            event.stopPropagation();  // Evita que el evento se propague a la fila
-            // Mostrar un cuadro de diálogo bonito para confirmar la eliminación
-            Swal.fire({
-                title: '¿Estás seguro?',
-                text: 'Esta acción no se puede deshacer.',
-                icon: 'warning',  // Icono de advertencia
-                showCancelButton: true,  // Botón para cancelar
-                confirmButtonText: 'Eliminar',  // Texto del botón de confirmación
-                cancelButtonText: 'Cancelar',  // Texto del botón de cancelación
-                confirmButtonColor: '#d33',  // Color del botón de confirmación (rojo)
-                cancelButtonColor: '#aaa',  // Color del botón de cancelación (gris)
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    // El usuario confirmó la eliminación
-                    console.log('Registro eliminado');
-                    // Aquí puedes añadir el código para eliminar el registro
-                } else {
-                    // El usuario canceló la eliminación
-                    console.log('Eliminación cancelada');
-                }
-            });
+
+        buscar()
+        function buscar() {
+            let input = document.getElementById("input-busqueda").value
+            console.log("Buscar registros de pacientes:", input);
+            let content = document.getElementById("content")
+            let url = "../Paciente/buscar_Simplificado.php"
+            let formaData = new FormData()
+            formaData.append('input-busqueda', input)
+
+            fetch(url, {
+                method: "POST",
+                body: formaData
+            }).then(Response => Response.json())
+            .then(data => {
+                content.innerHTML = data
+
+            }).catch(err => console.log(err))
+        }
+
+
+
+        function eliminarRegistro(button) {
+
+            const row = button.closest('tr');
+            const idPaciente = row.querySelector('td:first-child').textContent.trim();
+
+            console.log("La ID que quiero eliminar es: ", idPaciente);
+
+            if (idPaciente) {
+                // Realizar la solicitud AJAX para eliminar los datos
+                fetch('../Paciente/eliminar.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+                    body: `idPaciente=${encodeURIComponent(idPaciente)}`
+                })
+                .then(response => response.json())
+                .then(data => {
+                    // Mostrar mensaje de éxito o error
+                    if (data.success) {
+                        alert(data.message);
+                        // Actualizar la tabla o hacer cualquier otra acción necesaria
+                        console.log('Registro eliminado');
+                        buscar();
+                    } else {
+                        alert(data.message);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Error al eliminar los datos');
+                });
+            } else {
+                alert('ID de paciente inválido');
+            }     
         }
 
         function verDetalle() {
             window.location.href = "ver.html";
         }
 
-        function modificarPaciente() {
+        function modificarPaciente(button) {
+            const row = button.closest('tr');
+            const idPaciente = row.querySelector('td:first-child').textContent;
+            console.log("La ID que quiero eliminar es: ", idPaciente);
+
+  
+
+            const datos = {
+                idPacienteE: idPaciente
+            };
+
+            // Guardar los datos en sessionStorage
+            sessionStorage.setItem('datosPaciente', JSON.stringify(datos));
+            
+
             event.stopPropagation();  // Evita que el evento se propague a la fila
             window.location.href = "actualizar.html";
+            //buscarSolo1(button)
+        }
+        function seleccionarExpediente(button){
+            //const row = button.closest('tr');
+            //const cells = row.querySelectorAll('td');
+
+            //const idPaciente = cells[0].innerText;
+            //const nombre = cells[1].innerText;
+            //const idExpediente = cells[2].innerText;
+            //console.log("se seleccionaron los valores= ",idPaciente.value, nombre.value, idExpediente.value);
+            window.location.href = "../Expediente/expediente.html";
+        }
+        function limpiar(){
+            document.getElementById('input-busqueda').value = '';
+            buscar()
+
+
         }
 
 
