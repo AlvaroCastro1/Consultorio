@@ -37,3 +37,42 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     }
 });
+
+function buscar() {
+    var nombre = document.getElementById('input-busqueda').value;
+
+    if (!nombre) {
+        alert('Por favor, ingresa un nombre para buscar.');
+        return;
+    }
+
+    $.ajax({
+        url: 'buscarElemento.php',
+        type: 'GET',
+        data: { nombre: nombre },
+        success: function(response) {
+            var elementos = JSON.parse(response);
+            var tbody = document.getElementById('tabla-ElementosIndividual').getElementsByTagName('tbody')[0];
+            tbody.innerHTML = ''; // Limpiar la tabla antes de agregar nuevos datos
+
+            elementos.forEach(elemento => {
+                var row = tbody.insertRow();
+                row.innerHTML = `
+                    <td>${elemento.nombreElemento}</td>
+                    <td>${elemento.rango}</td>
+                    <td>${elemento.valor}</td>
+                    <td>${elemento.interpretacion}</td>
+                    <td>
+                        <button type="button" class="btn btn-danger me-2" onclick="eliminarElementosIndividual(this)">Eliminar</button>
+                        <button type="button" class="btn btn-primary" onclick="modificarElementosIndividual(this)">Modificar</button>
+                    </td>
+                `;
+            });
+        },
+        error: function(xhr, status, error) {
+            console.error('Error al buscar el elemento:', xhr.responseText);
+            alert('Ocurrió un error al buscar el elemento.');
+        }
+    });
+}
+
