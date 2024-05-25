@@ -23,10 +23,11 @@ document.addEventListener("DOMContentLoaded", function() {
                         <button type="button" class="btn btn-primary" onclick="verElementos(${estudio.idEstudio})">Ver Elementos</button>
                     </td>
                     <td>
-                        <button type="button" class="btn btn-danger me-2" onclick="eliminarEstudio(${estudio.idEstudio}, ${estudio.idDetalleEstudio}, ${index})">Eliminar</button>
-                        <button type="button" class="btn btn-primary" onclick="modificarEstudio(${estudio.idEstudio},${index})">Modificar</button>
+                        <button type="button" class="btn btn-danger me-2" onclick="eliminarEstudio(${estudio.idEstudio}, ${estudio.idDetalleEstudio}, ${rowIndex})">Eliminar</button>
+                        <button type="button" class="btn btn-primary" onclick="modificarEstudio(${estudio.idEstudio},${rowIndex})">Modificar</button>
                     </td>
                 `;
+                rowIndex++;
             });
         }
     };

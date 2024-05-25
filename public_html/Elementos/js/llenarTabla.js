@@ -13,7 +13,7 @@ document.addEventListener("DOMContentLoaded", function() {
             success: function(response) {
                 // Parsea la respuesta JSON
                 const elementos = JSON.parse(response);
-                
+                let rowIndex = 1;
                 // Llena la tabla con los elementos
                 const tabla = document.getElementById('tabla-ElementosIndividual');
                 elementos.forEach(elemento => {
@@ -24,10 +24,11 @@ document.addEventListener("DOMContentLoaded", function() {
                         <td>${elemento.valor}</td>
                         <td>${elemento.interpretacion}</td>
                         <td>
-                            <button type="button" class="btn btn-danger me-2" onclick="eliminarElementosIndividual(this)">Eliminar</button>
-                            <button type="button" class="btn btn-primary" onclick="modificarElementosIndividual(this)">Modificar</button>
+                            <button type="button" class="btn btn-danger me-2" onclick="eliminarElementosIndividual(${elemento.idElementos}, ${rowIndex})">Eliminar</button>
+                            <button type="button" class="btn btn-primary" onclick="modificarElementosIndividual(${elemento.idElementos} )">Modificar</button>
                         </td>
                     `;
+                    rowIndex++;
                 });
             },
             error: function(xhr, status, error) {
@@ -56,7 +57,7 @@ function buscar() {
             var elementos = JSON.parse(response);
             var tbody = document.getElementById('tabla-ElementosIndividual').getElementsByTagName('tbody')[0];
             tbody.innerHTML = ''; // Limpiar la tabla antes de agregar nuevos datos
-
+            let rowIndex = 1;
             elementos.forEach(elemento => {
                 var row = tbody.insertRow();
                 row.innerHTML = `
@@ -65,10 +66,11 @@ function buscar() {
                     <td>${elemento.valor}</td>
                     <td>${elemento.interpretacion}</td>
                     <td>
-                        <button type="button" class="btn btn-danger me-2" onclick="eliminarElementosIndividual(this)">Eliminar</button>
-                        <button type="button" class="btn btn-primary" onclick="modificarElementosIndividual(this)">Modificar</button>
+                        <button type="button" class="btn btn-danger me-2" onclick="eliminarElementosIndividual(${elemento.idElementos}, ${rowIndex})">Eliminar</button>
+                        <button type="button" class="btn btn-primary" onclick="modificarElementosIndividual(${elemento.idElementos})">Modificar</button>
                     </td>
                 `;
+                rowIndex++;
             });
         },
         error: function(xhr, status, error) {

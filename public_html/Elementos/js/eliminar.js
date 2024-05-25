@@ -1,6 +1,6 @@
-function eliminarElementosIndividual(idElemento, idDetalleElemento, rowIndex) {
+function eliminarElementosIndividual(idElemento, rowIndex) {
     const confirmacion = confirm("¿Estás seguro de que quieres eliminar este elemento?");
-    
+    console.log(rowIndex)
     if (confirmacion) {
         const xhr = new XMLHttpRequest();
         xhr.open("POST", "eliminarElemento.php", true);
@@ -14,6 +14,6 @@ function eliminarElementosIndividual(idElemento, idDetalleElemento, rowIndex) {
                 alert("Hubo un error al eliminar el elemento");
             }
         };
-        xhr.send(JSON.stringify({ idElemento: idElemento, idDetalleElemento: idDetalleElemento }));
+        xhr.send(JSON.stringify({ idElemento: idElemento }));
     }
 }

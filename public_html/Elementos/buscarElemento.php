@@ -5,7 +5,7 @@ if (isset($_GET['idEstudio'])) {
     $idEstudio = $_GET['idEstudio'];
     $nombre = isset($_GET['nombre']) ? '%' . $_GET['nombre'] . '%' : '%';
     
-    $query = "SELECT e.nombreElemento, e.rango, de.valor, de.interpretacion 
+    $query = "SELECT e.idElementos, e.nombreElemento, e.rango, de.valor, de.interpretacion 
               FROM Elementos e 
               JOIN detalleElemento de ON e.idElementos = de.idElementosDElem
               WHERE de.idEstudioDElem = ? AND e.nombreElemento LIKE ?";
