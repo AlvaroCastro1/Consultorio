@@ -2,7 +2,7 @@ function cargarElementos() {
     // Obtén el idEstudio de la URL
     const urlParams = new URLSearchParams(window.location.search);
     const idEstudio = urlParams.get('idEstudio');
-
+    $("#tabla-ElementosIndividual tbody").empty();
     // Llena la tabla con los elementos correspondientes al idEstudio
     if (idEstudio) {
         $.ajax({
@@ -41,7 +41,8 @@ function cargarElementos() {
 
 function limpiar() {
     document.getElementById('input-busqueda').value = '';
-    cargarElementos();
+    location.reload();
+
 }
 
 
@@ -49,7 +50,13 @@ function buscar() {
     const urlParams = new URLSearchParams(window.location.search);
     const idEstudio = urlParams.get('idEstudio');
     const nombre = document.getElementById('input-busqueda').value.trim();
-    
+
+    // Si el campo nombre está vacío, no realizar la búsqueda
+    if (nombre === '') {
+        alert('El campo nombre está vacío.');
+        return;
+    }
+
     if (!idEstudio) {
         alert('No se ha proporcionado un ID de estudio.');
         return;
@@ -84,4 +91,23 @@ function buscar() {
             alert('Ocurrió un error al buscar el elemento.');
         }
     });
+}
+
+
+function reiniciarModal() {
+    // Obtén los elementos del modal por su id
+    var nombreElemento = document.getElementById('nombreElementoinput');
+    var rango = document.getElementById('rangoInput');
+    var valor = document.getElementById('valorInput');
+    var interpretacion = document.getElementById('interpretacionInput');
+
+    // Reinicia los valores de los elementos
+    nombreElemento.value = '';
+    rango.value = '';
+    valor.value = '';
+    interpretacion.value = '';
+
+    // Cierra el modal
+    var modalAgregar = new bootstrap.Modal(document.getElementById('modalAgregar'));
+    modalAgregar.hide();
 }

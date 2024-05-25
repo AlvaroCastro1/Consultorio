@@ -1,7 +1,7 @@
 function modificarElementosIndividual(idElemento, rowIndex) {
     // Obtén la tabla y la fila correspondiente
     var table = document.getElementById('tabla-ElementosIndividual');
-    var row = table.rows[rowIndex+1];
+    var row = table.rows[rowIndex];
 
     // Verifica si la fila existe y tiene al menos 4 celdas
     if (row && row.cells.length >= 4) {

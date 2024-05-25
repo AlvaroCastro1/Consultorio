@@ -1,6 +1,8 @@
 function cargarEstudios() {
     // Obtener la tabla
     const tabla = document.getElementById("tabla-estudios");
+    $("#tabla-estudios tbody").empty();
+    
 
     // ID del expediente
     const idExpediente = 1; // Aquí debes poner el idExpediente deseado
@@ -35,7 +37,8 @@ function cargarEstudios() {
 }
 function limpiar() {
     document.getElementById('input-busqueda').value = '';
-    cargarEstudios();
+    location.reload();
+
 }
 
 
