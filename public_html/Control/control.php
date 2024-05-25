@@ -103,82 +103,8 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-
-        function agregarDesdeModal() {
-            console.log("se obtuvieron los datos idPaciente: ", idPaciente, "idExpediente: ", idExpediente);
-            
-            const altura = document.getElementById('alturaInput').value;
-            const peso= document.getElementById('pesoInput').value;
-            const perimetroC = document.getElementById('perimetroCInput').value;
-            const imc = document.getElementById('imcInput').value;
-            const evaluacion= document.getElementById('evaluacionInput').value;
-            const fechaControl = document.getElementById('fechaControlInput').value;
-
-            const tabla = document.getElementById('tabla-control').getElementsByTagName('tbody')[0];
-            const newRow = tabla.insertRow(tabla.rows.length);
-            newRow.innerHTML = `
-                <td>${altura}</td>
-                <td>${peso}</td>
-                <td>${perimetroC}</td>
-                <td>${imc}</td>
-                <td>${evaluacion}</td>
-                <td><input type="date" class="form-control" value="${fechaControl}" readonly></td>
-                <td>
-                    <button type="button" class="btn btn-danger me-2" onclick="eliminarFila(this)">Eliminar</button>
-                    <button type="button" class="btn btn-primary" onclick="modificarControl(this)">Modificar</button>
-                </td>
-            `;
-        
-            // Cerrar el modal después de agregar el registro
-            const modal = bootstrap.Modal.getInstance(document.getElementById('modalAgregar'));
-            modal.hide();
-        
-            // Limpiar los campos del modal
-            document.getElementById('alturaInput').value = '';
-            document.getElementById('pesoInput').value = '';
-            document.getElementById('perimetroCInput').value = '';
-            document.getElementById('imcInput').value = '';
-            document.getElementById('evaluacionlInput').value = '';
-            document.getElementById('fechaControlInput').value = '';
-        }
         
 
-        function buscar() {
-            const input = document.getElementById('input-busqueda').value;
-            console.log("Buscar registros de control de crecimiento:", input);
-        }
-
-        function eliminarFila(button) {
-            var fila = button.closest('tr');
-            // Elimina la fila del DOM
-            fila.remove();
-            console.log("Eliminar registro");
-        }
-
-        function modificarControl(button) {
-            const row = button.closest('tr');
-            const cells = row.querySelectorAll('td');
-            cells.forEach(cell => {
-                cell.contentEditable = true;
-            });
-            button.textContent = "Guardar";
-            button.classList.remove('btn-primary');
-            button.classList.add('btn-success');
-            button.setAttribute('onclick', 'guardarControl(this)');
-        }
-
-        function guardarControl(button) {
-            const row = button.closest('tr');
-            const cells = row.querySelectorAll('td');
-            cells.forEach(cell => {
-                cell.contentEditable = false;
-            });
-            button.textContent = "Modificar";
-            button.classList.remove('btn-success');
-            button.classList.add('btn-primary');
-            button.setAttribute('onclick', 'modificarControl(this)');
-            console.log("Guardar Control");
-        }
     </script>
 </body>
 </html>
