@@ -20,4 +20,4 @@ jobs:
         FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
         FTP_REMOTE_PATH: ${{ secrets.FTP_REMOTE_PATH }}
       run: |
-        lftp -e "set ftp:ssl-allow no; mirror -R ./ $FTP_REMOTE_PATH; quit" -u $FTP_USERNAME,$FTP_PASSWORD $FTP_HOST
+        lftp -e "set ftp:ssl-allow no; mirror --reverse --only-newer --delete --verbose ./ $FTP_REMOTE_PATH; quit" -u $FTP_USERNAME,$FTP_PASSWORD $FTP_HOST
