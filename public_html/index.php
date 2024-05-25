@@ -16,7 +16,6 @@ session_start();
 </head>
 <body>
     <div class="container2 mt-5">
-        <h1>test 01</h1>
         <?php if (isset($_SESSION['nombre_usuario'])): ?>
             <h1 class="text-center mb-5 titulo">¡Bienvenido, <?php echo htmlspecialchars($_SESSION['nombre_usuario']); ?>!</h1>
             <div class="text-center">
