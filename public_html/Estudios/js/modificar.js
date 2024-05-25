@@ -1,4 +1,10 @@
-function modificarEstudio(idEstudio, rowIndex) {
+import { idPaciente, idExpediente, obtenerDatosSession } from './obtenerExpediente.js';
+
+
+// Llama a obtenerDatosSession para asegurarte de que idExpediente se ha inicializado
+obtenerDatosSession();
+
+window.modificarEstudio = function(idEstudio, rowIndex) {
     // Obtén la tabla y la fila correspondiente
     var table = document.getElementById('tabla-estudios');
     var row = table.rows[rowIndex];
@@ -8,13 +14,6 @@ function modificarEstudio(idEstudio, rowIndex) {
     var nombreEstudio = row.cells[1].innerText;
     var descripcionEstudio = row.cells[2].innerText;
     var fechaEstudio = row.cells[3].innerText;
-
-    // Muestra los valores en la consola (opcional, para depuración)
-    console.log(idEstudio);
-    console.log(tipoEstudio);
-    console.log(nombreEstudio);
-    console.log(descripcionEstudio);
-    console.log(fechaEstudio);
 
     // Obtén los elementos del modal por su id
     var idEstudioInput = document.getElementById('idEstudioInputModificar');
@@ -32,9 +31,9 @@ function modificarEstudio(idEstudio, rowIndex) {
 
     // Abre el modal
     $('#modalModificar').modal('show');
-}
+};
 
-function guardarModificacionEstudio() {
+window.guardarModificacionEstudio = function() {
     // Obtén los elementos del modal por su id
     var idEstudioInput = document.getElementById('idEstudioInputModificar');
     var tipoEstudioInput = document.getElementById('tipoEstudioInputModificar');
@@ -55,7 +54,7 @@ function guardarModificacionEstudio() {
         nombre: nombreEstudioInput.value,
         descripcion: descripcionEstudioInput.value,
         fecha: fechaInput.value,
-        idExpediente: 1 // Asegúrate de ajustar esto según sea necesario
+        idExpediente: idExpediente // Asegúrate de ajustar esto según sea necesario
     };
 
     console.log(data);
@@ -80,4 +79,4 @@ function guardarModificacionEstudio() {
             alert('Ocurrió un error al actualizar el estudio.');
         }
     });
-}
+};
