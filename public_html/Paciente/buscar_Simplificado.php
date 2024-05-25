@@ -44,6 +44,7 @@ if ($resultado) {
             $html .= '<td>' . (isset($row['idExpediente']) ? $row['idExpediente'] : 'N/A') . '</td>';
             $html .= '<td>
             <button type="button" class="btn btn-danger me-2" onclick="eliminarRegistro(this)">Eliminar</button>
+            <button type="button" class="btn btn-primary" onclick="verDetallesPaciente(this)">Ver Detalles</button>
             <button type="button" class="btn btn-primary" onclick="modificarPaciente(this)">Modificar</button>
             <button type="button" class="btn btn-primary" onclick="seleccionarExpediente(this)">Expediente</button>
 

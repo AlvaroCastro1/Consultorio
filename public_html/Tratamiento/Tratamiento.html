@@ -39,8 +39,7 @@
             <table class="table table-bordered table-hover" id="tabla-tratamiento">
                 <thead>
                     <tr>
-                        <th>Id Detalle Tratamiento</th>
-                        <th>id Tratamiento DT</th>
+                        <th>Id Tratamiento</th>
                         <th>Descripcion del Tratamiento</th>
                         <th>Duracion</th>
                         <th>Diagnostico</th>
@@ -50,7 +49,6 @@
                 </thead>
                 <tbody id="content">
                     <tr>
-                        <td contenteditable="false">1</td>
                         <td contenteditable="false">1</td>
                         <td contenteditable="false">Esguince de tobillo</td>
                         <td contenteditable="false">3 semanas</td>
@@ -99,8 +97,27 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
+
+        var idPaciente = null;
+        var idExpediente = null; 
+
+        obtenerDatosSession()
+        function obtenerDatosSession(){
+            // Obtener los datos de sessionStorage
+            const datos = JSON.parse(sessionStorage.getItem('datosPaciente'));
+
+            if (datos) {
+                idPaciente = datos.idPacienteE;
+                idExpediente = datos.idExpedienteE
+
+                console.log("se obtuvieron los datos idPaciente: ", idPaciente, "idExpediente: ", idExpediente);
+            } else {
+                console.log('No se encontraron datos en sessionStorage');
+            }
+        }   
+
+
         function agregarDesdeModal() {
-            const idTratamientoDT = 2;
             const descripcionTratamiento = document.getElementById('descripcionTInput').value;
             const duracion = document.getElementById('duracionInput').value;
             const diagnostico = document.getElementById('diagnosticoInput').value;
@@ -132,7 +149,7 @@
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded'
                 },
-                body: `idTratamientoDT=${idTratamientoDT}&descripcionTratamiento=${descripcionTratamiento}&duracion=${duracion}&diagnostico=${diagnostico}&fechaTratamiento=${fechaTratamiento}`
+                body: `idExpedienteT=${idExpediente}&descripcionTratamiento=${descripcionTratamiento}&duracion=${duracion}&diagnostico=${diagnostico}&fechaTratamiento=${fechaTratamiento}`
             })
             .then(response => response.json())
             .then(data => {
@@ -168,6 +185,8 @@
             let content = document.getElementById("content")
             let url = "../Tratamiento/buscar.php"
             let formaData = new FormData()
+
+            formaData.append('idExpediente', idExpediente)
             formaData.append('input-busqueda', input)
 
             fetch(url, {
@@ -183,8 +202,8 @@
         function eliminarFila(button) {
             // Obtener el ID de la fila
             const row = button.closest('tr');
-            const idDetalleTratamiento = row.querySelector('td:first-child').textContent;
-            console.log("la id que quiero eliminar es: ", idDetalleTratamiento);
+            const idTratamiento = row.querySelector('td:first-child').textContent;
+            console.log("la id que quiero eliminar es: ", idTratamiento);
 
             
             // Realizar la solicitud AJAX para guardar los datos
@@ -193,7 +212,7 @@
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded'
                 },
-                body: `idDetalleTratamiento=${idDetalleTratamiento}`
+                body: `idTratamiento=${idTratamiento}`
             })
             .then(response => response.json())
             .then(data => {
@@ -229,10 +248,10 @@
             const cells = row.querySelectorAll('td');
 
 
-            const idDetalleTratamiento = cells[0].innerText;
-            const idTratamientoDT = cells[1].innerText;
-            const descripcionTratamiento = cells[2].innerText;
-            const duracion = cells[3].innerText;
+            const idTratamiento = cells[0].innerText;
+            const descripcionTratamiento = cells[1].innerText;
+            const duracion = cells[2].innerText;
+            const diagnostico = cells[3].innerText;
             const fechaTratamiento = cells[4].innerText;
 
             fetch('../Tratamiento/modificar.php', {
@@ -240,7 +259,7 @@
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded'
                 },
-                body: `idDetalleTratamiento=${idDetalleTratamiento}&idTratamientoDT=${idTratamientoDT}&descripcionTratamiento=${descripcionTratamiento}&duracion=${duracion}&fechaTratamiento=${fechaTratamiento}`
+                body: `idTratamiento=${idTratamiento}&descripcionTratamiento=${descripcionTratamiento}&duracion=${duracion}&diagnostico=${diagnostico}&fechaTratamiento=${fechaTratamiento}`
             })
             .then(response => response.json())
             .then(data => {

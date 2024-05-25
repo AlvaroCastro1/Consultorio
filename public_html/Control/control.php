@@ -1,13 +1,4 @@
 <?php
-// Obtener el valor de idExpediente de la URL
-$idExpediente = $_GET['idExpediente'] ?? null;
-
-// Verificar si idExpediente es null y mostrar un mensaje de error si es así
-if ($idExpediente === null) {
-    echo 'Error: El parámetro idExpediente no se ha especificado.';
-    
-    exit; // Terminar el script para evitar que se procese el resto de la página
-}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -16,9 +7,9 @@ if ($idExpediente === null) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Control de crecimiento</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="/assets/css/ControlStyles.css">
-    <link rel="stylesheet" href="/assets/css/barraNav.css">
-    <script src="/assets/js/header.js"></script>
+    <link rel="stylesheet" href="../assets/css/ControlStyles.css">
+    <link rel="stylesheet" href="../assets/css/barraNav.css">
+    <script src="../assets/js/header.js"></script>
 </head>
 <body>
 
@@ -32,7 +23,7 @@ if ($idExpediente === null) {
             {name: "Tratamiento", uri: "../Tratamiento/Tratamiento.html"},
             {name: "Procedimiento", uri: "../Procedimiento/procedimiento.html"},
             {name: "Control de Crecimiento", uri: "../Control/control.html"},
-            {name: "Gráficas", uri: "../Graficar/index.php?idExpediente=<?php echo $idExpediente; ?>"}
+            {name: "Gráficas", uri: "../Graficar/index.php"}
 
         ];
     
@@ -112,7 +103,26 @@ if ($idExpediente === null) {
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
+        var idPaciente = null;
+        var idExpediente = null; 
+
+        obtenerDatosSession()
+        function obtenerDatosSession(){
+            // Obtener los datos de sessionStorage
+            const datos = JSON.parse(sessionStorage.getItem('datosPaciente'));
+
+            if (datos) {
+                idPaciente = datos.idPacienteE;
+                idExpediente = datos.idExpedienteE
+
+                console.log("se obtuvieron los datos idPaciente: ", idPaciente, "idExpediente: ", idExpediente);
+            } else {
+                console.log('No se encontraron datos en sessionStorage');
+            }
+        }
         function agregarDesdeModal() {
+            console.log("se obtuvieron los datos idPaciente: ", idPaciente, "idExpediente: ", idExpediente);
+            
             const altura = document.getElementById('alturaInput').value;
             const peso= document.getElementById('pesoInput').value;
             const perimetroC = document.getElementById('perimetroCInput').value;

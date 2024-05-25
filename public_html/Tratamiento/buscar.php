@@ -2,18 +2,25 @@
 // Incluir el archivo de conexión a la base de datos
 require '../includes/conexion.php';
 
-$columns = ['idDetalleTratamiento','idTratamientoDT', 'descripcionTratamiento', 'duracion'];
-//fecha de tratamiento pertenece a la tabla de tratamiento y lo debo buscar con un innerjoin usando idTratamientoDT
-$columnsABuscar = ['fechaTrataniemto'];
+// Obtener el idExpediente del POST
+$idExpediente = isset($_POST['idExpediente']) ? intval($_POST['idExpediente']) : 0;
 
-$table = "detalleTratamiento";
+if ($idExpediente == 0) {
+    echo json_encode('<tr><td colspan="5">No se ha proporcionado un idExpediente válido</td></tr>', JSON_UNESCAPED_UNICODE);
+    exit;
+}
 
+$columns = ['Tratamiento.idTratamiento', 'Tratamiento.descripcionTratamiento', 'Tratamiento.duracion', 'Tratamiento.diagnostico', 'Tratamiento.fechaTratamiento'];
+$columnsABuscar = ['Tratamiento.descripcionTratamiento', 'Tratamiento.duracion', 'Tratamiento.diagnostico', 'Tratamiento.fechaTratamiento'];
+
+$table = "Tratamiento";
+$detalleTable = "detalleTratamiento";
 $campo = isset($_POST['input-busqueda']) ? $conn->real_escape_string($_POST['input-busqueda']) : null;
 
-$where = '';
+$where = "WHERE $detalleTable.idExpedienteT = $idExpediente";
 
 if ($campo != null) {
-    $where = "WHERE (";
+    $where .= " AND (";
 
     $cont = count($columnsABuscar);
 
@@ -25,21 +32,23 @@ if ($campo != null) {
     $where .= ")";
 }
 
-$sql = "SELECT " . implode(", ", $columns) . " FROM $table $where";
+$sql = "SELECT " . implode(", ", $columns) . " 
+        FROM $table 
+        INNER JOIN $detalleTable ON $table.idTratamiento = $detalleTable.idTratamientoT 
+        $where";
+        
 $resultado = $conn->query($sql);
 $html = '';
-
 
 if ($resultado) {
     if ($resultado->num_rows > 0) {
         while ($row = $resultado->fetch_assoc()) {
             $html .= '<tr>';
-            $html .= '<td>' . $row['idDetalleTratamiento'] . '</td>';
-            $html .= '<td>' . $row['idTratamientoDT'] . '</td>';
+            $html .= '<td>' . $row['idTratamiento'] . '</td>';
             $html .= '<td>' . $row['descripcionTratamiento'] . '</td>';
             $html .= '<td>' . $row['duracion'] . '</td>';
-            $html .= '<td>' . $row['duracion'] . '</td>';
-            $html .= '<td>' . $row['duracion'] . '</td>';
+            $html .= '<td>' . $row['diagnostico'] . '</td>';
+            $html .= '<td>' . $row['fechaTratamiento'] . '</td>';
             $html .= '<td>
             <button type="button" class="btn btn-danger me-2" onclick="eliminarFila(this)">Eliminar</button>
             <button type="button" class="btn btn-primary" onclick="modificarTratamiento(this)">Modificar</button>
@@ -48,15 +57,12 @@ if ($resultado) {
         }
     } else {
         $html .= '<tr>';
-        $html .= '<td colspan="7">No se encontraron resultados</td>';
-        $html .= '</tr>';
+        $html .= '<td colspan="5">No se encontraron resultados</td>';
     }
 } else {
     $html .= '<tr>';
-    $html .= '<td colspan="7">Error al ejecutar la consulta</td>';
-    $html .= '</tr>';
+    $html .= '<td colspan="5">Error al ejecutar la consulta</td>';
 }
 
 echo json_encode($html, JSON_UNESCAPED_UNICODE);
-
 ?>

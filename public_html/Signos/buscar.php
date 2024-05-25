@@ -2,17 +2,25 @@
 // Incluir el archivo de conexión a la base de datos
 require '../includes/conexion.php';
 
-$columns = ['idSignos','temperatura', 'frecuenciaRespiratoria', 'frecuenciaCardiaca', 'oxigenacion', 'presionArterial', 'estadoHidratacion', 'estadoConciencia', 'estadoNeurologico', 'fechaActualizacion'];
-$columnsABuscar = ['fechaActualizacion'];
+// Obtener el idExpedienteDS del POST
+$idExpedienteDS = isset($_POST['idExpedienteDS']) ? intval($_POST['idExpedienteDS']) : 0;
+
+if ($idExpedienteDS == 0) {
+    echo json_encode('<tr><td colspan="10">No se ha proporcionado un idExpedienteDS válido</td></tr>', JSON_UNESCAPED_UNICODE);
+    exit;
+}
+
+$columns = ['Signos.idSignos', 'Signos.temperatura', 'Signos.frecuenciaRespiratoria', 'Signos.frecuenciaCardiaca', 'Signos.oxigenacion', 'Signos.presionArterial', 'Signos.estadoHidratacion', 'Signos.estadoConciencia', 'Signos.estadoNeurologico', 'Signos.fechaActualizacion'];
+$columnsABuscar = ['Signos.fechaActualizacion'];
 
 $table = "Signos";
-
+$detalleTable = "detalleSignos";
 $campo = isset($_POST['input-busqueda']) ? $conn->real_escape_string($_POST['input-busqueda']) : null;
 
-$where = '';
+$where = "WHERE $detalleTable.idExpedienteDS = $idExpedienteDS";
 
 if ($campo != null) {
-    $where = "WHERE (";
+    $where .= " AND (";
 
     $cont = count($columnsABuscar);
 
@@ -24,7 +32,11 @@ if ($campo != null) {
     $where .= ")";
 }
 
-$sql = "SELECT " . implode(", ", $columns) . " FROM $table $where";
+$sql = "SELECT " . implode(", ", $columns) . " 
+        FROM $table 
+        INNER JOIN $detalleTable ON $table.idSignos = $detalleTable.idSignosDS 
+        $where";
+        
 $resultado = $conn->query($sql);
 $html = '';
 
@@ -60,5 +72,5 @@ if ($resultado) {
 }
 
 echo json_encode($html, JSON_UNESCAPED_UNICODE);
-
 ?>
+

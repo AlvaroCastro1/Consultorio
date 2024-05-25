@@ -30,47 +30,98 @@
     <div class="container2 mt-5">
         <h1 class="titulo text-center mb-4">Detalles del Paciente</h1>
 
-        <!-- Información del paciente usando filas y columnas -->
-        <div class="row mb-3">
-            <div class="col-md-6">
-                <strong>Nombre:</strong> Juan Pérez
-            </div>
-            <div class="col-md-6">
-                <strong>Apellido Paterno:</strong> Pérez
-            </div>
+        <!-- Campo para el nombre -->
+        <div class="mb-3">
+            <label para="nombre" class="form-label">Nombre</label>
+            <input type="text" class="form-control" id="nombre" value="Juan Pérez" required>
         </div>
-        <div class="row mb-3">
-            <div class="col-md-6">
-                <strong>Apellido Materno:</strong> García
-            </div>
-            <div class="col-md-6">
-                <strong>Fecha de Nacimiento:</strong> 01/01/1990
-            </div>
+
+        <!-- Campo para apellido paterno -->
+        <div class="mb-3">
+            <label para="apellido-paterno" class="form-label">Apellido Paterno</label>
+            <input type="text" class="form-control" id="apellido-paterno" value="Pérez" required>
         </div>
-        <div class="row mb-3">
-            <div class="col-md-6">
-                <strong>Sexo:</strong> Masculino
-            </div>
-            <div class="col-md-6">
-                <strong>Teléfono:</strong> 123-456-7890
-            </div>
+
+        <!-- Campo para apellido materno -->
+        <div class="mb-3">
+            <label para="apellido-materno" class="form-label">Apellido Materno</label>
+            <input type="text" class="form-control" id="apellido-materno" value="García" required>
         </div>
-        <div class="row mb-3">
-            <div class="col-md-6">
-                <strong>Correo Electrónico:</strong> juan.perez@example.com
-            </div>
-            <div class="col-md-6">
-                <strong>Dirección:</strong>
-                <ul>
-                  <li><strong>País:</strong> País ABC</li>
-                  <li><strong>Estado:</strong> Estado XYZ</li>
-                  <li><strong>Municipio:</strong> Municipio ABC</li>
-                  <li><strong>Localidad:</strong> Ciudad XYZ</li>
-                  <li><strong>Número Exterior:</strong> 123</li>
-                  <li><strong>Número Interior:</strong> 10A</li>
-                  <li><strong>Código Postal:</strong> 12345</li>
-                </ul>
-              </div>              
+
+        <!-- Campo para la fecha de nacimiento -->
+        <div class="mb-3">
+            <label para="fecha-nacimiento" class="form-label">Fecha de Nacimiento</label>
+            <input type="date" class="form-control" id="fecha-nacimiento" value="1990-01-01" required>
+        </div>
+
+        <!-- Campo para el sexo -->
+        <div class="mb-3">
+            <label para="sexo" class="form-label">Sexo</label>
+            <input type="text" class="form-control" id="sexo" value="García" required>
+
+        </div>
+
+        <!-- Campo para el teléfono -->
+        <div class="mb-3">
+            <label para="telefono" class="form-label">Teléfono</label>
+            <input type="text" class="form-control" id="telefono" value="123-456-7890" required>
+        </div>
+
+        <!-- Campo para el correo electrónico -->
+        <div class="mb-3">
+            <label para="email" class="form-label">Correo Electrónico</label>
+            <input type="email" class="form-control" id="email" value="juan.perez@example.com" required>
+        </div>
+
+        <!-- Dirección -->
+
+        <!-- País -->
+        <div class="mb-3">
+            <label for="pais" class="form-label">País</label>
+            <input type="text" class="form-control" id="pais" required>
+        </div>
+
+        <!-- Estado -->
+        <div class="mb-3">
+            <label for="estado" class="form-label">Estado</label>
+            <input type="text" class="form-control" id="estado" required>
+        </div>
+
+        <!-- Municipio -->
+        <div class="mb-3">
+            <label for="municipio" class="form-label">Municipio</label>
+            <input type="text" class="form-control" id="municipio"  required>
+        </div>
+
+        <!-- Localidad -->
+        <div class="mb-3">
+            <label for="localidad" class="form-label">Localidad</label>
+            <input type="text" class="form-control" id="localidad"  required>
+        </div>
+
+        <!-- Número exterior -->
+        <div class="mb-3">
+            <label for="numeroExt" class="form-label">Número Exterior</label>
+            <input type="number" class="form-control" id="numeroExt" required>
+        </div>
+
+        <!-- Número interior -->
+        <div class="mb-3">
+            <label for="numeroInt" class="form-label">Número Interior</label>
+            <input type="double" class="form-control" id="numeroInt">
+        </div>
+
+        <!-- Código Postal -->
+        <div class="mb-3">
+            <label for="cp" class="form-label">Código Postal</label>
+            <input type="number" class="form-control" id="cp" required>
+        </div>
+
+
+        <!-- Campo para el tipo de sangre -->
+        <div class="mb-3">
+            <label para="tipo-sangre" class="form-label">Tipo de Sangre</label>
+            <input type="text" class="form-control" id="tipo-sangre" value="O+" required>
         </div>
 
         <!-- Botones para regresar al índice e imprimir -->
@@ -89,6 +140,74 @@
     
     <!-- Script para redirigir y para imprimir -->
     <script>
+
+        var idPaciente = null;
+        var idExpediente = null; 
+
+        obtenerDatosSession()
+        function obtenerDatosSession(){
+            // Obtener los datos de sessionStorage
+            const datos = JSON.parse(sessionStorage.getItem('datosPaciente'));
+
+            if (datos) {
+                idPaciente = datos.idPacienteE;
+                idExpediente = datos.idExpedienteE
+
+                console.log("se obtuvieron los datos idPaciente: ", idPaciente, "idExpediente: ", idExpediente);
+            } else {
+                console.log('No se encontraron datos en sessionStorage');
+            }
+        }
+
+
+        buscarSolo1()
+        function buscarSolo1() {
+
+
+                // Usar los datos como necesites
+                console.log('se obtuvo el dato idpaciente = :', idPaciente);
+
+                // Borrar los datos de sessionStorage después de usarlos
+                //sessionStorage.removeItem('datosPaciente');
+                console.log("La ID que quiero buscar es: ", idPaciente);
+
+                const formData = new FormData();
+                formData.append('idPaciente', idPaciente); // Añadir el ID del paciente al formulario
+
+                fetch('../Paciente/buscar.php', {
+                    method: 'POST',
+                    body: formData,
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        const paciente = data.data; // Guardar los datos del paciente en una variable
+                          // Asignar los datos obtenidos a cada campo del formulario
+                        document.getElementById('nombre').value = paciente.nombre;
+                        document.getElementById('apellido-paterno').value = paciente.apellidoPaterno;
+                        document.getElementById('apellido-materno').value = paciente.apellidoMaterno;
+                        document.getElementById('fecha-nacimiento').value = paciente.fechaNacimiento;
+                        document.getElementById('sexo').value = paciente.sexo;
+                        document.getElementById('telefono').value = paciente.telefono;
+                        document.getElementById('email').value = paciente.email;
+                        document.getElementById('pais').value = paciente.pais;
+                        document.getElementById('estado').value = paciente.estado;
+                        document.getElementById('municipio').value = paciente.municipio;
+                        document.getElementById('localidad').value = paciente.localidad;
+                        document.getElementById('numeroExt').value = paciente.numero_ext;
+                        document.getElementById('numeroInt').value = paciente.numero_int;
+                        document.getElementById('cp').value = paciente.codigoPostal;
+                        document.getElementById('tipo-sangre').value = paciente.tipoSangre;
+                    } else {
+                        console.error(data.message); // Imprimir mensaje de error en la consola
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error); // Imprimir error en la consola
+                });
+
+        }
+
         function regresar() {
             window.location.href = "index.html";  // Regresa a index
         }
