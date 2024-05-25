@@ -32,6 +32,8 @@
         <div class="input-group mb-3">
             <input type="text" class="form-control" placeholder="Buscar por Fecha" id="input-busqueda">
             <button class="btn btn-outline-secondary" type="button" onclick="buscar()">Buscar</button>
+            <button class="btn btn-outline-secondary" type="button" onclick="limpiar()">Limpiar</button>
+
         </div>  
         
         <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#modalAgregar">Agregar</button>
@@ -415,6 +417,12 @@
             console.log("se obtuvo el valor= ",fechaInput.value);
 
             return fechaInput.value;
+        }
+        function limpiar(){
+            document.getElementById('input-busqueda').value = '';
+            buscar()
+
+
         }
 
 

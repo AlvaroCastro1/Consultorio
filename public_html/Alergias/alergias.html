@@ -40,24 +40,24 @@
             <table class="table table-bordered table-hover" id="tabla-alergias">
                 <thead>
                     <tr>
+                        <th>Id</th>
                         <th>Tipo de alergia</th>
                         <th>Alergeno</th>
                         <th>Score</th>
                         <th>Acciones</th>
                     </tr>
                 </thead>
-                <tbody>
-                    
+                <tbody id="content">
                     <tr>
+                        <td contenteditable ="false">Id</td> 
                         <td contenteditable="false">Ejemplo de alergia</td>
                         <td contenteditable="false">Ejemplo de alergeno</td>
                         <td contenteditable="false">Ejemplo de score</td>
                         <td>
-                            <button type="button" class="btn btn-danger me-2" onclick="eliminarAlergia()">Eliminar</button>
+                            <button type="button" class="btn btn-danger me-2" onclick="eliminarFila(this)">Eliminar</button>
                             <button type="button" class="btn btn-primary" onclick="modificarAlergia(this)">Modificar</button>
                         </td>
                     </tr>
-                    
                 </tbody>
             </table>
         </div>
@@ -78,12 +78,11 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-danger me-2" data-bs-dismiss="modal">Cerrar</button>
-                    <button type="button" class="btn btn-primary" onclick="agregarAlergiaDesdeModal()">Aceptar</button>
+                    <button type="button" class="btn btn-primary" onclick="agregarDesdeModal()">Aceptar</button>
                 </div>
             </div>
         </div>
     </div>
-    
 
     <footer>
         <div class="container3">
@@ -112,72 +111,159 @@
             }
         }
 
-
-        function agregarAlergiaDesdeModal() {
+        function agregarDesdeModal() {
             // Obtener los valores de los campos del formulario
             const tipoAlergia = document.getElementById('tipoAlergiaInput').value;
             const alergeno = document.getElementById('alergenoInput').value;
             const score = document.getElementById('scoreInput').value;
-    
-            // Insertar una nueva fila en la tabla con los datos de la alergia
-            const tabla = document.getElementById('tabla-alergias').getElementsByTagName('tbody')[0];
-            const newRow = tabla.insertRow(tabla.rows.length);
-            newRow.innerHTML = `
-                <td>${tipoAlergia}</td>
-                <td>${alergeno}</td>
-                <td>${score}</td>
-                <td>
-                    <button type="button" class="btn btn-danger me-2" onclick="eliminarAlergia(this)">Eliminar</button>
-                    <button type="button" class="btn btn-primary" onclick="modificarAlergia(this)">Modificar</button>
-                </td>
-            `;
-    
-            // Cerrar el modal después de agregar la alergia
+            // Realizar la solicitud AJAX para guardar los datos
+            fetch('../Alergias/Guardar.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: `idExpedienteDA=${idExpediente}&tipoAlergia=${tipoAlergia}&alergeno=${alergeno}&score=${score}`
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Mostrar mensaje de éxito o error
+                if (data.success) {
+                    alert(data.message);
+                    // Actualizar la tabla o hacer cualquier otra acción necesaria
+                    buscar();
+                } else {
+                    alert(data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Error al guardar los datos');
+            });
+        
+            // Cerrar el modal después de agregar el registro
             const modal = bootstrap.Modal.getInstance(document.getElementById('modalAgregar'));
             modal.hide();
-    
-            // Limpiar los campos del formulario
+        
+            // Limpiar los campos del modal
             document.getElementById('tipoAlergiaInput').value = '';
             document.getElementById('alergenoInput').value = '';
             document.getElementById('scoreInput').value = '';
         }
-    
+
+        buscar()
         function buscar() {
-            const input = document.getElementById('input-busqueda').value;
-            console.log("Buscar registros con término:", input);
+            let input = document.getElementById("input-busqueda").value;
+            let content = document.getElementById("content");
+            let url = "../Alergias/Buscar.php";
+            let formaData = new FormData();
+            
+            // Agregar idExpedienteDA solo si tiene valor
+            if (idExpediente) {
+                formaData.append('idExpedienteDA', idExpediente);
+            }
+            
+            // Agregar el tipoAlergia del input
+            formaData.append('tipoAlergia', input);
+
+            fetch(url, {
+                method: "POST",
+                body: formaData
+            }).then(response => response.json())
+            .then(data => {
+                content.innerHTML = data;
+            }).catch(err => console.log(err));
         }
-    
-        function eliminarAlergia(button) {
-            var fila = button.closest('tr');
-            fila.remove();
-            console.log("Eliminar Alergia");
+
+
+        function eliminarFila(button) {
+            // Obtener el ID de la fila
+            const row = button.closest('tr');
+            const idSignos = row.querySelector('td:first-child').textContent;
+            console.log("la id que quiero eliminar es: ", idSignos);
+            // Realizar la solicitud AJAX para guardar los datos
+            fetch('../Alergias/eliminar.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: `idAlergia=${idSignos}`
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Mostrar mensaje de éxito o error
+                if (data.success) {
+                    alert(data.message);
+                    // Actualizar la tabla o hacer cualquier otra acción necesaria
+                    buscar();
+                } else {
+                    alert(data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Error al eliminar los datos');
+            });
         }
 
         function modificarAlergia(button) {
             const row = button.closest('tr');
             const cells = row.querySelectorAll('td');
+            contador = 0;
             cells.forEach(cell => {
-                cell.contentEditable = true;
+                if (contador ==0){
+                    cell.contentEditable = false;
+                    contador = contador +1;
+
+                }else{
+                    cell.contentEditable = true;
+                }
             });
-            
             button.textContent = "Guardar";
             button.classList.remove('btn-primary');
             button.classList.add('btn-success');
             button.setAttribute('onclick', 'guardarAlergia(this)');
         }
-    
+
         function guardarAlergia(button) {
             const row = button.closest('tr');
             const cells = row.querySelectorAll('td');
-            cells.forEach(cell => {
-                cell.contentEditable = false;
+
+
+            const idAlergias = cells[0].innerText;
+            const tiposAlergia = cells[1].innerText;
+            const alergeno = cells[2].innerText;
+            const score = cells[3].innerText;
+
+
+            console.log("Dato 1:", idAlergias);
+            console.log("Dato 2:", tiposAlergia);
+            console.log("Dato 3:", alergeno);
+            console.log("Dato 4:", score);
+
+            fetch('../Alergias/Modificar.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: `idAlergia=${idAlergias}&tipoAlergia=${tiposAlergia}&alergeno=${alergeno}&score=${score}`
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Mostrar mensaje de éxito o error
+                if (data.success) {
+                    alert(data.message);
+                    // Actualizar la tabla o hacer cualquier otra acción necesaria
+                    buscar();
+                } else {
+                    alert(data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Error al guardar los datos');
             });
-            button.textContent = "Modificar";
-            button.classList.remove('btn-success');
-            button.classList.add('btn-primary');
-            button.setAttribute('onclick', 'modificarAlergia(this)');
-            console.log("Guardar alergia");
         }
+
     </script>
 </body>
 </html>
