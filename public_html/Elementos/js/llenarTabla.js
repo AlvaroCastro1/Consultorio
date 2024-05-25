@@ -1,5 +1,4 @@
-
-document.addEventListener("DOMContentLoaded", function() {
+function cargarElementos() {
     // Obtén el idEstudio de la URL
     const urlParams = new URLSearchParams(window.location.search);
     const idEstudio = urlParams.get('idEstudio');
@@ -37,7 +36,14 @@ document.addEventListener("DOMContentLoaded", function() {
             }
         });
     }
-});
+}
+
+
+function limpiar() {
+    document.getElementById('input-busqueda').value = '';
+    cargarElementos();
+}
+
 
 function buscar() {
     const urlParams = new URLSearchParams(window.location.search);

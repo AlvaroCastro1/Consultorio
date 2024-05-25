@@ -1,19 +1,20 @@
-function eliminarElementosIndividual(idElemento, idDetalleElemento, rowIndex) {
-    const confirmacion = confirm("¿Estás seguro de que quieres eliminar este elemento?");
+function eliminarEstudio(idEstudio, idDetalleEstudio, rowIndex) {
+    const confirmacion = confirm("¿Estás seguro de que quieres eliminar este estudio?");
+    console.log(idEstudio)
     
     if (confirmacion) {
         const xhr = new XMLHttpRequest();
-        xhr.open("POST", "eliminarElemento.php", true);
+        xhr.open("POST", "eliminar_estudio.php", true);
         xhr.setRequestHeader("Content-Type", "application/json");
         xhr.onload = function() {
             if (xhr.status === 200) {
-                alert("Elemento eliminado exitosamente");
+                alert("Estudio eliminado exitosamente");
                 // Eliminar la fila de la tabla
-                document.getElementById("tabla-ElementosIndividual").deleteRow(rowIndex);
+                document.getElementById("tabla-estudios").deleteRow(rowIndex);
             } else {
-                alert("Hubo un error al eliminar el elemento");
+                alert("Hubo un error al eliminar el estudio");
             }
         };
-        xhr.send(JSON.stringify({ idElemento: idElemento, idDetalleElemento: idDetalleElemento }));
+        xhr.send(JSON.stringify({ idEstudio: idEstudio, idDetalleEstudio: idDetalleEstudio }));
     }
 }

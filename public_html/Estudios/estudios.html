@@ -41,8 +41,9 @@
         <h1 class="titulo-inicio mb-4">Estudios</h1>
 
         <div class="input-group mb-3">
-            <input type="text" class="form-control" placeholder="Buscar por tipo" id="input-busqueda">
+            <input type="text" class="form-control" placeholder="Buscar por nombre" id="input-busqueda">
             <button class="btn btn-outline-secondary" type="button" onclick="buscar()">Buscar</button>
+            <button class="btn btn-outline-secondary" type="button" onclick="limpiar()">Limpiar</button>
         </div>
         
 
@@ -128,7 +129,7 @@
         </div>
         <div class="espacio-final"></div>
     </div>
-
+    <script>cargarEstudios() </script>
     <footer>
         <div class="container3">
             <p>Pie de página</p>

@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", function() {
+function cargarEstudios() {
     // Obtener la tabla
     const tabla = document.getElementById("tabla-estudios");
 
@@ -32,7 +32,11 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     };
     xhr.send();
-});
+}
+function limpiar() {
+    document.getElementById('input-busqueda').value = '';
+    cargarEstudios();
+}
 
 
 function buscar() {
