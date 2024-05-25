@@ -32,6 +32,7 @@
         <div class="input-group mb-3">
             <input type="text" class="form-control" placeholder="Buscar por Tipo" id="input-busqueda">
             <button class="btn btn-outline-secondary" type="button" onclick="buscar()">Buscar</button>
+            <button class="btn btn-outline-secondary" type="button" onclick="limpiar()">Limpiar</button>
         </div>
 
         <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#modalAgregar">Agregar</button>
@@ -40,20 +41,22 @@
             <table class="table table-bordered table-hover" id="tabla-antecedentes">
                 <thead>
                     <tr>
+                        <th>Id Antecedente</th>
                         <th>Tipo de antecdente</th>
                         <th>Nombre del padecimiento</th>
                         <th>Descripción</th>
                         <th>Acciones</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody id="content">
                     
                     <tr>
-                        <td contenteditable="false">Ejemplo de tipo</td>
+                        <td contenteditable="false">Ejemplo de id</td>
+                        <td contenteditable="false">Ejemplo de tipo Antecedente</td>
                         <td contenteditable="false">Ejemplo de padecimiento</td>
                         <td contenteditable="false">Ejemplo de descripción</td>
                         <td>
-                            <button type="button" class="btn btn-danger me-2" onclick="eliminarAntecedente()">Eliminar</button>
+                            <button type="button" class="btn btn-danger me-2" onclick="eliminarFila()">Eliminar</button>
                             <button type="button" class="btn btn-primary" onclick="modificarAntecedente(this)">Modificar</button>
                         </td>
                     </tr>
@@ -119,18 +122,29 @@
             const padecimiento= document.getElementById('padecimientoInput').value;
             const descripcion = document.getElementById('descripcionInput').value;
     
-            // Insertar una nueva fila en la tabla con los datos de la alergia
-            const tabla = document.getElementById('tabla-antecedente').getElementsByTagName('tbody')[0];
-            const newRow = tabla.insertRow(tabla.rows.length);
-            newRow.innerHTML = `
-                <td>${tipoAntecedente}</td>
-                <td>${padecimiento}</td>
-                <td>${descripcion}</td>
-                <td>
-                    <button type="button" class="btn btn-danger me-2" onclick="eliminarAntecedente(this)">Eliminar</button>
-                    <button type="button" class="btn btn-primary" onclick="modificarAntecedente(this)">Modificar</button>
-                </td>
-            `;
+            // Realizar la solicitud AJAX para guardar los datos
+            fetch('../Antecedentes/guardar.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: `idExpedienteDA=${idExpediente}&tipoAntecedente=${tipoAntecedente}&nombrePadecimiento=${padecimiento}&descripcion=${descripcion}`
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Mostrar mensaje de éxito o error
+                if (data.success) {
+                    alert(data.message);
+                    // Actualizar la tabla o hacer cualquier otra acción necesaria
+                    buscar();
+                } else {
+                    alert(data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Error al guardar los datos');
+            });
     
             // Cerrar el modal después de agregar la alergia
             const modal = bootstrap.Modal.getInstance(document.getElementById('modalAgregar'));
@@ -142,41 +156,118 @@
             document.getElementById('descripcionInput').value = '';
         }
     
+        buscar()
         function buscar() {
-            const input = document.getElementById('input-busqueda').value;
-            console.log("Buscar registros con término:", input);
+            let input = document.getElementById("input-busqueda").value
+            console.log("Buscar registros de signos:", input);
+            let content = document.getElementById("content")
+            let url = "../Antecedentes/buscar.php"
+            let formaData = new FormData()
+            
+            formaData.append('idExpedienteDA', idExpediente)
+            formaData.append('tipoAntecedente', input)
+
+            fetch(url, {
+                method: "POST",
+                body: formaData
+            }).then(Response => Response.json())
+            .then(data => {
+                content.innerHTML = data
+
+            }).catch(err => console.log(err))
         }
     
-        function eliminarAntecedente(button) {
-            var fila = button.closest('tr');
-            fila.remove();
-            console.log("Eliminar Antecedente");
+        function eliminarFila(button) {
+            // Obtener el ID de la fila
+            const row = button.closest('tr');
+            const idAntecedentes = row.querySelector('td:first-child').textContent;
+            console.log("la id que quiero eliminar es: ", idAntecedentes);
+
+            
+            // Realizar la solicitud AJAX para guardar los datos
+            fetch('../Antecedentes/eliminar.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: `idAntecedentes=${idAntecedentes}`
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Mostrar mensaje de éxito o error
+                if (data.success) {
+                    alert(data.message);
+                    // Actualizar la tabla o hacer cualquier otra acción necesaria
+                    buscar();
+                } else {
+                    alert(data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Error al eliminar los datos');
+            });
         }
 
         function modificarAntecedente(button) {
             const row = button.closest('tr');
             const cells = row.querySelectorAll('td');
+            contador = 0;
             cells.forEach(cell => {
-                cell.contentEditable = true;
+                if (contador ==0){
+                    cell.contentEditable = false;
+                    contador = contador +1;
+
+                }else{
+                    cell.contentEditable = true;
+                }
             });
-            
             button.textContent = "Guardar";
             button.classList.remove('btn-primary');
             button.classList.add('btn-success');
             button.setAttribute('onclick', 'guardarAntecedente(this)');
         }
-    
+
         function guardarAntecedente(button) {
             const row = button.closest('tr');
             const cells = row.querySelectorAll('td');
-            cells.forEach(cell => {
-                cell.contentEditable = false;
+
+
+            const idAntecedentes = cells[0].innerText;
+            const tipoAntecedente = cells[1].innerText;
+            const nombrePadecimiento = cells[2].innerText;
+            const descripcion = cells[3].innerText;
+
+
+            fetch('../Antecedentes/modificar.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: `idAntecedentes=${idAntecedentes}&tipoAntecedente=${tipoAntecedente}&nombrePadecimiento=${nombrePadecimiento}&descripcion=${descripcion}`
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Mostrar mensaje de éxito o error
+                if (data.success) {
+                    alert(data.message);
+                    // Actualizar la tabla o hacer cualquier otra acción necesaria
+                    buscar();
+                } else {
+                    alert(data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Error al guardar los datos');
             });
-            button.textContent = "Modificar";
-            button.classList.remove('btn-success');
-            button.classList.add('btn-primary');
-            button.setAttribute('onclick', 'modificarAntecedente(this)');
-            console.log("Guardar antecedente");
+        }
+
+        function limpiar(){
+            document.getElementById('input-busqueda').value = '';
+            buscar()
+
+
         }
     </script>
 </body>
