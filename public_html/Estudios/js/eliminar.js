@@ -1,7 +1,7 @@
 function eliminarEstudio(idEstudio, idDetalleEstudio, rowIndex) {
     const confirmacion = confirm("¿Estás seguro de que quieres eliminar este estudio?");
     console.log(idEstudio)
-    console.log(idDetalleEstudio)
+    
     if (confirmacion) {
         const xhr = new XMLHttpRequest();
         xhr.open("POST", "eliminar_estudio.php", true);

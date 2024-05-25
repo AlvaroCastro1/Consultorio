@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,6 +14,8 @@
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="js/llenarTabla.js"></script>
     <script src="js/eliminar.js"></script>
+    <script src="js/modificar.js"></script>
+    
    
 </head>
 <body>
@@ -75,6 +77,30 @@
                         
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                         <button type="button" class="btn btn-primary" id="GuardarEstudio"onclick="agregarEstudio()">Guardar Todo</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="modalModificar" tabindex="-1" aria-labelledby="modalModificar" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modalModificar">Modificar Registro de Estudios</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <input type="hidden" class="form-control mb-3" id="idEstudioInputModificar" placeholder="Tipo">
+                        <input type="text" class="form-control mb-3" id="tipoEstudioInputModificar" placeholder="Tipo">
+                        <input type="text" class="form-control mb-3" id="nombreEstudioInputModificar" placeholder="Nombre">
+                        <input type="text" class="form-control mb-3" id="descripcionEstudioInputModificar" placeholder="Descripción">
+                        <input type="date" class="form-control mb-3" id="fechaInputModificar">
+                        
+                    </div>
+                    <div class="modal-footer">
+                        
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                        <button type="button" class="btn btn-primary" id="ModificarEstudio"onclick="guardarModificacionEstudio()">Guardar Todo</button>
                     </div>
                 </div>
             </div>
