@@ -1,16 +1,17 @@
 <?php
 include '../includes/conexion.php';
 
-if (isset($_GET['nombre'])) {
-    $nombre = $_GET['nombre'];
+if (isset($_GET['idEstudio'])) {
+    $idEstudio = $_GET['idEstudio'];
+    $nombre = isset($_GET['nombre']) ? '%' . $_GET['nombre'] . '%' : '%';
     
     $query = "SELECT e.nombreElemento, e.rango, de.valor, de.interpretacion 
               FROM Elementos e 
               JOIN detalleElemento de ON e.idElementos = de.idElementosDElem
-              WHERE e.nombreElemento LIKE ?";
+              WHERE de.idEstudioDElem = ? AND e.nombreElemento LIKE ?";
+
     $stmt = $conn->prepare($query);
-    $likeNombre = "%".$nombre."%";
-    $stmt->bind_param('s', $likeNombre);
+    $stmt->bind_param('is', $idEstudio, $nombre);
     $stmt->execute();
     $result = $stmt->get_result();
 

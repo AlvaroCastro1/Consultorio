@@ -39,17 +39,19 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 function buscar() {
-    var nombre = document.getElementById('input-busqueda').value;
-
-    if (!nombre) {
-        alert('Por favor, ingresa un nombre para buscar.');
+    const urlParams = new URLSearchParams(window.location.search);
+    const idEstudio = urlParams.get('idEstudio');
+    const nombre = document.getElementById('input-busqueda').value.trim();
+    
+    if (!idEstudio) {
+        alert('No se ha proporcionado un ID de estudio.');
         return;
     }
 
     $.ajax({
         url: 'buscarElemento.php',
         type: 'GET',
-        data: { nombre: nombre },
+        data: { idEstudio: idEstudio, nombre: nombre },
         success: function(response) {
             var elementos = JSON.parse(response);
             var tbody = document.getElementById('tabla-ElementosIndividual').getElementsByTagName('tbody')[0];
@@ -75,4 +77,3 @@ function buscar() {
         }
     });
 }
-
