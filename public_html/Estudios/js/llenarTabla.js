@@ -63,7 +63,8 @@ function buscar() {
                     </td>
                     <td>
                         <button type="button" class="btn btn-danger me-2" onclick="eliminarEstudio(${estudio.idEstudio}, ${estudio.idDetalleEstudio}, ${rowIndex})">Eliminar</button>
-                        <button type="button" class="btn btn-primary" onclick="modificarEstudio(this)">Modificar</button>
+                        <button type="button" class="btn btn-primary" onclick="modificarEstudio(${estudio.idEstudio},${rowIndex} )">Modificar</button>
+                    
                     </td>
                 `;
                 rowIndex++;
