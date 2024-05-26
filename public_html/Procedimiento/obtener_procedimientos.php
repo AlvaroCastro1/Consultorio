@@ -4,10 +4,11 @@ include '../includes/conexion.php';
 $idExpediente = $_POST['idExpediente'];
 
 $query = "
-    SELECT p.nombreProceso, p.descripcionProcedimiento, dp.observaciones, dp.fechaProceso 
+    SELECT p.nombreProceso, p.descripcionProcedimiento, dp.observaciones, dp.fechaProceso, dp.idDetalleProcedimiento
     FROM Procedimiento p 
     INNER JOIN detalleProcedimiento dp ON p.idProcedimiento = dp.idProcedimientoDP 
     WHERE dp.idExpedienteDP = ?";
+
 
 $stmt = $conn->prepare($query);
 $stmt->bind_param("i", $idExpediente);

@@ -19,6 +19,7 @@ window.cargarProcedimientos = function () {
             $('#tabla-procedimientos tbody').empty();
 
             // Iterar sobre los procedimientos y agregarlos a la tabla
+            console.log(procedimientos);
             procedimientos.forEach(function(procedimiento, index) {
                 let row = `<tr>
                                 <td>${procedimiento.nombreProceso}</td>
@@ -26,7 +27,7 @@ window.cargarProcedimientos = function () {
                                 <td>${procedimiento.observaciones}</td>
                                 <td>${procedimiento.fechaProceso}</td>
                                 <td>
-                                    <button type="button" class="btn btn-danger me-2" onclick="eliminarProcedimiento(${index})">Eliminar</button>
+                                    <button type="button" class="btn btn-danger me-2" onclick="eliminarProcedimiento(${procedimiento.idDetalleProcedimiento})">Eliminar</button>
                                     <button type="button" class="btn btn-primary" onclick="modificarProcedimiento(${index})">Modificar</button>
                                 </td>
                             </tr>`;
@@ -82,7 +83,7 @@ window.buscar = function() {
                                 <td>${procedimiento.observaciones}</td>
                                 <td>${procedimiento.fechaProceso}</td>
                                 <td>
-                                    <button type="button" class="btn btn-danger me-2" onclick="eliminarProcedimiento()">Eliminar</button>
+                                    <button type="button" class="btn btn-danger me-2" onclick="eliminarProcedimiento(${procedimiento.idDetalleProcedimiento})">Eliminar</button>
                                     <button type="button" class="btn btn-primary" onclick="modificarProcedimiento(this)">Modificar</button>
                                 </td>
                             </tr>`;

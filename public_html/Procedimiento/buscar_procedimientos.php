@@ -5,7 +5,7 @@ include '../includes/conexion.php';
 $fechaBusqueda = $_POST['fechaBusqueda'];
 
 $query = "
-SELECT P.nombreProceso, P.descripcionProcedimiento, DP.observaciones, DP.fechaProceso
+SELECT P.nombreProceso, P.descripcionProcedimiento, DP.observaciones, DP.fechaProceso, DP.idDetalleProcedimiento
 FROM Procedimiento P
 INNER JOIN detalleProcedimiento DP ON P.idProcedimiento = DP.idProcedimientoDP
 WHERE DP.fechaProceso = ?
