@@ -98,6 +98,15 @@
             background-color: #57ff48;
             border-color: #57ff48;
         }
+        .btn-citas {
+            background-color: #af56ca;
+            border-color: #c09e95;
+        }
+
+        .btn-citas:hover {
+            background-color: #B695C0;
+            border-color: #B695C0;
+        }
 
         
         .espacio-final {
