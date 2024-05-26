@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="../assets/css/barraNav.css">
     <script src="../assets/js/header.js"></script>
     <script type="module" src="js/obtenerCitas.js"></script>
+    <script src="../Calendario/js/obt_horarios.js"></script>
 
 </head>
 <body>
@@ -39,7 +40,6 @@
         <script>
             document.getElementById('btnAgregar').addEventListener('click', function() {
                 resetModal();
-                
             });
         </script>
         <div class="table-responsive">
@@ -70,7 +70,11 @@
                 </div>
                 <div class="modal-body">
                     <form id="addEventForm">
-                        
+                        <div class="form-group">
+                            <label for="input-IDpaciente">ID del Paciente</label>
+                            <input type="text" class="form-control" id="input-IDpaciente" required disabled>
+
+                        </div>
                         <div class="form-group">
                             <label for="eventDate">Fecha del Evento</label>
                             <input type="date" class="form-control" id="eventDate" required>
@@ -98,8 +102,39 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            var modalAgregar = new bootstrap.Modal(document.getElementById('modalAgregar'));
+
+            document.getElementById('btnAgregar').addEventListener('click', function() {
+                resetModal();
+                modalAgregar.show();
+                
+            });
+
+            
+
             // Llamar a la función cargarCitas con el idPaciente deseado
             cargarCitas();
+        });
+
+        $('#modalAgregar').on('shown.bs.modal', function() {
+            var fechaSeleccionada = new Date();
+            // Convertir a formato YYYY-MM-DD
+            var dia = ("0" + fechaSeleccionada.getDate()).slice(-2);
+            var mes = ("0" + (fechaSeleccionada.getMonth() + 1)).slice(-2);
+            var ano = fechaSeleccionada.getFullYear();
+
+            var fechaFormateada = ano + '-' + mes + '-' + dia;
+            console.log(fechaFormateada);
+
+            cargarHorarios('#eventTime', fechaFormateada, null, null);
+            document.getElementById('eventDate').value = fechaFormateada;
+            console.log("este codigo se ejecuto");
+        });
+
+
+        $('#eventDate').on('change', function() {
+            var fechaSeleccionada = $(this).val();
+            cargarHorarios('#eventTime', fechaSeleccionada, null, null);
         });
     </script>
 

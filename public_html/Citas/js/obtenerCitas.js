@@ -1,4 +1,6 @@
+
 import { idPaciente, idExpediente, obtenerDatosSession } from '../../Estudios/js/obtenerExpediente.js';
+
 
 
 
@@ -45,4 +47,5 @@ window.resetModal = function() {
     
     document.getElementById('addEventForm').reset();
     modalAgregar.show();
+    document.getElementById('input-IDpaciente').value = idPaciente;
 };

@@ -40,7 +40,7 @@ function cargarHorarios(idComboBox, fechaSeleccionada, fechaActual, horarioExtra
     
     // Agregar timestamp para evitar caché
     var timestamp = new Date().getTime();
-    var url = 'obtener_horarios_disponibles.php?timestamp=' + timestamp;
+    var url = '../Calendario/obtener_horarios_disponibles.php?timestamp=' + timestamp;
 
     $.ajax({
         url: url,
