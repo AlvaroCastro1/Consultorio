@@ -1,6 +1,9 @@
 <?php
 include '../includes/conexion.php';
 
+// Configurar el encabezado para que el contenido devuelto sea JSON
+header('Content-Type: application/json');
+
 // Verificar si se recibió el ID de la cita a eliminar
 if (isset($_POST['id'])) {
     $idCita = $_POST['id'];
@@ -10,14 +13,14 @@ if (isset($_POST['id'])) {
 
     // Ejecutar la consulta
     if ($conn->query($sql) === TRUE) {
-        echo "La cita ha sido eliminada exitosamente";
+        echo json_encode(['success' => true, 'message' => 'La cita ha sido eliminada exitosamente']);
     } else {
-        echo "Error al eliminar la cita: " . $conn->error;
+        echo json_encode(['success' => false, 'message' => 'Error al eliminar la cita: ' . $conn->error]);
     }
 
     // Cerrar la conexión
     $conn->close();
 } else {
-    echo "ID de cita no proporcionado";
+    echo json_encode(['success' => false, 'message' => 'ID de cita no proporcionado']);
 }
 ?>
