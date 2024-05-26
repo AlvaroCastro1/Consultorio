@@ -44,3 +44,40 @@ function modificarCita(rowIndex) {
         console.error('La fila o las celdas no están definidas correctamente.');
     }
 }
+
+
+function guardarModificacionCita() {
+    var idCita = document.getElementById('input-idCita').value;
+    var idPaciente = document.getElementById('input-IDpacienteModificar').value;
+    var fecha = document.getElementById('eventDateModificar').value;
+    var hora = document.getElementById('eventTimeModificar').value;
+    var asistencia = document.getElementById('eventAttendanceModificar').checked ? 1 : 0;  // Cambiar a 1 o 0
+
+    console.log(idCita)
+    var data = {
+        citaId: idCita,
+        patientId: idPaciente,
+        eventDate: fecha,
+        eventTime: hora,
+        eventAttendance: asistencia
+    };
+
+    $.ajax({
+        url: '../Calendario/modificar_cita.php',
+        method: 'POST',
+        data: data,
+        success: function(response) {
+            if (response === 'Cita modificada correctamente') {
+                alert('Cita modificada correctamente');
+                $('#modalModificar').modal('hide');
+                location.reload(); // Recarga la página para reflejar los cambios
+            } else {
+                console.log('Error al modificar la cita: ' + response);
+            }
+        },
+        error: function(xhr, status, error) {
+            console.error('Error al modificar la cita');
+            console.error(xhr.responseText);
+        }
+    });
+}
