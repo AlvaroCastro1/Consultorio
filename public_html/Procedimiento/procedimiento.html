@@ -12,6 +12,7 @@
     <script type="module" src="js/obtenerProcedimiento.js"></script>
     <script type="module" src="js/guardarProcedimiento.js"></script>
     <script type="module" src="js/eliminarProcedimiento.js"></script>
+    <script type="module" src="js/modificarProcedimiento.js"></script>
 </head>
 <body>
 
@@ -83,6 +84,27 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-danger me-2" data-bs-dismiss="modal">Cerrar</button>
                     <button type="button" class="btn btn-primary" onclick="agregarProcedimiento()">Aceptar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modalModificar" tabindex="-1" aria-labelledby="modalModificarLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalModificarLabel">Modificar Registro de Procedimientos</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="text" class="form-control mb-3" id="nombreProcedimientoInputModificar" placeholder="Nombre del Procedimiento">
+                    <input type="text" class="form-control mb-3" id="descripcionProcedimientoInputModificar" placeholder="Descripción del Procedimiento">
+                    <input type="text" class="form-control mb-3" id="observacionesProcedimientoInputModificar" placeholder="Observaciones del Procedimiento">
+                    <input type="date" class="form-control mb-3" id="fechaProcedimientoInputModificar" placeholder="Fecha del Procedimiento">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger me-2" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-primary" onclick="ModificarProcedimiento()">Aceptar</button>
                 </div>
             </div>
         </div>
