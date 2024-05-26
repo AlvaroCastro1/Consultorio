@@ -26,10 +26,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // Función para cargar los horarios disponibles
 function cargarHorarios(idComboBox, fechaSeleccionada, fechaActual, horarioExtra) {
-    console.log(fechaActual)
-    console.log(horarioExtra)
+    console.log(fechaActual);
+    console.log(horarioExtra);
     var data = { 
-        date: fechaSeleccionada // Agregar la fecha actual a los datos
+        date: fechaSeleccionada // Agregar la fecha seleccionada a los datos
     };
     if (horarioExtra !== null) {
         data.horarioExtra = horarioExtra;
@@ -50,12 +50,17 @@ function cargarHorarios(idComboBox, fechaSeleccionada, fechaActual, horarioExtra
         success: function(response) {
             if (response.horarios && Array.isArray(response.horarios)) {
                 var comboBox = $(idComboBox);
-                console.log(response.horarios)
+                console.log(response.horarios);
                 comboBox.empty();
                 comboBox.append('<option value="">Seleccionar hora</option>');
                 response.horarios.forEach(function(time) {
                     comboBox.append('<option value="' + time + '">' + time + '</option>');
                 });
+
+                // Seleccionar la opción por defecto si horarioExtra no es null
+                if (horarioExtra !== null) {
+                    comboBox.val(horarioExtra);
+                }
             } else {
                 console.error('Error: la respuesta del servidor no contiene horarios válidos');
             }

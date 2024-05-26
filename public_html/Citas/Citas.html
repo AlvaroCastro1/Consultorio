@@ -19,6 +19,7 @@
     <script src="../Calendario/js/obt_horarios.js"></script>
     <script src="js/agregarCita.js"></script>
     <script src ="js/eliminarCita.js"></script>
+    <script src="js/modificarCita.js"></script>
     
 
 </head>
@@ -105,6 +106,52 @@
         </div>
     </div>
 
+    <div class="modal fade" id="modalModificar" tabindex="-1" aria-labelledby="modalModificarLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalModificarLabel">Modificar Cita</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="addEventForm">
+                        <div class="form-group">
+                            
+                            <input type="hidden" class="form-control" id="input-idCita">
+                            <input type="hidden" class="form-control" id="ocultoEventDate">
+                            <input type="hidden" class="form-control" id="ocultoEventTime">
+
+                        </div>
+                        <div class="form-group">
+                            <label for="input-IDpacienteModificar">ID del Paciente</label>
+                            <input type="text" class="form-control" id="input-IDpacienteModificar" required disabled>
+
+                        </div>
+                        <div class="form-group">
+                            <label for="eventDateModificar">Fecha del Evento</label>
+                            <input type="date" class="form-control" id="eventDateModificar" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="eventTimeModificar">Hora del Evento</label>
+                            
+                            <select class="form-control" id="eventTimeModificar" required>
+                                <option value="">Seleccionar hora</option>
+                            </select>
+                        </div>
+                        <div class="form-group form-check">
+                            <input type="checkbox" class="form-check-input" id="eventAttendanceModificar">
+                            <label class="form-check-label" for="eventAttendanceModificar">Asistencia</label>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-primary" id="saveButton" onclick="guardarCita()">Guardar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             var modalAgregar = new bootstrap.Modal(document.getElementById('modalAgregar'));
@@ -139,6 +186,20 @@
             var fechaSeleccionada = $(this).val();
             cargarHorarios('#eventTime', fechaSeleccionada, null, null);
         });
+
+        document.addEventListener('DOMContentLoaded', function() {
+        $('#modalModificar').on('show.bs.modal', function() {
+            var fechaSeleccionada = $('#eventDateModificar').val();
+            cargarHorarios('#eventTimeModificar', fechaSeleccionada,$('#ocultoEventDate').val(), $('#ocultoEventTime').val().slice(0, -3));
+            
+            
+        });
+
+        $('#eventDateModificar').on('change', function() {
+            var fechaSeleccionada = $(this).val();
+            cargarHorarios('#eventTimeModificar', fechaSeleccionada,$('#ocultoEventDate').val(), $('#ocultoEventTime').val().slice(0, -3));
+        });
+    });
     </script>
 
     <footer>

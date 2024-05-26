@@ -26,6 +26,7 @@ window.buscar=function () {
             tbody.innerHTML = '';
 
             if (citas.length > 0) {
+                let rowIndex = 1;
                 citas.forEach(function(cita) {
                     var row = document.createElement('tr');
                     row.innerHTML = `
@@ -36,9 +37,10 @@ window.buscar=function () {
                         <td>${cita.asistencia == 1 ? 'Asistió' : 'No asistió'}</td>
                         <td>
                             <button type="button" class="btn btn-danger me-2" onclick="eliminarCita(${cita.idCita})">Eliminar</button>
-                            <button type="button" class="btn btn-primary" onclick="modificarCita(${cita.idCita})">Modificar</button>
+                            <button type="button" class="btn btn-primary" onclick="modificarCita(${rowIndex})">Modificar</button>
                         </td>
                     `;
+                    rowIndex++;
                     tbody.appendChild(row);
                 });
             } else {

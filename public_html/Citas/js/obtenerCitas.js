@@ -19,9 +19,10 @@ window.cargarCitas=function () {
 
             // Limpiar la tabla antes de agregar nuevas filas
             $('#tabla-Citas tbody').empty();
-
+            let rowIndex = 1;
             // Iterar sobre las citas y agregarlas a la tabla
             citas.forEach(function(cita) {
+                
                 let row = `<tr>
                                 <td>${cita.idCita}</td>
                                 <td>${cita.idPacienteC}</td>
@@ -30,9 +31,10 @@ window.cargarCitas=function () {
                                 <td>${cita.asistencia == 1 ? 'Asistió' : 'No asistió'}</td>
                                 <td>
                                     <button type="button" class="btn btn-danger me-2" onclick="eliminarCita(${cita.idCita})">Eliminar</button>
-                                    <button type="button" class="btn btn-primary" onclick="modificarCita(${cita.idCita})">Modificar</button>
+                                    <button type="button" class="btn btn-primary" onclick="modificarCita(${rowIndex})">Modificar</button>
                                 </td>
                             </tr>`;
+                rowIndex++;
                 $('#tabla-Citas tbody').append(row);
             });
         },
