@@ -1,14 +1,3 @@
-<?php
-// Obtener el valor de idExpediente de la URL
-$idExpediente = $_GET['idExpediente'] ?? null;
-
-// Verificar si idExpediente es null y mostrar un mensaje de error si es así
-if ($idExpediente === null) {
-    echo 'Error: El parámetro idExpediente no se ha especificado.';
-    
-    exit; // Terminar el script para evitar que se procese el resto de la página
-}
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -44,7 +33,7 @@ if ($idExpediente === null) {
             {name: "Tratamiento", uri: "../Tratamiento/Tratamiento.html"},
             {name: "Procedimiento", uri: "../Procedimiento/procedimiento.html"},
             {name: "Control de Crecimiento", uri: "../Control/control.html"},
-            {name: "Gráficas", uri: "../Graficar/index.php?idExpediente=<?php echo $idExpediente; ?>"}
+            {name: "Gráficas", uri: "../Graficar/index.php"}
 
         ];
     
@@ -55,8 +44,9 @@ if ($idExpediente === null) {
         <h1 class="titulo-control mb-4">Control de crecimiento</h1>
         
         <div class="input-group mb-3">
-            <input type="date" class="form-control"  id="input-busqueda">
+            <input type="text" class="form-control" placeholder="Buscar por Fecha" id="input-busqueda">
             <button class="btn btn-outline-secondary" type="button" onclick="buscar()">Buscar</button>
+            <button class="btn btn-outline-secondary" type="button" onclick="limpiar()">Limpiar</button>
         </div>  
         
         <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#modalAgregar">Agregar</button>
@@ -65,17 +55,30 @@ if ($idExpediente === null) {
             <table class="table table-bordered table-hover" id="tabla-control">
                 <thead>
                     <tr>
+                        <th>Id Control</th>
                         <th>Altura</th>
                         <th>Peso</th>
-                        <th>Perimetro Cefálico</th>
                         <th>IMC</th>
+                        <th>Perimetro Cefálico</th>
                         <th>Evaluación</th>
                         <th>Fecha de Registro</th>
                         <th>Acciones</th>
                     </tr>
                 </thead>
-                <tbody id="tabla-estudios-body">
-                    
+                <tbody id="content">
+                    <tr>
+                        <td contenteditable="false">Ej id</td>
+                        <td contenteditable="false">altura</td>
+                        <td contenteditable="false">peso</td>
+                        <td contenteditable="false">imc</td>
+                        <td contenteditable="false">perimetro</td>
+                        <td contenteditable="false">Evaluacion</td>
+                        <td><input type="date" class="form-control" value="2024-04-15" readonly></td>
+                        <td>
+                            <button type="button" class="btn btn-danger me-2" onclick="eliminarFila(this)">Eliminar</button>
+                            <button type="button" class="btn btn-primary" onclick="modificarControl(this)">Modificar</button>
+                        </td>
+                    </tr>
                 </tbody>
             </table>
         </div>
@@ -90,21 +93,19 @@ if ($idExpediente === null) {
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form method="POST" action="../Control/insertarControl.php" id="registroEstudio">
-                        <input type="number" class="form-control mb-3" id="altura" name="altura" placeholder="Altura" min="40" step="0.01" >
-                        <input type="number" class="form-control mb-3" id="peso" name="peso" placeholder="Peso" min="1" step="0.001">
-                        <input type="number" class="form-control mb-3" id="circunferenciaDelCraneo" name="circunferenciaDelCraneo" placeholder="Perimetro Cefálico" min="20" step="0.01">
-                        <input type="number" class="form-control mb-3" id="indiceMasaCorporal" name="indiceMasaCorporal" placeholder="IMC" min="18" step="0.1">
-                        <input type="date" class="form-control mb-3" id="fechaControl" name="fechaControl" placeholder="Fecha de Registro">
-                        <textarea class="form-control mb-3" id="evaluacion" name="evaluacion" placeholder="Evaluación" maxlength="30"></textarea>
+                    <form id="registroEstudio">
+                        <input type="number" class="form-control mb-3" id="altura"                  placeholder="Altura">
+                        <input type="number" class="form-control mb-3" id="peso"                    placeholder="Peso">
+                        <input type="number" class="form-control mb-3" id="circunferenciaDelCraneo" placeholder="Perimetro Cefálico">
+                        <input type="number" class="form-control mb-3" id="indiceMasaCorporal"      placeholder="IMC">
+                        <input type="date"   class="form-control mb-3" id="fechaControl"            placeholder="Fecha de Registro">
+                        <input type="text"   class="form-control mb-3" id="evaluacion"              placeholder="Evaluación">
                         
                     </form>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-danger me-2" data-bs-dismiss="modal">Cerrar</button>
-                    <button type="button" class="btn btn-primary" id="btnAceptar" onclick="insertaControl()">Aceptar</button>
-                    <button type="submit" class="btn btn-primary d-none"
-                        onclick="modificar()" id="btnActualizar">Actualizar</button>
+                    <button type="button" class="btn btn-primary" onclick="agregarDesdeModal()">Aceptar</button>
                 </div>
             </div>
         </div>
@@ -118,307 +119,222 @@ if ($idExpediente === null) {
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
+        var idPaciente = null;
+        var idExpediente = null; 
 
-        var listaCrecimientos = [];
-        var crecimiento =  null;
+        obtenerDatosSession()
+        function obtenerDatosSession(){
+            // Obtener los datos de sessionStorage
+            const datos = JSON.parse(sessionStorage.getItem('datosPaciente'));
 
-        document.addEventListener("DOMContentLoaded", function() {
-            buscar();
-        });
+            if (datos) {
+                idPaciente = datos.idPacienteE;
+                idExpediente = datos.idExpedienteE
 
-        function mostrarAlerta(mensaje, tipo){
-            //asignar texto al toast
-            document.querySelector('.toast-body').innerHTML = mensaje;
-
-            let toast = document.querySelector('.toast');
-            toast.classList.remove('text-bg-success');
-            toast.classList.remove('text-bg-danger');
-            toast.classList.remove('text-bg-warning');
-            toast.classList.add(tipo);
-            // mostrar alerta
-            let alerta = new bootstrap.Toast(toast);
-            alerta.show();
+                console.log("se obtuvieron los datos idPaciente: ", idPaciente, "idExpediente: ", idExpediente);
+            } else {
+                console.log('No se encontraron datos en sessionStorage');
+            }
         }
-
-        function validarRegistro(){
-            let Altura=document.getElementById('altura');
-            if (Altura.value === '') {
-                mostrarAlerta('Por favor, ingrese una altura', 'text-bg-warning');
-                return false;
-            }
-
-            let Peso=document.getElementById('peso');
-            if(Peso.value === ''){
-                mostrarAlerta('Por favor, ingrese el peso' , 'text-bg-warning');
-                return false;
-            }
-
-            let CircunferenciaDelCraneo=document.getElementById('circunferenciaDelCraneo');
-            if(CircunferenciaDelCraneo.value === ''){
-                mostrarAlerta('Por favor, ingrese el perímetro cefálico', 'text-bg-warning');
-                return false;
-            }
-
-            let IMC=document.getElementById('indiceMasaCorporal');
-            if(IMC.value === ''){
-                mostrarAlerta('Por favor, ingrese el índice de masa Corporal', 'text-bg-warning');
-                return false;
-            }
-
-            let Evaluacion=document.getElementById('evaluacion');
-            if(Evaluacion.value === ''){
-                mostrarAlerta('Por favor, ingrese la evaluacion', 'text-bg-warning');
-                return false;
-            }
-            return true;
-        }
-
         
-        function limpiarModal() {
+        function agregarDesdeModal() {
+            // Obtener los valores de los campos del formulario
+            const altura = document.getElementById('altura').value;
+            const peso = document.getElementById('peso').value;
+            const indiceMasaCorporal = document.getElementById('indiceMasaCorporal').value;
+            const circunferenciaDelCraneo = document.getElementById('circunferenciaDelCraneo').value;
+            const evaluacion = document.getElementById('evaluacion').value;
+            const fechaControl = document.getElementById('fechaControl').value;
+            
+            //var fechaFormato = formatoFecha();
+
+            // Realizar la solicitud AJAX para guardar los datos
+            fetch('../Control/guardar.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: `idExpedienteDC=${idExpediente}&altura=${altura}&peso=${peso}
+                &indiceMasaCorporal=${indiceMasaCorporal}&circunferenciaDelCraneo=${circunferenciaDelCraneo}&evaluacion=${evaluacion}
+                &fechaControl=${fechaControl}`
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Mostrar mensaje de éxito o error
+                if (data.success) {
+                    alert(data.message);
+                    // Actualizar la tabla o hacer cualquier otra acción necesaria
+                    buscar();
+                } else {
+                    alert(data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Error al guardar los datos');
+            });
+        
+            // Cerrar el modal después de agregar el registro
+            const modal = bootstrap.Modal.getInstance(document.getElementById('modalAgregar'));
+            modal.hide();
+        
+            // Limpiar los campos del modal
             document.getElementById('altura').value = '';
             document.getElementById('peso').value = '';
             document.getElementById('indiceMasaCorporal').value = '';
-            document.getElementById('evaluacion').value = '';
             document.getElementById('circunferenciaDelCraneo').value = '';
+            document.getElementById('evaluacion').value = '';
             document.getElementById('fechaControl').value = '';
         }
-
-
-        function insertaControl() {
-        if (validarRegistro()) {
-            let altura = document.getElementById('altura').value;
-            let peso = document.getElementById('peso').value;
-            let indiceMasaCorporal = document.getElementById('indiceMasaCorporal').value;
-            let evaluacion = document.getElementById('evaluacion').value;
-            let circunferenciaDelCraneo = document.getElementById('circunferenciaDelCraneo').value;
-            let fechaControl = document.getElementById('fechaControl').value;
-
-            // URL a la que enviar la petición POST
-            const url = './insertarControl.php';
-
-            // Crear un objeto FormData
-            const formData = new FormData();
-            formData.append('altura', altura);
-            formData.append('peso', peso);
-            formData.append('indiceMasaCorporal', indiceMasaCorporal);
-            formData.append('evaluacion', evaluacion);
-            formData.append('circunferenciaDelCraneo', circunferenciaDelCraneo);
-            formData.append('fechaControl', fechaControl);
-
-            // Configuración de la petición
-            const configuracion = {
-                method: 'POST',
-                body: formData
-            };
-
-            // Enviamos la petición
-            fetch(url, configuracion)
-                .then(response => Promise.all([response.status, response.text()]))
-                .then(([status, text]) => {
-                    if (status !== 200) {
-                        mostrarAlerta(text, 'text-bg-danger');
-                    } else {
-                        mostrarAlerta(text, 'text-bg-success');
-                        // Recargar la página después de mostrar la alerta
-                        location.reload();
-                    }
-                    limpiarModal();
-                })
-                .catch(error => {
-                    console.error('Error al insertar el control de crecimiento:', error);
-                });
-        }
-    }
-
-
-    function buscar() {
-            let fechaControlBuscar = document.getElementById('input-busqueda').value;
-            const url = './mostarControl.php';
-
-            //Creamos el formData
-            let formData = new FormData();
-            formData.append('fechaControl', fechaControlBuscar);
+        
+        buscar()
+        function buscar() {
+            let input = document.getElementById("input-busqueda").value
+            console.log("Buscar registros de signos:", input);
+            let content = document.getElementById("content")
+            let url = "../Control/buscar.php"
+            let formaData = new FormData()
+            
+            formaData.append('idExpedienteDC', idExpediente)
+            formaData.append('input-busqueda', input)
 
             fetch(url, {
                 method: "POST",
-                body: formData
-            })
-            // Manejamos la respuesta del servidor
-            .then(response => {
-                // Verificamos si la respuesta fue exitosa
-                if (!response.ok) {
-                    throw new Error('Ocurrió un problema con la solicitud.');
-                }
-                // Convertimos la respuesta a formato JSON
-                return response.json();
-            })
-            // Manejamos los datos obtenidos del servidor
+                body: formaData
+            }).then(Response => Response.json())
             .then(data => {
-                // Obtenemos el cuerpo de la tabla
-                let tableBody = document.getElementById("tabla-estudios-body");
+                content.innerHTML = data
 
-                // Limpiamos el contenido actual del cuerpo de la tabla
-                tableBody.innerHTML = '';
-                this.listaCrecimientos = [];
-                // Iteramos sobre los datos obtenidos y creamos filas en la tabla para cada conjunto de datos
-                data.forEach(rowData => {
-                    this.listaCrecimientos.push(rowData);
-                    let row = document.createElement('tr');
-                    // Insertamos los datos en las celdas de la fila
-                    row.innerHTML = `
-                        <td>${rowData.altura}</td>
-                        <td>${rowData.peso}</td>
-                        <td>${rowData.circunferenciaDelCraneo}</td>
-                        <td>${rowData.indiceMasaCorporal}</td>
-                        <td>${rowData.evaluacion}</td>
-                        <td>${rowData.fechaControl}</td>
-                        <td>
-                            <button type="button" class="btn btn-danger me-2" onclick="eliminar(${rowData.idControlC})">Eliminar</button>
-                            <button type="button" class="btn btn-primary" onclick="abrirControl(${rowData.idControlC})">Modificar</button>
-                        </td>
-                    `;
-                    // Agregamos la fila al cuerpo de la tabla
-                    tableBody.appendChild(row);
-                });
+            }).catch(err => console.log(err))
+        }
+
+        function eliminarFila(button) {
+            // Obtener el ID de la fila
+            const row = button.closest('tr');
+            const idControlC = row.querySelector('td:first-child').textContent;
+            console.log("la id que quiero eliminar es: ", idControlC);
+
+            
+            // Realizar la solicitud AJAX para guardar los datos
+            fetch('../Control/eliminar.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: `idControlC=${idControlC}`
             })
-            // Manejamos errores que puedan ocurrir durante la solicitud
+            .then(response => response.json())
+            .then(data => {
+                // Mostrar mensaje de éxito o error
+                if (data.success) {
+                    alert(data.message);
+                    // Actualizar la tabla o hacer cualquier otra acción necesaria
+                    buscar();
+                } else {
+                    alert(data.message);
+                }
+            })
             .catch(error => {
-                console.error('Error al realizar la solicitud:', error);
+                console.error('Error:', error);
+                alert('Error al eliminar los datos');
             });
         }
 
-        function eliminar(idControl) {
-            // URL a la que enviar la petición DELETE para eliminar el registro
-            const url = './eliminarControl.php';
+        function modificarControl(button) {
+            const row = button.closest('tr');
+            const cells = row.querySelectorAll('td');
+            contador = 0;
+            cells.forEach(cell => {
+                if (contador ==0){
+                    cell.contentEditable = false;
+                    contador = contador +1;
 
-            // Crear un objeto con los datos a enviar
-            const data = {
-                idControlC: idControl
+                }else{
+                    cell.contentEditable = true;
+                }
+            });
+            button.textContent = "Guardar";
+            button.classList.remove('btn-primary');
+            button.classList.add('btn-success');
+            button.setAttribute('onclick', 'guardarControl(this)');
+        }
 
-            };
+        function guardarControl(button) {
+            const row = button.closest('tr');
+            const cells = row.querySelectorAll('td');
 
-            // Configuración de la petición
-            const configuracion = {
-                method: 'DELETE',
+
+            const idControlC = cells[0].innerText;
+            const altura = cells[1].innerText;
+            const peso = cells[2].innerText;
+            const indiceMasaCorporal = cells[3].innerText;
+            const circunferenciaDelCraneo = cells[4].innerText;
+            const evaluacion = cells[5].innerText;
+            const fechaControl = cells[6].innerText
+
+
+            fetch('../Control/modificar.php', {
+                method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/x-www-form-urlencoded'
                 },
-                body: JSON.stringify(data) // Convertir el objeto en una cadena JSON
-            };
-
-            // Enviamos la petición sin confirmación del usuario
-            fetch(url, configuracion)
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Error al eliminar el registro');
-                    }
-                    // Recargar la página después de eliminar el registro
-                    location.reload();
-                })
-                .catch(error => {
-                    console.error('Error al eliminar el control de crecimiento:', error);
-                });
+                body: `altura=${altura}&peso=${peso}&indiceMasaCorporal=${indiceMasaCorporal}
+                &circunferenciaDelCraneo=${circunferenciaDelCraneo}&evaluacion=${evaluacion}
+                &fechaControl=${fechaControl}&idControlC=${idControlC}`
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Mostrar mensaje de éxito o error
+                if (data.success) {
+                    alert(data.message);
+                    // Actualizar la tabla o hacer cualquier otra acción necesaria
+                    buscar();
+                } else {
+                    alert(data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Error al guardar los datos');
+            });
         }
 
-        function abrirControl(idControl) {
-            idControl=''+idControl;
-            //Buscar idControl en el array listaCrecimientos
-            let controlCrecimiento = this.listaCrecimientos.filter( (item) => item.idControlC === idControl);
 
-            if(controlCrecimiento.length){
-                this.crecimiento = controlCrecimiento[0];
+        function formatoFecha() {
+            // Obtener el input de fecha
+            var fechaInput = document.getElementById("fechaSignosInput");
 
-                document.getElementById('altura').value = this.crecimiento.altura;
-                document.getElementById('peso').value = this.crecimiento.peso;
-                document.getElementById('indiceMasaCorporal').value = this.crecimiento.indiceMasaCorporal;
-                document.getElementById('evaluacion').value = this.crecimiento.evaluacion;
-                document.getElementById('circunferenciaDelCraneo').value = this.crecimiento.circunferenciaDelCraneo;
-                document.getElementById('fechaControl').value = this.crecimiento.fechaControl;
+            // Obtener el valor del input (fecha seleccionada por el usuario)
+            var fechaSeleccionada = fechaInput.value;
 
-                cambiarModal();
+            // Verificar si se ha seleccionado una fecha
+            if (fechaSeleccionada) {
+                // Convertir la fecha a un objeto Date
+                var fechaObj = new Date(fechaSeleccionada);
 
-                document.getElementById('btnActualizar').classList.remove('d-none');
-                document.getElementById('btnActualizar').classList.add('d-block');
-                document.getElementById('btnAceptar').classList.remove('d-block');
-                document.getElementById('btnAceptar').classList.add('d-none');
+                // Obtener los componentes de la fecha (año, mes, día)
+                var año = fechaObj.getFullYear();
+                var mes = (fechaObj.getMonth() + 1).toString().padStart(2, '0'); // Agregar un cero al mes si es necesario
+                var dia = fechaObj.getDate().toString().padStart(2, '0'); // Agregar un cero al día si es necesario
 
+                // Crear el formato deseado (año-mes-día)
+                var formatoDeseado = año + "-" + mes + "-" + dia;
 
-
+                // Asignar el formato deseado al valor del input
+                fechaInput.value = formatoDeseado;
             }
-            
+
+            // Retornar el valor del input modificado
+            console.log("se obtuvo el valor= ",fechaInput.value);
+
+            return fechaInput.value;
+        }
+        function limpiar(){
+            document.getElementById('input-busqueda').value = '';
+            buscar()
+
 
         }
-
-        function cambiarModal() {
-            const modalElement = document.getElementById('modalAgregar');
-            const modal = new bootstrap.Modal(modalElement);
-            modal.toggle();
-            // Agregar el siguiente código para cerrar el modal después de abrirlo
-            setTimeout(() => {
-                modal.hide();
-            },100000); // Cambia el tiempo según sea necesario
-        }
-
-        function modificar(){
-
-            if(validarRegistro()){
-
-                let altura = document.getElementById('altura').value;
-                let peso = document.getElementById('peso').value;
-                let indiceMasaCorporal = document.getElementById('indiceMasaCorporal').value;
-                let evaluacion = document.getElementById('evaluacion').value;
-                let circunferenciaDelCraneo = document.getElementById('circunferenciaDelCraneo').value;
-                let fechaControl = document.getElementById('fechaControl').value;
-
-                console.log(altura);
-                console.log(peso);
-                console.log(indiceMasaCorporal);
-                console.log(evaluacion);
-                console.log(this.crecimiento.idControlC);
-                // URL a la que enviar la petición POST
-                const url = './modificarControl.php';
-                
-                // Crear un objeto FormData
-                const formData = new FormData();
-                formData.append('idControlC', this.crecimiento.idControlC);
-                formData.append('altura', altura);
-                formData.append('peso', peso);
-                formData.append('indiceMasaCorporal', indiceMasaCorporal);
-                formData.append('evaluacion', evaluacion);
-                formData.append('circunferenciaDelCraneo', circunferenciaDelCraneo);
-                formData.append('fechaControl', fechaControl);
-                
-                console.log(formData);
-                // Configuración de la petición
-                const configuracion = {
-                    method: 'POST',
-                    body: formData
-                };
-
-                // Enviamos la petición
-                fetch(url, configuracion)
-                    .then(response => Promise.all([response.status, response.text()]))
-                    .then(([status, text]) => {
-                        if (status !== 200) {
-                            mostrarAlerta(text, 'text-bg-danger');
-                        } else {
-                            mostrarAlerta(text, 'text-bg-success');
-                            // Recargar la página después de mostrar la alerta
-                            limpiarModal();
-                            document.getElementById('btnActualizar').classList.remove('d-block');
-                            document.getElementById('btnActualizar').classList.add('d-none');
-                            document.getElementById('btnAceptar').classList.remove('d-none');
-                            document.getElementById('btnAceptar').classList.add('d-block');
-                            location.reload();
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Error al insertar el control de crecimiento:', error);
-                    });
-
-            }
-        }
-
     </script>
 </body>
 </html>

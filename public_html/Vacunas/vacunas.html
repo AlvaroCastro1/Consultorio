@@ -55,6 +55,8 @@
         <div class="input-group mb-3">
             <input type="text" class="form-control" placeholder="Buscar por Sustancia" id="input-busqueda">
             <button class="btn btn-outline-secondary" type="button" onclick="buscar()">Buscar</button>
+            <button class="btn btn-outline-secondary" type="button" onclick="limpiar()">Limpiar</button>
+
         </div>
 
         <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#modalAgregar">Agregar</button>
@@ -64,14 +66,15 @@
             <table class="table table-bordered table-hover" id="tabla-vacunas">
                 <thead>
                     <tr>
-                        <th>Id Signo</th>
-                        <th>Sustancia Activa</th>
+                        <th>Id Vacuna</th>
                         <th>Enfermedad</th>
+                        <th>Sustancia Activa</th>
                         <th>Formula</th>
                         <th>Laboratorio</th>
-                        <th>Dosis</th>
                         <th>Gramaje</th>
                         <th>Lote</th>
+                        <th>Dosis</th>
+                        <th>Fecha Aplicacion</th>
                         <th>Fecha Caducidad</th>
                         <th>Acciones</th>
                     </tr>
@@ -87,9 +90,10 @@
                         <td contenteditable="false">0g</td>
                         <td contenteditable="false">0000</td>
                         <td><input type="date" class="form-control" value="2024-04-17" readonly></td>
+                        <td><input type="date" class="form-control" value="2024-04-10" readonly></td>
                         <td>
                             <button type="button" class="btn btn-danger me-2" onclick="eliminarFila(this)">Eliminar</button>
-                            <button type="button" class="btn btn-primary" onclick="modificarControl(this)">Modificar</button>
+                            <button type="button" class="btn btn-primary" onclick="modificarVacunas(this)">Modificar</button>
                         </td>
                     </tr>
                 </tbody>
@@ -171,7 +175,10 @@
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded'
                 },
-                body: `sustanciaActiva=${sustanciaActiva}&enfermedad=${enfermedad}&formula=${formula}&laboratorio=${laboratorio}&dosis=${dosis}&gramaje=${gramaje}&lote=${lote}&fechaCaducidad=${fechaFormato}`
+                body: `idExpedienteDV=${idExpediente}&enfermedad=${enfermedad}&sustanciaActiva=${sustanciaActiva}
+                &formula=${formula}&laboratorio=${laboratorio}&gramaje=${gramaje}
+                &lote=${lote}&dosis=${dosis}&fechaCaducidad=${fechaFormato}
+               `
             })
             .then(response => response.json())
             .then(data => {
@@ -215,7 +222,9 @@
             let content = document.getElementById("content")
             let url = "../Vacunas/buscar.php"
             let formaData = new FormData()
-            formaData.append('input-busqueda', input)
+            formaData.append('idExpedienteDV', idExpediente)
+
+            formaData.append('sustanciaActiva', input)
 
             fetch(url, {
                 method: "POST",
@@ -286,21 +295,17 @@
 
 
             const idVacunas = cells[0].innerText;
-            const sustanciaActiva= cells[1].innerText;
-            const enfermedad = cells[2].innerText;
+            const enfermedad= cells[1].innerText;
+            const sustanciaActiva = cells[2].innerText;
             const formula = cells[3].innerText;
             const laboratorio = cells[4].innerText;
-            const dosis = cells[5].innerText;
-            const gramaje = cells[6].innerText;
-            const lote = cells[7].innerText;
-            const fechaCaducidad = cells[8].innerText;
-            
+            const gramaje = cells[5].innerText;
+            const lote = cells[6].innerText;
+            const dosis = cells[7].innerText;
+            const fechaAplicacion = cells[8].innerText;
+            const fechaCaducidad = cells[9].innerText;
 
-
-            console.log("Dato 1:", idVacunas);
-            console.log("Dato 2:", sustanciaActiva);
-            console.log("Dato 3:", dosis);
-
+        
 
 
             fetch('../Vacunas/modificar.php', {
@@ -308,7 +313,10 @@
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded'
                 },
-                body: `sustanciaActiva=${sustanciaActiva}&enfermedad=${enfermedad}&formula=${formula}&laboratorio=${laboratorio}&dosis=${dosis}&gramaje=${gramaje}&lote=${lote}&fechaCaducidad=${fechaCaducidad}&idVacunas=${idVacunas}`
+                body: `idVacunas=${idVacunas}&enfermedad=${enfermedad}
+                &sustanciaActiva=${sustanciaActiva}&formula=${formula}&laboratorio=${laboratorio}
+                &gramaje=${gramaje}&lote=${lote}&dosis=${dosis}
+                &fechaAplicacion=${fechaAplicacion}&fechaCaducidad=${fechaCaducidad}`
             })
             .then(response => response.json())
             .then(data => {
@@ -358,6 +366,25 @@
 
             return fechaInput.value;
         }
+
+        function mostrarFechaActual() {
+            var hoy = new Date();
+            var anio = hoy.getFullYear();
+            var mes = ('0' + (hoy.getMonth() + 1)).slice(-2);  // Obtener el mes (0-11) y agregar ceros a la izquierda
+            var dia = ('0' + hoy.getDate()).slice(-2);  // Obtener el día y agregar ceros a la izquierda
+            var fechaFormateada = `${anio}-${mes}-${dia}`;
+            console.log("se obtuvo la fecha actual: ",fechaFormateada )
+
+            return fechaFormateada.value
+        }
+        function limpiar(){
+            document.getElementById('input-busqueda').value = '';
+            buscar()
+
+
+        }
+        
     </script>
+    
 </body>
 </html> 
