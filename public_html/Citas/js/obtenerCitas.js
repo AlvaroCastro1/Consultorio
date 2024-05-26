@@ -49,3 +49,9 @@ window.resetModal = function() {
     modalAgregar.show();
     document.getElementById('input-IDpaciente').value = idPaciente;
 };
+
+window.limpiar=function () {
+    document.getElementById('input-busqueda').value = '';
+    document.querySelector('#tabla-Citas tbody').innerHTML = '';
+    cargarCitas();
+}
