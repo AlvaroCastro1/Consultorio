@@ -25,7 +25,7 @@ window.cargarCitas=function () {
                                 <td>${cita.idPacienteC}</td>
                                 <td>${cita.fecha}</td>
                                 <td>${cita.hora}</td>
-                                <td>${cita.asistencia ? 'Asistió' : 'No asistió'}</td>
+                                <td>${cita.asistencia == 1 ? 'Asistió' : 'No asistió'}</td>
                                 <td>
                                     <button type="button" class="btn btn-danger me-2" onclick="eliminarCita(${cita.idCita})">Eliminar</button>
                                     <button type="button" class="btn btn-primary" onclick="modificarCita(${cita.idCita})">Modificar</button>
@@ -39,3 +39,10 @@ window.cargarCitas=function () {
         }
     });
 }
+
+window.resetModal = function() {
+    var modalAgregar = new bootstrap.Modal(document.getElementById('modalAgregar'));
+    
+    document.getElementById('addEventForm').reset();
+    modalAgregar.show();
+};

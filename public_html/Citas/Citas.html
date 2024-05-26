@@ -6,11 +6,11 @@
     <title>Citas</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-datepicker@1.9.0/dist/css/bootstrap-datepicker.min.css" rel="stylesheet">   
-
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-datepicker@1.9.0/dist/css/bootstrap-datepicker.min.css" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.7/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap-datepicker@1.9.0/dist/js/bootstrap-datepicker.min.js"></script>
-
     <link rel="stylesheet" href="../assets/css/CitasStyles.css">
     <link rel="stylesheet" href="../assets/css/barraNav.css">
     <script src="../assets/js/header.js"></script>
@@ -23,26 +23,25 @@
             {name: "Citas" ,uri: "../Citas/Citas.html"},
             {name: "Calendario" ,uri: "../Calendario/calendario.php"},
         ];
-    
+
         createHeader(navItems);
     </script>
 
     <div class="container2 mt-5">
         <h1 class="titulo-Citas mb-4">Citas</h1>
-        
 
         <div class="input-group mb-3">
             <input type="text" class="form-control" placeholder="Buscar por ID Cita" id="input-busqueda">
             <button class="btn btn-outline-secondary" type="button" onclick="buscar()">Buscar</button>
         </div>
 
-        <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#modalAgregar">Agregar</button>
-
-
-        
-        
-
-
+        <button type="button" class="btn btn-primary mb-3" id="btnAgregar" data-bs-toggle="modal" data-bs-target="#modalAgregar">Agregar</button>
+        <script>
+            document.getElementById('btnAgregar').addEventListener('click', function() {
+                resetModal();
+                
+            });
+        </script>
         <div class="table-responsive">
             <table class="table table-bordered table-hover" id="tabla-Citas">
                 <thead>
@@ -50,70 +49,59 @@
                         <th>Id Cita</th>
                         <th>Id Paciente</th>
                         <th>Fecha Cita</th>
-                        <th> Hora Cita</th>
+                        <th>Hora Cita</th>
                         <th>Asistencia</th>
                         <th>Acciones</th>
-
-                        
                     </tr>
                 </thead>
                 <tbody>
-                    
-                    
-                    
                 </tbody>
             </table>
         </div>
         <div class="espacio-final"></div>
     </div>
 
-
-
     <div class="modal fade" id="modalAgregar" tabindex="-1" aria-labelledby="modalAgregarLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="modalAgregarLabel">Registro de Vacunas</h5>
+                    <h5 class="modal-title" id="modalAgregarLabel">Agregar Cita</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <div class="input-group mb-3">
-                        <input type="text" class="form-control" placeholder="ID del Paciente" id="input-IDpaciente">
-                    </div>
-            
-                    <div class="input-group mb-3">
-                        <input type="text" class="form-control" placeholder="Fecha de la cita (yyyy/mm/dd)" id="input-FechaCita">
-                        <button class="btn btn-outline-secondary" type="button" id="btn-calendar">
-                            <i class="bi bi-calendar">Usar Calendario</i>
-                        </button>
-                    </div>
-                    <div class="input-group mb-3">
-                        <input type="time" class="form-control" id="input-horaCita">
-                    </div>
-                    
-                    <div class="input-group mb-3">
-                        <select class="form-select" id="input-asistencia">
-                            <option value="Asistió">Asistió</option>
-                            <option value="No asistió">No asistió</option>
-                            <option value="Pendiente">Pendiente</option>
-                        </select>
-                    </div>
+                    <form id="addEventForm">
+                        
+                        <div class="form-group">
+                            <label for="eventDate">Fecha del Evento</label>
+                            <input type="date" class="form-control" id="eventDate" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="eventTime">Hora del Evento</label>
+                            <select class="form-control" id="eventTime" required>
+                                <option value="">Seleccionar hora</option>
+                                <!-- Opciones de hora -->
+                            </select>
+                        </div>
+                        <div class="form-group form-check">
+                            <input type="checkbox" class="form-check-input" id="eventAttendance">
+                            <label class="form-check-label" for="eventAttendance">Asistencia</label>
+                        </div>
+                    </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-danger me-2" data-bs-dismiss="modal">Cerrar</button>
-                    <button type="button" class="btn btn-primary" onclick="agregarRegistro()">Aceptar</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-primary" id="saveButton">Guardar</button>
                 </div>
             </div>
         </div>
     </div>
+
     <script>
-        // Llamar a la función cargarCitas con el idPaciente deseado
-        $(document).ready(function() {
+        document.addEventListener('DOMContentLoaded', function() {
+            // Llamar a la función cargarCitas con el idPaciente deseado
             cargarCitas();
         });
     </script>
-    
-
 
     <footer>
         <div class="container3">
