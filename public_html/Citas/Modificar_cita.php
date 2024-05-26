@@ -1,33 +1,43 @@
 <?php
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "consultorios";
+include('../includes/conexion.php');
 
-// Crear conexión
-$conn = new mysqli($servername, $username, $password, $dbname);
+// Obtener los datos del formulario
+$idCita = $_POST['idCita'];
+$idPaciente = $_POST['idPaciente'];
+$fechaCita = $_POST['fechaCita'];
+$horaCita = $_POST['horaCita'];
+$asistencia = $_POST['asistencia'];
 
-// Verificar la conexión
-if ($conn->connect_error) {
-    die("Conexión fallida: " . $conn->connect_error);
+// Validar que los campos no estén vacíos
+if (empty($idCita) || empty($idPaciente) || empty($fechaCita) || empty($horaCita) || empty($asistencia)) {
+    echo "<script>alert('Todos los campos son obligatorios'); window.location='citas.php';</script>";
+    exit;
 }
 
-if(isset($_POST['modificarCita'])) {
-  $idCita = $_POST['idCita'];
-  $idPacienteC = $_POST['idPacienteC'];
-  $fechaCita = $_POST['fechaCita'];
-  $horaCita = $_POST['horaCita'];
-  $asistencia = $_POST['asistencia'];
+// Preparar la consulta de actualización
+$query = "UPDATE Cita SET idPacienteC = ?, fecha = ?, hora = ?, asistencia = ? WHERE idCita = ?";
+$stmt = $conn->prepare($query);
 
-  // ACTUALIZAR (Modificar)
-  $sql = "UPDATE Cita SET idPacienteC='$idPacienteC', fechaCita='$fechaCita', horaCita='$horaCita', asistencia='$asistencia' WHERE idCita=$idCita";
-
-  if ($conn->query($sql) === TRUE) {
-    echo "Registro actualizado exitosamente";
-  } else {
-    echo "Error actualizando registro: " . $conn->error;
-  }
+// Verificar si la preparación de la consulta fue exitosa
+if (!$stmt) {
+    echo "<script>alert('Error al preparar la consulta. Por favor inténtalo nuevamente'); window.location='citas.php';</script>";
+    exit;
 }
 
+// Ejecutar la consulta de actualización
+$stmt->bind_param("isssi", $idPaciente, $fechaCita, $horaCita, $asistencia, $idCita);
+$modificar = $stmt->execute();
+
+// Verificar si la consulta de actualización se ejecutó correctamente
+if (!$modificar) {
+    $conn->rollback();
+    echo "<script>alert('Hubo un error al modificar la cita. Rollback ejecutado.'); window.location='citas.php';</script>";
+} else {
+    $conn->commit();
+    echo "<script>alert('Cita modificada correctamente.'); window.location='citas.php';</script>";
+}
+
+// Cerrar la consulta y la conexión
+$stmt->close();
 $conn->close();
 ?>
