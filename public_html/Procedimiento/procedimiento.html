@@ -37,8 +37,12 @@
             <button class="btn btn-outline-secondary" type="button" onclick="buscar()">Buscar</button>
         </div>
 
-        <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#modalAgregar">Agregar</button>
-
+        <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#modalAgregar" id="btnAgregar">Agregar</button>
+        <script>
+            document.getElementById('btnAgregar').addEventListener('click', function() {
+                modalReset();
+            });
+        </script>
 
         <div class="table-responsive">
             <table class="table table-bordered table-hover" id="tabla-procedimientos">

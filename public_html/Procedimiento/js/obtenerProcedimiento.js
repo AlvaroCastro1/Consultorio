@@ -38,3 +38,17 @@ window.cargarProcedimientos = function () {
         }
     });
 }
+
+window.modalReset = function() {
+    // Limpiar los valores de los campos de entrada del modal
+    $('#nombreProcedimientoInput').val('');
+    $('#descripcionProcedimientoInput').val('');
+    $('#observacionesProcedimientoInput').val('');
+    $('#fechaProcedimientoInput').val('');
+    
+    // Opcionalmente, puedes restablecer cualquier otro estado adicional del modal aquí
+    // Por ejemplo, remover clases de validación, mensajes de error, etc.
+
+    // Si el modal está actualmente abierto, puedes cerrarlo
+    $('#modalAgregar').modal('hide');
+}
