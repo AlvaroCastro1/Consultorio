@@ -97,7 +97,7 @@ include 'citas.php'; // Incluye el contenido de cita.php
                 <form id="addEventForm">
                     <div class="form-group">
                         <label for="eventPatientId">ID del Paciente</label>
-                        <input type="text" class="form-control" id="eventPatientId" required>
+                        <input type="number" class="form-control" id="eventPatientId" required>
                     </div>
                     <div class="form-group">
                         <label for="eventDate">Fecha del Evento</label>
@@ -134,7 +134,7 @@ include 'citas.php'; // Incluye el contenido de cita.php
                 <form id="editEventForm">
                     <div class="form-group">
                         <label for="eventPatientId">ID del Paciente</label>
-                        <input type="text" class="form-control" id="editeventPatientId" required>
+                        <input type="number" class="form-control" id="editeventPatientId" required>
                     </div>
                     <div class="form-group">
                         <label for="eventDate">Fecha del Evento</label>
