@@ -11,48 +11,21 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap-datepicker@1.9.0/dist/js/bootstrap-datepicker.min.js"></script>
 
-    <script>
-        // Aquí van tus otras funciones JavaScript
-
-        function buscar() {
-            const idCita = document.getElementById('input-busqueda').value;
-
-            $.ajax({
-                url: 'Buscar_cita.php',
-                type: 'post',
-                data: {buscarCita: true, idCita: idCita},
-                success: function(response) {
-                    // Aquí puedes manejar la respuesta de tu script PHP
-                    console.log(response);
-                }
-            });
-        }
-    </script>
-
-    <link rel="stylesheet" href="..//CSS/CitasStyles.css">
-    <link rel="stylesheet" href="..//CSS/barraNav.css">
+    <link rel="stylesheet" href="../assets/css/CitasStyles.css">
+    <link rel="stylesheet" href="../assets/css/barraNav.css">
+    <script src="../assets/js/header.js"></script>
+    <script type="module" src="js/obtenerCitas.js"></script>
 
 </head>
 <body>
-
-    <nav class="navbar navbar-expand-lg navbar-light bg-primary-custom">
-        <div class="container">
-            <a class="navbar-brand texto-gris-claro" href="..//Paciente/paciente.html" style="font-size: 20px; font-weight: bold; ">Paciente</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link texto-blanco-activo" href="..//Citas/Citas.html" onclick="abrirPagina('citas')">Citas</a>
-                    </li> 
-                    <li class="nav-item">
-                        <a class="nav-link texto-gris-claro" href="..//Calendario/calendario.php" onclick="abrirPagina('calendario')">Calendario</a>
-                    </li>  
-                </ul>
-            </div>
-        </div>
-    </nav>
+    <script>
+        const navItems = [
+            {name: "Citas" ,uri: "../Citas/Citas.html"},
+            {name: "Calendario" ,uri: "../Calendario/calendario.php"},
+        ];
+    
+        createHeader(navItems);
+    </script>
 
     <div class="container2 mt-5">
         <h1 class="titulo-Citas mb-4">Citas</h1>
@@ -86,18 +59,7 @@
                 </thead>
                 <tbody>
                     
-                    <tr>
-                        <td contenteditable="false">Ejemplo de Id Cita</td>
-                        <td contenteditable="false">Ejemplo de Id Paciente</td>
-                        <td contenteditable="false">Ejemplo de Fecha</td>
-                        <td contenteditable="false">Ejemplo de Hora</td>
-                        <td contenteditable="false">Ejemplo de Asistencia</td>
-
-                        <td>
-                            <button type="button" class="btn btn-danger me-2" onclick="eliminarCita()">Eliminar</button>
-                            <button type="button" class="btn btn-primary" onclick="modificarCita(this)">Modificar</button>
-                        </td>
-                    </tr>
+                    
                     
                 </tbody>
             </table>
@@ -111,7 +73,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="modalAgregarLabel">Registro de Cita</h5>
+                    <h5 class="modal-title" id="modalAgregarLabel">Registro de Vacunas</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -144,8 +106,14 @@
             </div>
         </div>
     </div>
-
+    <script>
+        // Llamar a la función cargarCitas con el idPaciente deseado
+        $(document).ready(function() {
+            cargarCitas();
+        });
+    </script>
     
+
 
     <footer>
         <div class="container3">
@@ -153,90 +121,5 @@
         </div>
     </footer>
 
-
-    
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
-        // Inicializar el Datepicker
-        $('#input-FechaProcedimiento').datepicker({
-            format: 'yyyy/mm/dd',
-            autoclose: true,
-            orientation: 'right'
-
-        });
-    
-        // Escuchar el evento de cambio de fecha y actualizar el campo de entrada de fecha
-        $('#input-FechaCita').on('changeDate', function(e) {
-            // Obtener la fecha seleccionada y formatearla
-            const selectedDate = e.format();
-            // Actualizar el valor del campo de entrada de fecha
-            $('#input-FechaCita').val(selectedDate);
-        });
-    </script>
-
-    <script>
-        // Asociar el evento click al botón del calendario para abrir el Datepicker
-        $('#btn-calendar').click(function() {
-            $('#input-FechaCita').datepicker('show');
-        });
-    </script>
-
-    <script>
-        function agregarRegistro() {
-            const tabla = document.getElementById('tabla-Citas').getElementsByTagName('tbody')[0];
-            const newRow = tabla.insertRow(tabla.rows.length);
-            const cell1 = newRow.insertCell(0);
-            const cell2 = newRow.insertCell(1);
-            const cell3 = newRow.insertCell(2);
-            const cell4 = newRow.insertCell(3);
-            const cell5 = newRow.insertCell(4);
-            const cell6 = newRow.insertCell(5);
-
-
-            
-            cell1.contentEditable = true;
-            cell2.contentEditable = true;
-            cell3.contentEditable = true;
-            cell4.contentEditable = true;
-            cell5.contentEditable = true;
-            cell6.innerHTML = '<button type="button" class="btn btn-danger me-2" onclick="eliminarCita()">Eliminar</button><button type="button" class="btn btn-success" onclick="guardarCita(this)">Guardar</button>';
-        }
-
-        function buscar() {
-            const input = document.getElementById('input-busqueda').value;
-            console.log("Buscar registros con término:", input);
-        }
-
-        function eliminarCita() {
-            console.log("Eliminar Procedimiento");
-        }
-
-        function modificarCita(button) {
-            const row = button.closest('tr');
-            const cells = row.querySelectorAll('td');
-            cells.forEach(cell => {
-                cell.contentEditable = true;
-            });
-            
-            button.textContent = "Guardar";
-            button.classList.remove('btn-primary');
-            button.classList.add('btn-success');
-            button.setAttribute('onclick', 'guardarCita(this)');
-        }
-
-        function guardarCita(button) {
-            const row = button.closest('tr');
-            const cells = row.querySelectorAll('td');
-            cells.forEach(cell => {
-                cell.contentEditable = false;
-            });
-            button.textContent = "Modificar";
-            button.classList.remove('btn-success');
-            button.classList.add('btn-primary');
-            button.setAttribute('onclick', 'modificarCita(this)');
-            console.log("Guardar cita");
-        }
-    </script>
 </body>
 </html>
