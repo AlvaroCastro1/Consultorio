@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <meta charset="UTF-8">
@@ -15,6 +15,8 @@
 
     <!-- SweetAlert2 JavaScript -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="../assets/js/header.js"></script>
 
 </head>
@@ -23,9 +25,9 @@
 
     <script>
         const navItems = [
-            { name: "Inicio", uri: "/" },
-            { name: "Expediente", uri: "/expediente" },
-            { name: "Contacto", uri: "/contacto" }
+            { name: "Inicio", uri: "/" }
+            
+            
         ];
     
         createHeader(navItems); // Llamar a la función para crear el header
@@ -56,26 +58,7 @@
                     </tr>
                 </thead>
                 <tbody id="content">
-                    <!-- Fila con evento de clic para redirigir -->
-                    <tr style="cursor: pointer;">  <!-- El evento se detendrá si se hace clic en los botones -->
-                    <!-- <tr style="cursor: pointer;" onclick="verDetalle()">   El evento se detendrá si se hace clic en los botones -->
-
-                        <td>0</td>
-                        <td>Ejemplo de Nombre</td>
-                        <td>paterno</td>
-                        <td>materno</td>
-                        <td>0</td>
-                        <td>
-                            <!-- Detener propagación para evitar que el clic en el botón active el evento de la fila -->
-                            <button type="button" class="btn btn-danger" onclick="eliminarRegistro(this)">Eliminar</button>
-                            <button type="button" class="btn btn-danger" onclick="verDetallesPaciente(this)">Ver Detalles</button>
-                            <button type="button" class="btn btn-primary" onclick="modificarPaciente(this)">Modificar</button>
-                            <button type="button" class="btn btn-primary" onclick="seleccionarExpediente(this)">Expediente</button>
-
-                        </td>
-                    </tr>
-        
-                    <!-- Puedes agregar más filas aquí -->
+                    
                 </tbody>
             </table>
         </div>
@@ -101,24 +84,24 @@
 
         buscar()
         function buscar() {
-            let input = document.getElementById("input-busqueda").value
+            let input = $("#input-busqueda").val();
             console.log("Buscar registros de pacientes:", input);
-            let content = document.getElementById("content")
-            let url = "../Paciente/buscar_Simplificado.php"
-            let formaData = new FormData()
-            formaData.append('input-busqueda', input)
-
-            fetch(url, {
-                method: "POST",
-                body: formaData
-            }).then(Response => Response.json())
-            .then(data => {
-                content.innerHTML = data
-
-            }).catch(err => console.log(err))
+            let content = $("#content");
+            let url = "../Paciente/buscar_Simplificado.php";
+            console.log(input)
+            $.ajax({
+                type: "POST",
+                url: url,
+                data: { 'input-busqueda': input },
+                dataType: "json",
+                success: function(data) {
+                    content.html(data);
+                },
+                error: function(err) {
+                    console.log(err);
+                }
+            });
         }
-
-
 
         function eliminarRegistro(button) {
 

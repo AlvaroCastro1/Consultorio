@@ -21,7 +21,7 @@ include 'citas.php'; // Incluye el contenido de cita.php
 
 <!-- JS de Bootstrap v5.3.3 -->
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.3/js/bootstrap.min.js"></script>
-
+<script src="../assets/js/header.js"></script>
 <script src="calendar.js"></script>
 <script src="js/obt_horarios.js"></script>
 
@@ -33,24 +33,17 @@ include 'citas.php'; // Incluye el contenido de cita.php
     
 </head>
 <body>
-<nav class="navbar navbar-expand-lg navbar-light bg-primary-custom">
-    <div class="container">
-        <a class="navbar-brand texto-gris-claro" href="..//Expediente/expediente.html" style="font-size: 20px; font-weight: bold; ">Inicio</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link texto-gris-claro" href="..//Paciente/paciente.html" onclick="abrirPagina('paciente')">Pacientes</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link texto-gris-claro" href="..//configuracion/configuracion.html" onclick="abrirPagina('configuración')">Configuración</a>
-                </li>
-            </ul>
-        </div>
-    </div>
-</nav>
+<script>
+        const navItems = [
+            {name: "Citas" ,uri: "../Citas/Citas.html"},
+            {name: "Calendario" ,uri: "../Calendario/calendario.php"},
+            {name: "Expediente", uri: "../Expediente/expediente.html"},
+        
+        ];
+    
+        createHeader(navItems);
+        
+    </script>
 <div class="container2 mt-5">
   <div class="row mt-4">
         <div class="col-md-12 mx-auto">

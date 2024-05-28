@@ -25,20 +25,23 @@
     </div>
     <script>
         const navItems = [
-            {name: "Vacunas", uri: "..//Vacunas/vacunas.html"},
-            {name: "Estudios", uri: "..//Estudios/estudios.html"},
-            {name: "Alergias", uri: "..//Alergias/alergias.html"},
-            {name: "Antecedentes", uri: "..//Antecedentes/antecedentes.html"},
-            {name: "Signos Vitales", uri: "..//Signos/Signos.html"},
-            {name: "Tratamiento", uri: "..//Tratamiento/Tratamiento.html"},
-            {name: "Procedimiento", uri: "..//Procedimiento/procedimiento.html"},
-            {name: "Control de Crecimiento", uri: "..//Control/control.html"},
-            {name: "Gráficas", uri: "..//Graficar/index.php"}
-
+        {name: "Vacunas", uri: "../Vacunas/vacunas.html"},
+        {name: "Estudios", uri: "../Estudios/estudios.html"},
+        {name: "Alergias", uri: "../Alergias/alergias.html"},
+        {name: "Antecedentes", uri: "..Antecedentes/antecedentes.html"},
+        {name: "Signos Vitales", uri: "../Signos/Signos.html"},
+        {name: "Tratamiento", uri: "../Tratamiento/Tratamiento.html"},
+        {name: "Procedimiento", uri: "../Procedimiento/procedimiento.html"},
+        {name: "Control de Crecimiento", uri: "../Control/control.php"},
+        {name: "Expediente", uri: "../Expediente/expediente.html"},
+        {name: "Gráficas", uri: "../Graficar/index.php"}
+        
         ];
     
         createHeader(navItems);
+        
     </script>
+    
     
     <div class="container2  mt-5">
         <h1 class="titulo-control mb-4">Control de crecimiento</h1>
