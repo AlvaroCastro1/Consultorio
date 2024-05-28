@@ -1,9 +1,6 @@
 
 import { idPaciente, idExpediente, obtenerDatosSession } from '../../Estudios/js/obtenerExpediente.js';
 
-
-
-
 window.cargarCitas=function () {
     obtenerDatosSession();
     var idP = idPaciente;
@@ -47,10 +44,23 @@ window.cargarCitas=function () {
 window.resetModal = function() {
     var modalAgregar = new bootstrap.Modal(document.getElementById('modalAgregar'));
     
+    // Restablecer el formulario
     document.getElementById('addEventForm').reset();
+    
+    // Mostrar el modal
     modalAgregar.show();
-    document.getElementById('input-IDpaciente').value = idPaciente;
+    
+    
+    // Asignar el valor de idPaciente al campo de entrada y verificar si es null
+    var inputIDpaciente = document.getElementById('input-IDpaciente');
+    if (idPaciente === null) {
+        inputIDpaciente.removeAttribute('disabled');
+    } else {
+        inputIDpaciente.setAttribute('disabled', 'disabled');
+        inputIDpaciente.value = idPaciente;
+    }
 };
+
 
 window.limpiar=function () {
     document.getElementById('input-busqueda').value = '';

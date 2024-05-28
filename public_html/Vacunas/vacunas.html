@@ -11,43 +11,23 @@
 </head>
 <body>
 
-    <nav class="navbar navbar-expand-lg navbar-light bg-primary-custom">
-        <div class="container">
-            <a class="navbar-brand texto-gris-claro" href="..//Expediente/expediente.html" style="font-size: 20px; font-weight: bold; ">Expediente Médico</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link texto-blanco-activo" href="..//Vacunas/vacunas.html" onclick="abrirPagina('vacunas')">Vacunas</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link texto-gris-claro" href="..//Estudios/estudios.html" onclick="abrirPagina('estudios')">Estudios</a>
-                    </li>
-                    
-                    <li class="nav-item">
-                        <a class="nav-link texto-gris-claro" href="..//Alergias/alergias.html" onclick="abrirPagina('alergias')">Alergias</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link texto-gris-claro" href="../Antecedentes/antecedentes.html" onclick="abrirPagina('antecedentes')">Antecedentes</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link texto-gris-claro" href="..//Signos/Signos.html" onclick="abrirPagina('signos')">Signos Vitales</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link texto-gris-claro" href="..//Tratamiento/Tratamiento.html" onclick="abrirPagina('tratamiento')">Tratamiento</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link texto-gris-claro" href="..//Procedimiento/procedimiento.html" onclick="abrirPagina('procedimiento')">Procedimiento</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link texto-gris-claro" href="..//Control/control.html" onclick="abrirPagina('control')">Control de Crecimiento</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
+    <script>
+        const navItems = [
+        {name: "Vacunas", uri: "../Vacunas/vacunas.html"},
+        {name: "Estudios", uri: "../Estudios/estudios.html"},
+        {name: "Alergias", uri: "../Alergias/alergias.html"},
+        {name: "Antecedentes", uri: "..Antecedentes/antecedentes.html"},
+        {name: "Signos Vitales", uri: "../Signos/Signos.html"},
+        {name: "Tratamiento", uri: "../Tratamiento/Tratamiento.html"},
+        {name: "Procedimiento", uri: "../Procedimiento/procedimiento.html"},
+        {name: "Control de Crecimiento", uri: "../Control/control.php"},
+        {name: "Expediente", uri: "../Expediente/expediente.html"},
+        
+        ];
+    
+        createHeader(navItems);
+        
+    </script>
 
     <div class="container2 mt-5">
         <h1 class="titulo-vacunas mb-4">Vacunas</h1>

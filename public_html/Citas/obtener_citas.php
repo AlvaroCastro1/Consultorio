@@ -2,11 +2,21 @@
 include '../includes/conexion.php';
 
 // Obtener el idPaciente de la solicitud (suponiendo que se envía mediante GET o POST)
-$idPaciente = $_REQUEST['idPaciente'];
+$idPaciente = isset($_REQUEST['idPaciente']) ? $_REQUEST['idPaciente'] : null;
 
-// Consulta para obtener todas las citas de un paciente específico
-$sql = "SELECT * FROM Cita WHERE idPacienteC = $idPaciente";
-$result = $conn->query($sql);
+// Construir la consulta SQL utilizando consultas preparadas
+if (is_null($idPaciente) || $idPaciente === '') {
+    $sql = "SELECT * FROM Cita";
+    $stmt = $conn->prepare($sql);
+} else {
+    $sql = "SELECT * FROM Cita WHERE idPacienteC = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param('i', $idPaciente);
+}
+
+
+$stmt->execute();
+$result = $stmt->get_result();
 
 $citas = array();
 
@@ -20,4 +30,6 @@ if ($result->num_rows > 0) {
 // Devolver las citas en formato JSON
 echo json_encode($citas);
 
+$stmt->close();
 $conn->close();
+?>
