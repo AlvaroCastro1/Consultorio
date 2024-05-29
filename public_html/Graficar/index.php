@@ -20,12 +20,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
-    <script>
-                // Llamar a la función para cargar y mostrar las gráficas
-        var idExpediente = 1; // ID del expediente deseado
-        
-
-    </script>
+    
     <script>
         const navItems = [
             {name: "Control de crecimiento", uri: "..//Control/control.html"},
