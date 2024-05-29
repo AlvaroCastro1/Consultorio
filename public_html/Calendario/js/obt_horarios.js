@@ -59,14 +59,7 @@ function cargarHorarios(idComboBox, fechaSeleccionada, fechaActual, horarioExtra
 
                 // Seleccionar la opción por defecto si horarioExtra no es null
                 if (horarioExtra !== null) {
-                    if (fechaActual !== fechaSeleccionada) {
-                        console.log("HOla");
-                        comboBox.val(''); // Seleccionar la opción "Seleccionar hora"
-                        
-                    }else{
-                        comboBox.val(horarioExtra);
-                    }
-                    
+                    comboBox.val(horarioExtra);
                 }
             } else {
                 console.error('Error: la respuesta del servidor no contiene horarios válidos');

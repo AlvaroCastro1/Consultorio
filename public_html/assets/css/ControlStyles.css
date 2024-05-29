@@ -1,13 +1,18 @@
-
 .titulo-control {
     background-color: #FFE596;
     color: #ffffff;
     padding: 10px;
     border-radius: 5px;
-
     background-image: url('../Iconos/control.png');
     background-repeat: no-repeat;
     background-position: right center;
+}
+
+@media screen and (max-width: 767px) {
+    .titulo-control {
+        background-image: none;
+        text-align: center;
+    }
 }
 
 body {
@@ -15,7 +20,6 @@ body {
     background-size: cover; 
     background-repeat: no-repeat; 
     background-attachment: fixed; 
-
     display: flex;
     flex-direction: column;
     min-height: 100vh;
@@ -27,21 +31,29 @@ body {
     padding: 20px; 
     border-radius: 10px; 
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); 
-    margin-left: 100px; 
-    margin-right: 100px;
+    margin-left: 50px; 
+    margin-right: 50px;
+}
+
+@media screen and (max-width: 767px) {
+    .container2 {
+        margin-left: 10px;
+        margin-right: 10px;
+        padding: 15px;
+    }
 }
 
 .table th,
 .table td {
-   vertical-align: middle;
-   white-space: nowrap;
+    vertical-align: middle;
+    white-space: nowrap;
 }
 
 .table thead th {
-    background-color: #FFE596 ;
+    background-color: #FFE596;
     color: #ffffff;
-    border-color: #FFE596 ;
-}       
+    border-color: #FFE596;
+}
 
 .table-bordered th,
 .table-bordered td {
@@ -51,6 +63,13 @@ body {
 .table-bordered thead th,
 .table-bordered thead td {
     border-bottom-width: 2px;
+}
+
+@media screen and (max-width: 767px) {
+    .table th,
+    .table td {
+        white-space: normal;
+    }
 }
 
 .btn-primary {
@@ -74,14 +93,14 @@ body {
 }
 
 .btn-success {
-    background-color: #a0c4ff ;
-    border-color: #a0c4ff  ;
-}
-.btn-success:hover {
-    background-color: #a0c4ff  ;
-    border-color: #a0c4ff ;
+    background-color: #a0c4ff;
+    border-color: #a0c4ff;
 }
 
+.btn-success:hover {
+    background-color: #a0c4ff;
+    border-color: #a0c4ff;
+}
 
 .bg-custom {
     background-color: #84b6f4;
@@ -97,4 +116,10 @@ footer {
     color: white;
     text-align: center;
     padding: 10px 0;
+}
+
+@media screen and (max-width: 767px) {
+    footer {
+        padding: 20px 0;
+    }
 }
