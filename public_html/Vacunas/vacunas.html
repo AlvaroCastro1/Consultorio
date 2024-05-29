@@ -164,255 +164,211 @@
             const gramaje = document.getElementById('gramajeInput').value;
             const lote = document.getElementById('loteInput').value;
             const fechaCaducidad = document.getElementById('fechaCaducidadInput').value;
-            
+
             var fechaFormato = formatoFecha();
+            if (idExpediente !== null) {
+                fetch('../Vacunas/guardar.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+                    body: `idExpedienteDV=${idExpediente}&enfermedad=${enfermedad}&sustanciaActiva=${sustanciaActiva}
+                    &formula=${formula}&laboratorio=${laboratorio}&gramaje=${gramaje}
+                    &lote=${lote}&dosis=${dosis}&fechaCaducidad=${fechaCaducidad}`
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert(data.message);
+                        buscar();
+                    } else {
+                        alert(data.message);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Error al guardar los datos');
+                });
 
-            fetch('../Vacunas/guardar.php', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded'
-                },
-                body: `idExpedienteDV=${idExpediente}&enfermedad=${enfermedad}&sustanciaActiva=${sustanciaActiva}
-                &formula=${formula}&laboratorio=${laboratorio}&gramaje=${gramaje}
-                &lote=${lote}&dosis=${dosis}&fechaCaducidad=${fechaCaducidad}
-               `
-            })
-            .then(response => response.json())
-            .then(data => {
-                // Mostrar mensaje de éxito o error
-                if (data.success) {
-                    alert(data.message);
-                    // Actualizar la tabla o hacer cualquier otra acción necesaria
-                    buscar();
-                } else {
-                    alert(data.message);
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                alert('Error al guardar los datos');
-            });
-        
-            // Cerrar el modal después de agregar el registro
-            const modal = bootstrap.Modal.getInstance(document.getElementById('modalAgregar'));
-            modal.hide();
-    
-            // Limpiar los campos del formulario
-            document.getElementById('sustanciaActivaInput').value = '';
-            document.getElementById('enfermedadInput').value = '';
-            document.getElementById('formulaInput').value = '';
-            document.getElementById('laboratorioInput').value = '';
-            document.getElementById('dosisInput').value = '';
-            document.getElementById('gramajeInput').value = '';
-            document.getElementById('loteInput').value = '';
-            document.getElementById('fechaCaducidadInput').value = '';
-            
+                const modal = bootstrap.Modal.getInstance(document.getElementById('modalAgregar'));
+                modal.hide();
 
+                document.getElementById('sustanciaActivaInput').value = '';
+                document.getElementById('enfermedadInput').value = '';
+                document.getElementById('formulaInput').value = '';
+                document.getElementById('laboratorioInput').value = '';
+                document.getElementById('dosisInput').value = '';
+                document.getElementById('gramajeInput').value = '';
+                document.getElementById('loteInput').value = '';
+                document.getElementById('fechaCaducidadInput').value = '';
+            } else {
+                alert("Su sesión ya expiró o no la ha iniciado");
+                window.location.href = '../index.php';
+            }
         }
-    
-        buscar()
-        //document.getElementById("input-busqueda").addEventListener("keyup", buscar)
+
         function buscar() {
-  
-            let input = document.getElementById("input-busqueda").value
-            console.log("Buscar por sustancia vacunas:", input);
-            let content = document.getElementById("content")
-            let url = "../Vacunas/buscar.php"
-            let formaData = new FormData()
-            formaData.append('idExpedienteDV', idExpediente)
+            if (idExpediente !== null) {
+                let input = document.getElementById("input-busqueda").value;
+                console.log("Buscar por sustancia vacunas:", input);
+                let content = document.getElementById("content");
+                let url = "../Vacunas/buscar.php";
+                let formaData = new FormData();
+                formaData.append('idExpedienteDV', idExpediente);
+                formaData.append('sustanciaActiva', input);
 
-            formaData.append('sustanciaActiva', input)
-
-            fetch(url, {
-                method: "POST",
-                body: formaData
-            }).then(Response => Response.json())
-            .then(data => {
-                content.innerHTML = data
-
-            }).catch(err => console.log(err))
+                fetch(url, {
+                    method: "POST",
+                    body: formaData
+                }).then(Response => Response.json())
+                .then(data => {
+                    content.innerHTML = data;
+                }).catch(err => console.log(err));
+            } else {
+                alert("Su sesión ya expiró o no la ha iniciado");
+                window.location.href = '../index.php';
+            }
         }
 
         function eliminarFila(button) {
-            // Obtener el ID de la fila
-            const row = button.closest('tr');
-            const idVacunas = row.querySelector('td:first-child').textContent;
-            console.log("la id que a eliminar es: ", idVacunas);
+            if (idExpediente !== null) {
+                const row = button.closest('tr');
+                const idVacunas = row.querySelector('td:first-child').textContent;
+                console.log("la id que a eliminar es: ", idVacunas);
 
-            
-            // Realizar la solicitud AJAX para guardar los datos
-            fetch('../Vacunas/eliminar.php', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded'
-                },
-                body: `idVacunas=${idVacunas}`
-            })
-            .then(response => response.json())
-            .then(data => {
-                // Mostrar mensaje de éxito o error
-                if (data.success) {
-                    alert(data.message);
-                    // Actualizar la tabla o hacer cualquier otra acción necesaria
-                    buscar();
-                } else {
-                    alert(data.message);
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                alert('Error al eliminar los datos');
-            });
-        
-
+                fetch('../Vacunas/eliminar.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+                    body: `idVacunas=${idVacunas}`
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert(data.message);
+                        buscar();
+                    } else {
+                        alert(data.message);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Error al eliminar los datos');
+                });
+            } else {
+                alert("Su sesión ya expiró o no la ha iniciado");
+                window.location.href = '../index.php';
+            }
         }
 
         function modificarVacunas(button) {
-            const row = button.closest('tr');
-            const cells = row.querySelectorAll('td');
-            const modal = new bootstrap.Modal(document.getElementById('modalModificar'));
+            if (idExpediente !== null) {
+                const row = button.closest('tr');
+                const cells = row.querySelectorAll('td');
+                const modal = new bootstrap.Modal(document.getElementById('modalModificar'));
 
-            // Extraer los datos de la fila seleccionada
-            const data = {
-                idCita: cells[0].textContent,
-                sustanciaActiva: cells[2].textContent,
-                enfermedad: cells[1].textContent,
-                formula: cells[3].textContent,
-                laboratorio: cells[4].textContent,
-                dosis: cells[7].textContent,
-                gramaje: cells[6].textContent,
-                lote: cells[5].textContent,
-                fechaAplicacion: cells[8].textContent,
-                fechaCaducidad: cells[9].textContent
-            };
+                const data = {
+                    idCita: cells[0].textContent,
+                    sustanciaActiva: cells[2].textContent,
+                    enfermedad: cells[1].textContent,
+                    formula: cells[3].textContent,
+                    laboratorio: cells[4].textContent,
+                    dosis: cells[7].textContent,
+                    gramaje: cells[6].textContent,
+                    lote: cells[5].textContent,
+                    fechaAplicacion: cells[8].textContent,
+                    fechaCaducidad: cells[9].textContent
+                };
 
-            // Cargar los datos en los campos de entrada del modal
-            document.getElementById('idOculto').value = data.idCita;
-            document.getElementById('sustanciaActivaInputModificar').value = data.sustanciaActiva;
-            document.getElementById('enfermedadInputModificar').value = data.enfermedad;
-            document.getElementById('formulaInputModificar').value = data.formula;
-            document.getElementById('laboratorioInputModificar').value = data.laboratorio;
-            document.getElementById('dosisInputModificar').value = data.dosis;
-            document.getElementById('gramajeInputModificar').value = data.gramaje;
-            document.getElementById('loteInputModificar').value = data.lote;
-            document.getElementById('fechaCaducidadInputModificar').value = data.fechaCaducidad;
-            document.getElementById('fechaAplicacionInputModificar').value = data.fechaAplicacion;
+                document.getElementById('idOculto').value = data.idCita;
+                document.getElementById('sustanciaActivaInputModificar').value = data.sustanciaActiva;
+                document.getElementById('enfermedadInputModificar').value = data.enfermedad;
+                document.getElementById('formulaInputModificar').value = data.formula;
+                document.getElementById('laboratorioInputModificar').value = data.laboratorio;
+                document.getElementById('dosisInputModificar').value = data.dosis;
+                document.getElementById('gramajeInputModificar').value = data.gramaje;
+                document.getElementById('loteInputModificar').value = data.lote;
+                document.getElementById('fechaCaducidadInputModificar').value = data.fechaCaducidad;
+                document.getElementById('fechaAplicacionInputModificar').value = data.fechaAplicacion;
 
-            // Mostrar el modal
-            modal.show();
-
-            
+                modal.show();
+            } else {
+                alert("Su sesión ya expiró o no la ha iniciado");
+                window.location.href = '../index.php';
+            }
         }
-
 
         function ModificarVacunaDesdeModal() {
-            
+            if (idExpediente !== null) {
+                const idVacunas = document.getElementById('idOculto').value;
+                const enfermedad = document.getElementById('enfermedadInputModificar').value;
+                const sustanciaActiva = document.getElementById('sustanciaActivaInputModificar').value;
+                const formula = document.getElementById('formulaInputModificar').value;
+                const laboratorio = document.getElementById('laboratorioInputModificar').value;
+                const gramaje = document.getElementById('gramajeInputModificar').value;
+                const lote = document.getElementById('loteInputModificar').value;
+                const dosis = document.getElementById('dosisInputModificar').value;
+                const fechaAplicacion = document.getElementById('fechaAplicacionInputModificar').value;
+                const fechaCaducidad = document.getElementById('fechaCaducidadInputModificar').value;
 
-            const idVacunas = document.getElementById('idOculto').value;
-            const enfermedad= document.getElementById('enfermedadInputModificar').value ;
-            const sustanciaActiva = document.getElementById('sustanciaActivaInputModificar').value
-            const formula = document.getElementById('formulaInputModificar').value;
-            const laboratorio = document.getElementById('laboratorioInputModificar').value ;
-            const gramaje =  document.getElementById('gramajeInputModificar').value ;
-            const lote = document.getElementById('loteInputModificar').value;
-            const dosis = document.getElementById('dosisInputModificar').value;
-            const fechaAplicacion = document.getElementById('fechaAplicacionInputModificar').value;
-            const fechaCaducidad = document.getElementById('fechaCaducidadInputModificar').value;
+                fetch('../Vacunas/modificar.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+                    body: `idVacunas=${idVacunas}&enfermedad=${enfermedad}
+                    &sustanciaActiva=${sustanciaActiva}&formula=${formula}&laboratorio=${laboratorio}
+                    &gramaje=${gramaje}&lote=${lote}&dosis=${dosis}
+                    &fechaAplicacion=${fechaAplicacion}&fechaCaducidad=${fechaCaducidad}`
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert(data.message);
+                        buscar();
+                    } else {
+                        alert(data.message);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Error al guardar los datos');
+                });
 
-        
+                const modal = bootstrap.Modal.getInstance(document.getElementById('modalModificar'));
+                modal.hide();
 
-
-            fetch('../Vacunas/modificar.php', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded'
-                },
-                body: `idVacunas=${idVacunas}&enfermedad=${enfermedad}
-                &sustanciaActiva=${sustanciaActiva}&formula=${formula}&laboratorio=${laboratorio}
-                &gramaje=${gramaje}&lote=${lote}&dosis=${dosis}
-                &fechaAplicacion=${fechaAplicacion}&fechaCaducidad=${fechaCaducidad}`
-            })
-            .then(response => response.json())
-            .then(data => {
-                // Mostrar mensaje de éxito o error
-                if (data.success) {
-                    alert(data.message);
-                    // Actualizar la tabla o hacer cualquier otra acción necesaria
-                    buscar();
-
-                } else {
-                    alert(data.message);
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                alert('Error al guardar los datos');
-            });
-            // Cerrar el modal después de agregar el registro
-            const modal = bootstrap.Modal.getInstance(document.getElementById('modalModificar'));
-            modal.hide();
-    
-            // Limpiar los campos del formulario
-            document.getElementById('idOculto').value='';
-            document.getElementById('enfermedadInputModificar').value='';
-            document.getElementById('sustanciaActivaInputModificar').value='';
-            document.getElementById('formulaInputModificar').value='';
-            document.getElementById('laboratorioInputModificar').value='' ;
-            document.getElementById('gramajeInputModificar').value='' ;
-            document.getElementById('loteInputModificar').value='';
-            document.getElementById('dosisInputModificar').value='';
-            document.getElementById('fechaAplicacionInputModificar').value='';
-            document.getElementById('fechaCaducidadInputModificar').value='';
-
+                document.getElementById('idOculto').value = '';
+                document.getElementById('enfermedadInputModificar').value = '';
+                document.getElementById('sustanciaActivaInputModificar').value = '';
+                document.getElementById('formulaInputModificar').value = '';
+                document.getElementById('laboratorioInputModificar').value = '';
+                document.getElementById('gramajeInputModificar').value = '';
+                document.getElementById('loteInputModificar').value = '';
+                document.getElementById('dosisInputModificar').value = '';
+                document.getElementById('fechaAplicacionInputModificar').value = '';
+                document.getElementById('fechaCaducidadInputModificar').value = '';
+            } else {
+                alert("Su sesión ya expiró o no la ha iniciado");
+                window.location.href = '../index.php';
+            }
         }
-        
-
 
         function formatoFecha() {
-            // Obtener el input de fecha
             var fechaInput = document.getElementById("fechaCaducidadInput");
-
-            // Obtener el valor del input (fecha seleccionada por el usuario)
             var fechaSeleccionada = fechaInput.value;
 
-            // Verificar si se ha seleccionado una fecha
             if (fechaSeleccionada) {
-                // Convertir la fecha a un objeto Date
                 var fechaObj = new Date(fechaSeleccionada);
-
-                // Obtener los componentes de la fecha (año, mes, día)
                 var año = fechaObj.getFullYear();
-                var mes = (fechaObj.getMonth() + 1).toString().padStart(2, '0'); // Agregar un cero al mes si es necesario
-                var dia = fechaObj.getDate().toString().padStart(2, '0'); // Agregar un cero al día si es necesario
-
-                // Crear el formato deseado (año-mes-día)
-                var formatoDeseado = año + "-" + mes + "-" + dia;
-
-                // Asignar el formato deseado al valor del input
-                fechaInput.value = formatoDeseado;
+                var mes = (fechaObj.getMonth() + 1).toString().padStart(2, '0');
+                var dia = fechaObj.getDate().toString().padStart(2, '0');
+                var fechaFormateada = año + "-" + mes + "-" + dia;
+                return fechaFormateada;
+            } else {
+                console.error("Error: fecha no válida");
             }
-
-            // Retornar el valor del input modificado
-            console.log("se obtuvo el valor= ",fechaInput.value);
-
-            return fechaInput.value;
-        }
-
-        function mostrarFechaActual() {
-            var hoy = new Date();
-            var anio = hoy.getFullYear();
-            var mes = ('0' + (hoy.getMonth() + 1)).slice(-2);  // Obtener el mes (0-11) y agregar ceros a la izquierda
-            var dia = ('0' + hoy.getDate()).slice(-2);  // Obtener el día y agregar ceros a la izquierda
-            var fechaFormateada = `${anio}-${mes}-${dia}`;
-            console.log("se obtuvo la fecha actual: ",fechaFormateada )
-
-            return fechaFormateada.value
-        }
-        function limpiar(){
-            document.getElementById('input-busqueda').value = '';
-            buscar()
-
-
         }
         
     </script>
