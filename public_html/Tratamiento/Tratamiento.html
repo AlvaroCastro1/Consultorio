@@ -53,17 +53,7 @@
                     </tr>
                 </thead>
                 <tbody id="content">
-                    <tr>
-                        <td contenteditable="false">1</td>
-                        <td contenteditable="false">Esguince de tobillo</td>
-                        <td contenteditable="false">3 semanas</td>
-                        <td contenteditable="false">se puede curar</td>
-                        <td><input type="date" class="form-control" value="2024-04-15" readonly></td>
-                        <td>
-                            <button type="button" class="btn btn-danger me-2" onclick="eliminarFila(this)">Eliminar</button>
-                            <button type="button" class="btn btn-primary" onclick="modificarTratamiento(this)">Modificar</button>
-                        </td>
-                    </tr>
+                    
                 </tbody>
             </table>
         </div>
@@ -89,6 +79,30 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-danger me-2" data-bs-dismiss="modal">Cerrar</button>
                     <button type="button" class="btn btn-primary" onclick="agregarDesdeModal()">Aceptar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modalModificar" tabindex="-1" aria-labelledby="modalModificarLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalModificarLabel">Modificar Registro de Tratamiento</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="formulario-Tratamiento">
+                        <input type="hidden" class="form-control mb-3" id="idTratamientoModificar" placeholder="Descripción">
+                        <input type="text" class="form-control mb-3" id="descripcionTInputModificar" placeholder="Descripción">
+                        <input type="text" class="form-control mb-3" id="duracionInputModificar" placeholder="Duración">
+                        <input type="text" class="form-control mb-3" id="diagnosticoInputModificar" placeholder="Diagnóstico">
+                        <input type="date" class="form-control mb-3" id="fechaTratamientoInputModificar" placeholder="Fecha del tratamiento">
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger me-2" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-primary" onclick="ModificarDesdeModal()">Aceptar</button>
                 </div>
             </div>
         </div>
@@ -240,25 +254,51 @@
         function modificarTratamiento(button) {
             const row = button.closest('tr');
             const cells = row.querySelectorAll('td');
-            cells.forEach(cell => {
-                cell.contentEditable = true;
-            });
-            button.textContent = "Guardar";
-            button.classList.remove('btn-primary');
-            button.classList.add('btn-success');
-            button.setAttribute('onclick', 'guardarTratamiento(this)');
+            const modal = new bootstrap.Modal(document.getElementById('modalModificar'));
+
+            // Extraer los datos de la fila seleccionada
+            const data = {
+                idTratamiento: cells[0].textContent,
+                descripcionTratamiento: cells[1].textContent,
+                duracion: cells[2].textContent,
+                diagnostico: cells[3].textContent,
+                fechaTratamiento: cells[4].textContent
+            };
+
+            // Cargar los datos en los campos de entrada del modal
+            document.getElementById('idTratamientoModificar').value = data.idTratamiento;
+            document.getElementById('descripcionTInputModificar').value = data.descripcionTratamiento;
+            document.getElementById('duracionInputModificar').value = data.duracion;
+            document.getElementById('diagnosticoInputModificar').value = data.diagnostico;
+            document.getElementById('fechaTratamientoInputModificar').value = data.fechaTratamiento;
+
+            // Mostrar el modal
+            modal.show();
         }
 
-        function guardarTratamiento(button) {
-            const row = button.closest('tr');
-            const cells = row.querySelectorAll('td');
+        function ModificarDesdeModal() {
+            const idTratamiento = document.getElementById('idTratamientoModificar').value;
+            const descripcionTratamiento = document.getElementById('descripcionTInputModificar').value;
+            const duracion = document.getElementById('duracionInputModificar').value;
+            const diagnostico = document.getElementById('diagnosticoInputModificar').value;
+            const fechaTratamiento = document.getElementById('fechaTratamientoInputModificar').value;
 
-
-            const idTratamiento = cells[0].innerText;
-            const descripcionTratamiento = cells[1].innerText;
-            const duracion = cells[2].innerText;
-            const diagnostico = cells[3].innerText;
-            const fechaTratamiento = cells[4].innerText;
+            if (!descripcionTratamiento) {
+                alert('Por favor, ingresa la descripción del tratamiento.');
+                return; // Detener el proceso si el campo está vacío
+            }
+            if (!duracion) {
+                alert('Por favor, ingresa la duración del tratamiento.');
+                return; // Detener el proceso si el campo está vacío
+            }
+            if (!diagnostico) {
+                alert('Por favor, ingresa el diagnóstico.');
+                return; // Detener el proceso si el campo está vacío
+            }
+            if (!fechaTratamiento) {
+                alert('Por favor, ingresa la fecha del tratamiento.');
+                return; // Detener el proceso si el campo está vacío
+            }
 
             fetch('../Tratamiento/modificar.php', {
                 method: 'POST',
@@ -282,6 +322,13 @@
                 console.error('Error:', error);
                 alert('Error al guardar los datos');
             });
+
+            // Cerrar el modal después de agregar el registro
+            const modal = bootstrap.Modal.getInstance(document.getElementById('modalModificar'));
+            modal.hide();
+
+            // Limpiar los campos del formulario
+            document.getElementById('formulario-Tratamiento').reset();
         }
 
 

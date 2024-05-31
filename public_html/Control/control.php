@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -113,6 +113,32 @@
             </div>
         </div>
     </div>
+    <div class="modal fade" id="modalModificar" tabindex="-1" aria-labelledby="modalModificarLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalModificarLabel">Control de Crecimiento</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="registroEstudio">
+                    <input type="hidden" class="form-control mb-3" id="idControlModificar" placeholder="ID">
+                    <input type="number" class="form-control mb-3" id="alturaModificar" placeholder="Altura">
+                    <input type="number" class="form-control mb-3" id="pesoModificar" placeholder="Peso">
+                    <input type="number" class="form-control mb-3" id="circunferenciaDelCraneoModificar" placeholder="Perímetro Cefálico">
+                    <input type="number" class="form-control mb-3" id="indiceMasaCorporalModificar" placeholder="IMC">
+                    <input type="date" class="form-control mb-3" id="fechaControlModificar" placeholder="Fecha de Registro">
+                    <input type="text" class="form-control mb-3" id="evaluacionModificar" placeholder="Evaluación">
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger me-2" data-bs-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-primary" onclick="ModificarDesdeModal()">Aceptar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
     
     <footer>
         <div class="container3">
@@ -247,44 +273,74 @@
         function modificarControl(button) {
             const row = button.closest('tr');
             const cells = row.querySelectorAll('td');
-            contador = 0;
-            cells.forEach(cell => {
-                if (contador ==0){
-                    cell.contentEditable = false;
-                    contador = contador +1;
+            const modal = new bootstrap.Modal(document.getElementById('modalModificar'));
 
-                }else{
-                    cell.contentEditable = true;
-                }
-            });
-            button.textContent = "Guardar";
-            button.classList.remove('btn-primary');
-            button.classList.add('btn-success');
-            button.setAttribute('onclick', 'guardarControl(this)');
+            // Extraer los datos de la fila seleccionada
+            const data = {
+                idControl: cells[0].textContent,
+                altura: cells[1].textContent,
+                peso: cells[2].textContent,
+                circunferenciaDelCraneo: cells[3].textContent,
+                indiceMasaCorporal: cells[4].textContent,
+                fechaControl: cells[6].textContent,
+                evaluacion: cells[5].textContent
+            };
+
+            // Cargar los datos en los campos de entrada del modal
+            document.getElementById('idControlModificar').value = data.idControl;
+            
+            document.getElementById('alturaModificar').value = data.altura;
+            document.getElementById('pesoModificar').value = data.peso;
+            document.getElementById('circunferenciaDelCraneoModificar').value = data.circunferenciaDelCraneo;
+            document.getElementById('indiceMasaCorporalModificar').value = data.indiceMasaCorporal;
+            document.getElementById('fechaControlModificar').value = data.fechaControl;
+            document.getElementById('evaluacionModificar').value = data.evaluacion;
+
+            // Mostrar el modal
+            modal.show();
         }
 
-        function guardarControl(button) {
-            const row = button.closest('tr');
-            const cells = row.querySelectorAll('td');
+        function ModificarDesdeModal() {
+            const idControl = document.getElementById('idControlModificar').value;
+            console.log(idControl);
+            const altura = document.getElementById('alturaModificar').value;
+            const peso = document.getElementById('pesoModificar').value;
+            const circunferenciaDelCraneo = document.getElementById('circunferenciaDelCraneoModificar').value;
+            const indiceMasaCorporal = document.getElementById('indiceMasaCorporalModificar').value;
+            const fechaControl = document.getElementById('fechaControlModificar').value;
+            const evaluacion = document.getElementById('evaluacionModificar').value;
 
-
-            const idControlC = cells[0].innerText;
-            const altura = cells[1].innerText;
-            const peso = cells[2].innerText;
-            const indiceMasaCorporal = cells[3].innerText;
-            const circunferenciaDelCraneo = cells[4].innerText;
-            const evaluacion = cells[5].innerText;
-            const fechaControl = cells[6].innerText
-
+            if (!altura) {
+                alert('Por favor, ingresa la altura.');
+                return; // Detener el proceso si el campo está vacío
+            }
+            if (!peso) {
+                alert('Por favor, ingresa el peso.');
+                return; // Detener el proceso si el campo está vacío
+            }
+            if (!circunferenciaDelCraneo) {
+                alert('Por favor, ingresa la circunferencia del cráneo.');
+                return; // Detener el proceso si el campo está vacío
+            }
+            if (!indiceMasaCorporal) {
+                alert('Por favor, ingresa el IMC.');
+                return; // Detener el proceso si el campo está vacío
+            }
+            if (!fechaControl) {
+                alert('Por favor, ingresa la fecha de control.');
+                return; // Detener el proceso si el campo está vacío
+            }
+            if (!evaluacion) {
+                alert('Por favor, ingresa la evaluación.');
+                return; // Detener el proceso si el campo está vacío
+            }
 
             fetch('../Control/modificar.php', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded'
                 },
-                body: `altura=${altura}&peso=${peso}&indiceMasaCorporal=${indiceMasaCorporal}
-                &circunferenciaDelCraneo=${circunferenciaDelCraneo}&evaluacion=${evaluacion}
-                &fechaControl=${fechaControl}&idControlC=${idControlC}`
+                body: `idControlC=${idControl}&altura=${altura}&peso=${peso}&circunferenciaDelCraneo=${circunferenciaDelCraneo}&indiceMasaCorporal=${indiceMasaCorporal}&fechaControl=${fechaControl}&evaluacion=${evaluacion}`
             })
             .then(response => response.json())
             .then(data => {
@@ -301,6 +357,13 @@
                 console.error('Error:', error);
                 alert('Error al guardar los datos');
             });
+
+            // Cerrar el modal después de agregar el registro
+            const modal = bootstrap.Modal.getInstance(document.getElementById('modalModificar'));
+            modal.hide();
+
+            // Limpiar los campos del formulario
+            document.getElementById('registroEstudio').reset();
         }
 
 
