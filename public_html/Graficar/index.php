@@ -21,10 +21,11 @@
 </head>
 <body>
     
+
     <script>
         const navItems = [
-            {name: "Control de crecimiento", uri: "..//Control/control.html"},
-            {name: "Gráficas", uri: "..//Graficar/index.html"}
+            {name: "Control de crecimiento", uri: "..//Control/control.php"},
+            {name: "Gráficas", uri: "..//Graficar/index.php"}
         ];
 
         createHeader(navItems);

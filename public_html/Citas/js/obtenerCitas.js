@@ -1,5 +1,23 @@
-import { idPaciente, idExpediente, obtenerDatosSession } from '../../Estudios/js/obtenerExpediente.js';
+var idPaciente = null;
+var idExpediente = null;
+window.obtenerDatosSession = function (){
+    // Obtener los datos de sessionStorage
+    const datos = JSON.parse(sessionStorage.getItem('datosPaciente'));
 
+    if (datos) {
+        idPaciente = datos.idPacienteE;
+        idExpediente = datos.idExpedienteE
+
+        console.log("se obtuvieron los datos idPaciente: ", idPaciente, "idExpediente: ", idExpediente);
+    } else {
+        var sesion = sessionStorage.getItem('sesion');
+        if (!sesion) {
+            // Si no hay sesión, redirige al usuario
+            alert("Su sesión ya expiró o no la ha iniciado");
+            window.location.href = '../index.php';
+        }
+    }
+}
 /**
  * Función para cargar citas desde el servidor y mostrarlas en una tabla.
  * 

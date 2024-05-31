@@ -40,16 +40,20 @@ window.reiniciarModal = function reiniciarModal() {
     fechaInput.value = '';
 
     // Elimina los campos inyectados
-    var modalBody = document.querySelector('.modal-body');
+    var modalBody = document.querySelector('#modalAgregar .modal-body');
     while (modalBody.firstChild) {
         modalBody.removeChild(modalBody.firstChild);
     }
 
     // Agrega los campos originales al cuerpo del modal
     modalBody.innerHTML = `
+        <label for="tipoEstudioInput">Tipo</label>
         <input type="text" class="form-control mb-3" id="tipoEstudioInput" placeholder="Tipo">
+        <label for="nombreEstudioInput">Nombre</label>
         <input type="text" class="form-control mb-3" id="nombreEstudioInput" placeholder="Nombre">
+        <label for="descripcionEstudioInput">Descripción</label>
         <input type="text" class="form-control mb-3" id="descripcionEstudioInput" placeholder="Descripción">
+        <label for="fechaInput">Fecha del estudio</label>
         <input type="date" class="form-control mb-3" id="fechaInput">
         <button type="button" class="btn btn-secondary mb-3" id="AgregarElemento0" onclick="generarCamposElementos()">Agregar Elemento</button>
     `;
@@ -57,11 +61,16 @@ window.reiniciarModal = function reiniciarModal() {
     // Reinicia el contador de elementos
     contadorElementos = 0;
 
-    // Cierra el modal
-    var modalAgregar = new bootstrap.Modal(document.getElementById('modalAgregar'));
-    modalAgregar.hide();
-    generarCamposElementos()
+    // Cierra el modal correctamente
+    var modalElement = document.getElementById('modalAgregar');
+    var modalInstance = bootstrap.Modal.getInstance(modalElement);
+    if (modalInstance) {
+        modalInstance.hide();
+    }
+
+    generarCamposElementos();
 }
+
 
 window.eliminarElemento = function (indice) {
     // Elimina el elemento
