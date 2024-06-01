@@ -15,7 +15,7 @@ function createHeader(navItems) {
             // Elemento de marca con logotipo y nombre del sitio
             const brand = document.createElement("a");
             brand.className = "navbar-brand";
-            brand.href = "/";
+            brand.href = "../../index.php";
 
             // Agregar el logotipo
             if (logoPath) {

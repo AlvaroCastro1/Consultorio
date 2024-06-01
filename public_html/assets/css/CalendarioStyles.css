@@ -54,6 +54,14 @@ body {
   margin: 0 auto;
   border-radius: 5px;
 }
+
+@media screen and (max-width: 767px) {
+  #calendar {
+    max-width: 100%; /* Ancho máximo del calendario al 100% en pantallas pequeñas */
+    
+  }
+}
+
 /* Cambiar el color de fondo de los botones */
 .fc-prev-button, .fc-next-button, .fc-today-button {
   background-color: #ff0000; /* Cambiar al color deseado */
@@ -73,11 +81,14 @@ body {
 /* Estilos adicionales para el calendario */
 .fc-daygrid-day {
   background-color: #77dd77;
+  height: 60px;
 }
 
 .fc-daygrid-day-number {
   color: #FFFFFF;
   font-size: large;
+  line-height: 80px; /* Centrar el número del día verticalmente */
+  font-size: 16px; /* Tamaño de fuente del número del día */
 }
 
 .fc-event-title {

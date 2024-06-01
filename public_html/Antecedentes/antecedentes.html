@@ -53,16 +53,7 @@
                 </thead>
                 <tbody id="content">
                     
-                    <tr>
-                        <td contenteditable="false">Ejemplo de id</td>
-                        <td contenteditable="false">Ejemplo de tipo Antecedente</td>
-                        <td contenteditable="false">Ejemplo de padecimiento</td>
-                        <td contenteditable="false">Ejemplo de descripción</td>
-                        <td>
-                            <button type="button" class="btn btn-danger me-2" onclick="eliminarFila()">Eliminar</button>
-                            <button type="button" class="btn btn-primary" onclick="modificarAntecedente(this)">Modificar</button>
-                        </td>
-                    </tr>
+                    
                     
                 </tbody>
             </table>
@@ -89,6 +80,28 @@
             </div>
         </div>
     </div>
+
+    <div class="modal fade" id="modalModificar" tabindex="-1" aria-labelledby="modalModificarLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalModificarLabel">Modificar Registro de Antecedentes</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" class="form-control mb-3" id="idAntecedentesModificar" hidden>
+                    <input type="text" class="form-control mb-3" id="tipoAntecedenteInputModificar" placeholder="Tipo de antecedente">
+                    <input type="text" class="form-control mb-3" id="padecimientoInputModificar" placeholder="Padecimiento">
+                    <input type="text" class="form-control mb-3" id="descripcionInputModificar" placeholder="Descripción">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger me-2" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-primary" onclick="ModificarAntecedenteDesdeModal()">Aceptar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
     
 
     <footer>
@@ -114,7 +127,8 @@
 
                 console.log("se obtuvieron los datos idPaciente: ", idPaciente, "idExpediente: ", idExpediente);
             } else {
-                console.log('No se encontraron datos en sessionStorage');
+                alert("Su sesión ya expiró o no la ha iniciado");
+                window.location.href = '../index.php';
             }
         }
 
@@ -215,32 +229,31 @@
         function modificarAntecedente(button) {
             const row = button.closest('tr');
             const cells = row.querySelectorAll('td');
-            contador = 0;
-            cells.forEach(cell => {
-                if (contador ==0){
-                    cell.contentEditable = false;
-                    contador = contador +1;
+            const modal = new bootstrap.Modal(document.getElementById('modalModificar'));
 
-                }else{
-                    cell.contentEditable = true;
-                }
-            });
-            button.textContent = "Guardar";
-            button.classList.remove('btn-primary');
-            button.classList.add('btn-success');
-            button.setAttribute('onclick', 'guardarAntecedente(this)');
+            // Extraer los datos de la fila seleccionada
+            const data = {
+                idAntecedentes: cells[0].textContent,
+                tipoAntecedente: cells[1].textContent,
+                nombrePadecimiento: cells[2].textContent,
+                descripcion: cells[3].textContent
+            };
+
+            // Cargar los datos en los campos de entrada del modal
+            document.getElementById('idAntecedentesModificar').value = data.idAntecedentes;
+            document.getElementById('tipoAntecedenteInputModificar').value = data.tipoAntecedente;
+            document.getElementById('padecimientoInputModificar').value = data.nombrePadecimiento;
+            document.getElementById('descripcionInputModificar').value = data.descripcion;
+
+            // Mostrar el modal
+            modal.show();
         }
 
-        function guardarAntecedente(button) {
-            const row = button.closest('tr');
-            const cells = row.querySelectorAll('td');
-
-
-            const idAntecedentes = cells[0].innerText;
-            const tipoAntecedente = cells[1].innerText;
-            const nombrePadecimiento = cells[2].innerText;
-            const descripcion = cells[3].innerText;
-
+        function ModificarAntecedenteDesdeModal() {
+            const idAntecedentes = document.getElementById('idAntecedentesModificar').value;
+            const tipoAntecedente = document.getElementById('tipoAntecedenteInputModificar').value;
+            const nombrePadecimiento = document.getElementById('padecimientoInputModificar').value;
+            const descripcion = document.getElementById('descripcionInputModificar').value;
 
             fetch('../Antecedentes/modificar.php', {
                 method: 'POST',
@@ -264,7 +277,18 @@
                 console.error('Error:', error);
                 alert('Error al guardar los datos');
             });
+
+            // Cerrar el modal después de agregar el registro
+            const modal = bootstrap.Modal.getInstance(document.getElementById('modalModificar'));
+            modal.hide();
+
+            // Limpiar los campos del formulario
+            document.getElementById('idAntecedentesModificar').value = '';
+            document.getElementById('tipoAntecedenteInputModificar').value = '';
+            document.getElementById('padecimientoInputModificar').value = '';
+            document.getElementById('descripcionInputModificar').value = '';
         }
+
 
         function limpiar(){
             document.getElementById('input-busqueda').value = '';

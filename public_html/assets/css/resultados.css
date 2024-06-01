@@ -1,106 +1,131 @@
+.titulo-inicio {
+    background-color: #7ab7ec;
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+    background-image: url('../Iconos/result.png');
+    background-repeat: no-repeat;
+    background-position: right center;
+    background-size: 50px;
+}
 
-        .titulo-inicio {
-            background-color: #7ab7ec;
-            color: white;
-            padding: 10px;
-            border-radius: 5px;
+@media screen and (max-width: 767px) {
+    .titulo-inicio {
+        background-image: none;
+        text-align: center;
+    }
+}
 
-            background-image: url('../Iconos/result.png');
-            background-repeat: no-repeat;
-            background-position: right center;
-            background-size: 50px;
-        }
+body {
+    background-image: url('../Imagenes/Resultados.png');
+    background-size: cover; 
+    background-repeat: no-repeat; 
+    background-attachment: fixed; 
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    margin: 0;
+}
 
-        body {
-            background-image: url('../Imagenes/Resultados.png');
-            background-size: cover; 
-            background-repeat: no-repeat; 
-            background-attachment: fixed; 
+.container2 {
+    background-color: white; 
+    padding: 20px; 
+    border-radius: 10px; 
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); 
+    margin-left: 50px; 
+    margin-right: 50px;
+}
 
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-            margin: 0;
-        }
+@media screen and (max-width: 767px) {
+    .container2 {
+        margin-left: 0px;
+        margin-right: 0px;
+        padding: 15px;
+    }
+}
 
-        .container2 {
-            background-color: white; 
-            padding: 20px; 
-            border-radius: 10px; 
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); 
-            margin-left: 100px; 
-            margin-right: 100px;
-        }
+.table th,
+.table td {
+    vertical-align: middle;
+    white-space: nowrap;
+}
 
-        .table th,
-        .table td {
-            vertical-align: middle;
-            white-space: nowrap;
-        }
+.table thead th {
+    background-color: #7ab7ec;
+    color: #ffffff;
+    border-color: #449eed;
+}
 
-        .table thead th {
-            background-color: #7ab7ec ;
-            color: #ffffff;
-            border-color: #449eed ;
-        }
+.table-bordered th,
+.table-bordered td {
+    border: 1px solid #dee2e6;
+}
 
-        .table-bordered th,
-        .table-bordered td {
-            border: 1px solid #dee2e6;
-        }
+.table-bordered thead th,
+.table-bordered thead td {
+    border-bottom-width: 2px;
+}
 
-        .table-bordered thead th,
-        .table-bordered thead td {
-            border-bottom-width: 2px;
-        }
+@media screen and (max-width: 767px) {
+    .table th,
+    .table td {
+        white-space: normal;
+    }
+}
 
-        .btn-primary {
-            background-color: #59dae3;
-            border-color: #59dae3 ;
-        }
+.btn-primary {
+    background-color: #59dae3;
+    border-color: #59dae3;
+}
 
-        .btn-primary:hover {
-            background-color: #49b4bb;
-            border-color: #43a3aa;
-        }
+.btn-primary:hover {
+    background-color: #49b4bb;
+    border-color: #43a3aa;
+}
 
-        .btn-danger {
-            background-color: rgb(245, 111, 111);
-            border-color: rgb(245, 111, 111);
-        }
+.btn-danger {
+    background-color: rgb(245, 111, 111);
+    border-color: rgb(245, 111, 111);
+}
 
-        .btn-reslt {
-            background-color: #8cc2ff;
-            border-color: #8cc2ff;
-        }
+.btn-reslt {
+    background-color: #8cc2ff;
+    border-color: #8cc2ff;
+}
 
-        .btn-danger:hover {
-            background-color: rgb(231, 101, 101);
-            border-color: rgb(231, 101, 101);
-        }
+.btn-danger:hover {
+    background-color: rgb(231, 101, 101);
+    border-color: rgb(231, 101, 101);
+}
 
-        .btn-success {
-            background-color: #a0c4ff ;
-            border-color: #a0c4ff  ;
-        }
-        .btn-success:hover {
-            background-color: #a0c4ff  ;
-            border-color: #a0c4ff ;
-        }
-        
+.btn-success {
+    background-color: #a0c4ff;
+    border-color: #a0c4ff;
+}
 
-        .bg-custom {
-            background-color: #84b6f4;
-        }
+.btn-success:hover {
+    background-color: #a0c4ff;
+    border-color: #a0c4ff;
+}
 
-        .espacio-final {
-            margin-bottom: 50px;
-        }
+.bg-custom {
+    background-color: #84b6f4;
+}
 
-        footer {
-            margin-top: auto;
-            background-color: #76a3db;
-            color: white;
-            text-align: center;
-            padding: 10px 0;
-        }
+.espacio-final {
+    margin-bottom: 50px;
+}
+
+footer {
+    margin-top: auto;
+    background-color: #76a3db;
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+}
+
+@media screen and (max-width: 767px) {
+    footer {
+        padding: 20px 0;
+    }
+}

@@ -9,6 +9,17 @@ export function obtenerDatosSession() {
         idExpediente = datos.idExpedienteE;
         console.log("se obtuvieron los datos idPaciente: ", idPaciente, "idExpediente: ", idExpediente);
     } else {
-        console.log('No se encontraron datos en sessionStorage');
+        alert("Su sesión ya expiró o no la ha iniciado");
+        window.location.href = '../index.php';
     }
+}
+
+
+export function verificarSesion(idE) {
+    if (idE === null) {
+        alert("Su sesión ya expiró o no la ha iniciado");
+        window.location.href = '../index.php';
+        return false;
+    }
+    return true;
 }

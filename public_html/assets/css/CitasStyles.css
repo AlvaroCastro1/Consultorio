@@ -1,100 +1,127 @@
+.titulo-Citas {
+    background-color: #8de98d;
+    color: #ffffff;
+    padding: 10px;
+    border-radius: 5px;
 
-        .titulo-Citas {
-            background-color: #8de98d;
-            color: #ffffff;
-            padding: 10px;
-            border-radius: 5px;
+    background-image: url('../Iconos/cita.png');
+    background-repeat: no-repeat;
+    background-position: right center;
+}
 
-            background-image: url('../Iconos/cita.png');
-            background-repeat: no-repeat;
-            background-position: right center;
-        }
+@media screen and (max-width: 767px) {
+    .titulo-Citas {
+        background-image: none;
+        text-align: center;
+    }
+}
 
-        body {
-            background-image: url('../Imagenes/fondoCitas.png');
-            background-size: cover; 
-            background-repeat: no-repeat; 
-            background-attachment: fixed; 
+body {
+    background-image: url('../Imagenes/fondoCitas.png');
+    background-size: cover; 
+    background-repeat: no-repeat; 
+    background-attachment: fixed; 
 
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-            margin: 0;
-        }
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    margin: 0;
+}
 
-        .container2 {
-            background-color: white; 
-            padding: 20px; 
-            border-radius: 10px; 
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); 
-            margin-left: 100px; 
-            margin-right: 100px;
-        }
+.container2 {
+    background-color: white; 
+    padding: 20px; 
+    border-radius: 10px; 
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); 
+    margin-left: 50px; 
+    margin-right: 50px;
+}
 
-        .table th,
-        .table td {
-            vertical-align: middle;
-            white-space: nowrap;
-        }
+@media screen and (max-width: 767px) {
+    .container2 {
+        margin-left: 10px;
+        margin-right: 10px;
+        padding: 15px;
+    }
+}
 
-        .table thead th {
-            background-color: #8de98d;
-            color: #ffffff;
-            border-color: #8de98d ;
-        }
+.table th,
+.table td {
+    vertical-align: middle;
+    white-space: nowrap;
+}
 
-        .table-bordered th,
-        .table-bordered td {
-            border: 1px solid #dee2e6;
-        }
+.table thead th {
+    background-color: #8de98d;
+    color: #ffffff;
+    border-color: #8de98d;
+}
 
-        .table-bordered thead th,
-        .table-bordered thead td {
-            border-bottom-width: 2px;
-        }
+.table-bordered th,
+.table-bordered td {
+    border: 1px solid #dee2e6;
+}
 
-        .btn-primary {
-            background-color: #a9e9a4;
-            border-color: #a9e9a4;
-        }
+.table-bordered thead th,
+.table-bordered thead td {
+    border-bottom-width: 2px;
+}
 
-        .btn-primary:hover {
-            background-color: #66cc88;
-            border-color: #66cc88;
-        }
+@media screen and (max-width: 767px) {
+    .table th,
+    .table td {
+        white-space: normal;
+    }
+}
 
-        .btn-danger {
-            background-color: #ff958c;
-            border-color: #ff958c;
-        }
+.btn-primary {
+    background-color: #a9e9a4;
+    border-color: #a9e9a4;
+}
 
-        .btn-danger:hover {
-            background-color: #f96356;
-            border-color: #f96356;
-        }
+.btn-primary:hover {
+    background-color: #66cc88;
+    border-color: #66cc88;
+}
 
-        .btn-success {
-            background-color: #a0c4ff ;
-            border-color: #a0c4ff  ;
-        }
-        .btn-success:hover {
-            background-color: #a0c4ff  ;
-            border-color: #a0c4ff ;
-        }
-        
+.btn-danger {
+    background-color: #ff958c;
+    border-color: #ff958c;
+}
 
-        .bg-custom {
-            background-color: #84b6f4;
-        }
+.btn-danger:hover {
+    background-color: #f96356;
+    border-color: #f96356;
+}
 
-        .espacio-final {
-            margin-bottom: 50px;
-        }
+.btn-success {
+    background-color: #a0c4ff;
+    border-color: #a0c4ff;
+}
 
-        footer {
-            margin-top: auto;
-            background-color: #76a3db;
-            color: white;
-            text-align: center;
-            padding: 10px 0;
-        }
+.btn-success:hover {
+    background-color: #a0c4ff;
+    border-color: #a0c4ff;
+}
+
+.bg-custom {
+    background-color: #84b6f4;
+}
+
+.espacio-final {
+    margin-bottom: 50px;
+}
+
+footer {
+    margin-top: auto;
+    background-color: #76a3db;
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+}
+
+@media screen and (max-width: 767px) {
+    footer {
+        padding: 20px 0;
+    }
+}

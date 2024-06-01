@@ -25,6 +25,7 @@ window.agregarProcedimiento = function () {
             let result = JSON.parse(response);
             if (result.success) {
                 // Cerrar el modal
+                alert("Procedimiento guardado de forma exitosa")
                 $('#modalAgregar').modal('hide');
                 location.reload();
                 // Recargar la tabla de procedimientos

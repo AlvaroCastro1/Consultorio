@@ -37,12 +37,33 @@ include 'citas.php'; // Incluye el contenido de cita.php
         const navItems = [
             {name: "Citas" ,uri: "../Citas/Citas.html"},
             {name: "Calendario" ,uri: "../Calendario/calendario.php"},
-            {name: "Expediente", uri: "../Expediente/expediente.html"},
+            { name: "Inicio", uri: "../../index.php" }
         
         ];
     
         createHeader(navItems);
         
+    </script>
+    <script>
+    var idPaciente = null;
+    var idExpediente = null;
+
+    // Obtener los datos de sessionStorage
+    const datos = JSON.parse(sessionStorage.getItem('datosPaciente'));
+
+    if (datos) {
+        idPaciente = datos.idPacienteE;
+        idExpediente = datos.idExpedienteE
+
+        console.log("se obtuvieron los datos idPaciente: ", idPaciente, "idExpediente: ", idExpediente);
+    } else {
+        var sesion = sessionStorage.getItem('sesion');
+        if (!sesion) {
+            // Si no hay sesión, redirige al usuario
+            alert("Su sesión ya expiró o no la ha iniciado");
+            window.location.href = '../index.php';
+        }
+    }
     </script>
 <div class="container2 mt-5">
   <div class="row mt-4">

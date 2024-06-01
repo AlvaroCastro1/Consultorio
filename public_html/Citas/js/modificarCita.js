@@ -1,3 +1,11 @@
+/**
+ * Función para modificar una cita médica.
+ * 
+ * Esta función toma el índice de una fila en la tabla de citas, recupera los datos de la cita de esa fila y 
+ * los coloca en los campos de un modal para permitir la modificación de la cita.
+ *
+ * @param {number} rowIndex - El índice de la fila de la tabla de citas.
+ */
 function modificarCita(rowIndex) {
     // Obtén la tabla y la fila correspondiente
     var table = document.getElementById('tabla-Citas');
@@ -12,7 +20,6 @@ function modificarCita(rowIndex) {
         var hora = row.cells[3].innerText;
         var asistencia = row.cells[4].innerText == 'Asistió';
         console.log('Texto de la celda:', row.cells[4].innerText);
-
 
         // Obtén los elementos del modal por su id
         var idCitaInput = document.getElementById('input-idCita');
@@ -33,7 +40,6 @@ function modificarCita(rowIndex) {
             asistenciaInput.checked = asistencia;
             fechaInputOculto.value = fecha;
             horaInputOculto.value = hora;
-            
 
             // Abre el modal
             $('#modalModificar').modal('show');
@@ -45,15 +51,21 @@ function modificarCita(rowIndex) {
     }
 }
 
-
+/**
+ * Función para guardar la modificación de una cita médica.
+ * 
+ * Esta función toma los datos del formulario de modificación de cita, realiza una solicitud AJAX para
+ * enviar los datos al servidor y maneja la respuesta del servidor.
+ */
 function guardarModificacionCita() {
+    // Obtén los valores de los campos del formulario
     var idCita = document.getElementById('input-idCita').value;
     var idPaciente = document.getElementById('input-IDpacienteModificar').value;
     var fecha = document.getElementById('eventDateModificar').value;
     var hora = document.getElementById('eventTimeModificar').value;
-    var asistencia = document.getElementById('eventAttendanceModificar').checked ? 1 : 0;  // Cambiar a 1 o 0
+    var asistencia = document.getElementById('eventAttendanceModificar').checked ? 1 : 0;
 
-    console.log(idCita)
+    console.log(idCita);
     var data = {
         citaId: idCita,
         patientId: idPaciente,
@@ -62,15 +74,19 @@ function guardarModificacionCita() {
         eventAttendance: asistencia
     };
 
+    // Realizar una solicitud AJAX para guardar la modificación de la cita
     $.ajax({
-        url: '../Calendario/modificar_cita.php',
-        method: 'POST',
-        data: data,
+        url: '../Calendario/modificar_cita.php', // URL del servidor para modificar la cita
+        method: 'POST', // Tipo de solicitud HTTP
+        data: data, // Datos enviados en la solicitud
         success: function(response) {
             if (response === 'Cita modificada correctamente') {
+                // Mostrar un mensaje de éxito al usuario
                 alert('Cita modificada correctamente');
+                // Ocultar el modal
                 $('#modalModificar').modal('hide');
-                location.reload(); // Recarga la página para reflejar los cambios
+                // Recargar la página para reflejar los cambios
+                location.reload();
             } else {
                 console.log('Error al modificar la cita: ' + response);
             }

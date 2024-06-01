@@ -59,22 +59,7 @@
                     </tr>
                 </thead>
                 <tbody id="content">
-                    <tr>
-                        <td contenteditable="false">0</td>
-                        <td contenteditable="false">37</td>
-                        <td contenteditable="false">70</td>
-                        <td contenteditable="false">80</td>
-                        <td contenteditable="false">98%</td>
-                        <td contenteditable="false">120/80</td>
-                        <td contenteditable="false">Correcto</td>
-                        <td contenteditable="false">Alerta</td>
-                        <td contenteditable="false">Normal</td>
-                        <td><input type="date" class="form-control" value="2024-04-15" readonly></td>
-                        <td>
-                            <button type="button" class="btn btn-danger me-2" onclick="eliminarFila(this)">Eliminar</button>
-                            <button type="button" class="btn btn-primary" onclick="modificarControl(this)">Modificar</button>
-                        </td>
-                    </tr>
+                    
                 </tbody>
             </table>
         </div>
@@ -109,6 +94,35 @@
             </div>
         </div>
     </div>
+    <div class="modal fade" id="modalModificar" tabindex="-1" aria-labelledby="modalModificarLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalModificarLabel">Modificar Registro de Signos</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="formulario-signos">
+                        <input type="number" class="form-control mb-3" id="idSignosModificar" hidden>
+                        <input type="number" class="form-control mb-3" id="temperaturaInputModificar" placeholder="Temperatura (°C)">
+                        <input type="number" class="form-control mb-3" id="frecuenciaRInputModificar" placeholder="Frecuencia Respiratoria">
+                        <input type="number" class="form-control mb-3" id="frecuenciaCInputModificar" placeholder="Frecuencia Cardíaca">
+                        <input type="number" class="form-control mb-3" id="oxigenacionInputModificar" placeholder="Oxigenación">
+                        <input type="number" class="form-control mb-3" id="presionArterialInputModificar" placeholder="Presión Arterial">
+                        <input type="text" class="form-control mb-3" id="edoHidratacionInputModificar" placeholder="Estado de Hidratación">
+                        <input type="text" class="form-control mb-3" id="edoConcienciaInputModificar" placeholder="Estado de Conciencia">
+                        <input type="text" class="form-control mb-3" id="edoNeurologicoInputModificar" placeholder="Estado Neurológico">
+                        <input type="date" class="form-control mb-3" id="fechaSignosInputModificar" placeholder="Fecha de Registro">
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger me-2" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-primary" onclick="ModificarDesdeModal()">Aceptar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
     
     <footer>
         <div class="container3">
@@ -132,7 +146,8 @@
 
                 console.log("se obtuvieron los datos idPaciente: ", idPaciente, "idExpediente: ", idExpediente);
             } else {
-                console.log('No se encontraron datos en sessionStorage');
+                alert("Su sesión ya expiró o no la ha iniciado");
+                window.location.href = '../index.php';
             }
         }
         
@@ -290,38 +305,49 @@
         function modificarSignos(button) {
             const row = button.closest('tr');
             const cells = row.querySelectorAll('td');
-            contador = 0;
-            cells.forEach(cell => {
-                if (contador ==0){
-                    cell.contentEditable = false;
-                    contador = contador +1;
+            const modal = new bootstrap.Modal(document.getElementById('modalModificar'));
 
-                }else{
-                    cell.contentEditable = true;
-                }
-            });
-            button.textContent = "Guardar";
-            button.classList.remove('btn-primary');
-            button.classList.add('btn-success');
-            button.setAttribute('onclick', 'guardarSignos(this)');
+            // Extraer los datos de la fila seleccionada
+            const data = {
+                idSignos: cells[0].textContent,
+                temperatura: cells[1].textContent,
+                frecuenciaR: cells[2].textContent,
+                frecuenciaC: cells[3].textContent,
+                oxigenacion: cells[4].textContent,
+                presionArterial: cells[5].textContent,
+                edoHidratacion: cells[6].textContent,
+                edoConciencia: cells[7].textContent,
+                edoNeurologico: cells[8].textContent,
+                fechaSignos: cells[9].textContent
+            };
+
+            // Cargar los datos en los campos de entrada del modal
+            document.getElementById('idSignosModificar').value = data.idSignos;
+            document.getElementById('temperaturaInputModificar').value = data.temperatura;
+            document.getElementById('frecuenciaRInputModificar').value = data.frecuenciaR;
+            document.getElementById('frecuenciaCInputModificar').value = data.frecuenciaC;
+            document.getElementById('oxigenacionInputModificar').value = data.oxigenacion;
+            document.getElementById('presionArterialInputModificar').value = data.presionArterial;
+            document.getElementById('edoHidratacionInputModificar').value = data.edoHidratacion;
+            document.getElementById('edoConcienciaInputModificar').value = data.edoConciencia;
+            document.getElementById('edoNeurologicoInputModificar').value = data.edoNeurologico;
+            document.getElementById('fechaSignosInputModificar').value = data.fechaSignos;
+
+            // Mostrar el modal
+            modal.show();
         }
 
-        function guardarSignos(button) {
-            const row = button.closest('tr');
-            const cells = row.querySelectorAll('td');
-
-
-            const idSignos = cells[0].innerText;
-            const temperatura = cells[1].innerText;
-            const frecuenciaR = cells[2].innerText;
-            const frecuenciaC = cells[3].innerText;
-            const oxigenacion = cells[4].innerText;
-            const presionArterial = cells[5].innerText;
-            const edoHidratacion = cells[6].innerText;
-            const edoConciencia = cells[7].innerText;
-            const edoNeurologico = cells[8].innerText;
-            const fechaSignos = cells[9].innerText;
-
+        function ModificarDesdeModal() {
+            const idSignos = document.getElementById('idSignosModificar').value;
+            const temperatura = document.getElementById('temperaturaInputModificar').value;
+            const frecuenciaR = document.getElementById('frecuenciaRInputModificar').value;
+            const frecuenciaC = document.getElementById('frecuenciaCInputModificar').value;
+            const oxigenacion = document.getElementById('oxigenacionInputModificar').value;
+            const presionArterial = document.getElementById('presionArterialInputModificar').value;
+            const edoHidratacion = document.getElementById('edoHidratacionInputModificar').value;
+            const edoConciencia = document.getElementById('edoConcienciaInputModificar').value;
+            const edoNeurologico = document.getElementById('edoNeurologicoInputModificar').value;
+            const fechaSignos = document.getElementById('fechaSignosInputModificar').value;
 
             if (!temperatura) {
                 alert('Por favor, ingresa la temperatura.');
@@ -332,19 +358,19 @@
                 return; // Detener el proceso si el campo está vacío
             }
             if (!frecuenciaC) {
-                alert('Por favor, ingresa la recuencia cardiaca.');
+                alert('Por favor, ingresa la frecuencia cardiaca.');
                 return; // Detener el proceso si el campo está vacío
             }
             if (!oxigenacion) {
-                alert('Por favor, ingresa la oxigenacion.');
+                alert('Por favor, ingresa la oxigenación.');
                 return; // Detener el proceso si el campo está vacío
             }
             if (!presionArterial) {
-                alert('Por favor, ingresa la presion arterial.');
+                alert('Por favor, ingresa la presión arterial.');
                 return; // Detener el proceso si el campo está vacío
             }
             if (!edoHidratacion) {
-                alert('Por favor, ingresa el estado de hidratacion.');
+                alert('Por favor, ingresa el estado de hidratación.');
                 return; // Detener el proceso si el campo está vacío
             }
             if (!edoConciencia) {
@@ -352,7 +378,7 @@
                 return; // Detener el proceso si el campo está vacío
             }
             if (!edoNeurologico) {
-                alert('Por favor, ingresa el estado neurologico.');
+                alert('Por favor, ingresa el estado neurológico.');
                 return; // Detener el proceso si el campo está vacío
             }
             if (!fechaSignos) {
@@ -360,19 +386,12 @@
                 return; // Detener el proceso si el campo está vacío
             }
 
-
-            console.log("Dato 1:", idSignos);
-            console.log("Dato 2:", temperatura);
-            console.log("Dato 3:", frecuenciaR);
-
-
-
             fetch('../Signos/modificar.php', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded'
                 },
-                body: `temperatura=${temperatura}&frecuenciaR=${frecuenciaR}&frecuenciaC=${frecuenciaC}&oxigenacion=${oxigenacion}&presionArterial=${presionArterial}&edoHidratacion=${edoHidratacion}&edoConciencia=${edoConciencia}&edoNeurologico=${edoNeurologico}&fechaSignos=${fechaSignos}&idSignos=${idSignos}`
+                body: `idSignos=${idSignos}&temperatura=${temperatura}&frecuenciaR=${frecuenciaR}&frecuenciaC=${frecuenciaC}&oxigenacion=${oxigenacion}&presionArterial=${presionArterial}&edoHidratacion=${edoHidratacion}&edoConciencia=${edoConciencia}&edoNeurologico=${edoNeurologico}&fechaSignos=${fechaSignos}`
             })
             .then(response => response.json())
             .then(data => {
@@ -389,7 +408,15 @@
                 console.error('Error:', error);
                 alert('Error al guardar los datos');
             });
+
+            // Cerrar el modal después de agregar el registro
+            const modal = bootstrap.Modal.getInstance(document.getElementById('modalModificar'));
+            modal.hide();
+
+            // Limpiar los campos del formulario
+            document.getElementById('formulario-signos').reset();
         }
+
 
 
         function formatoFecha() {
