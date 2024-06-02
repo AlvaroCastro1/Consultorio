@@ -34,7 +34,7 @@
         
         <div class="input-group mb-3">
             <input type="text" class="form-control" placeholder="Buscar por Sustancia" id="input-busqueda">
-            <button class="btn btn-outline-secondary" type="button" onclick="buscar()">Buscar</button>
+            <button class="btn btn-outline-secondary" type="button" onclick="botonBuscar()">Buscar</button>
             <button class="btn btn-outline-secondary" type="button" onclick="limpiar()">Limpiar</button>
 
         </div>
@@ -75,7 +75,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form id="formulario-vacunas"></form>
+                    <form id="formulario-vacunas">
                         <input type="text" class="form-control mb-3" id="sustanciaActivaInput" placeholder="Sustancia Activa">
                         <input type="text" class="form-control mb-3" id="enfermedadInput" placeholder="Enfermedad">
                         <input type="text" class="form-control mb-3" id="formulaInput" placeholder="Fórmula">
@@ -154,7 +154,20 @@
             }
         }
 
+        function validarEntradaTexto(texto) {
+            const regex = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s'´]+$/;
+            return regex.test(texto);
+        }
 
+        function validarEntradaNumero(numero) {
+            return !isNaN(numero) && numero.trim() !== '';
+        }
+
+        function validarFecha(fecha) {
+            return fecha.trim() !== '';
+        }
+
+        
         function agregarVacunaDesdeModal() {
             // Obtener los valores de los campos del formulario
             const sustanciaActiva = document.getElementById('sustanciaActivaInput').value;
@@ -167,6 +180,51 @@
             const fechaCaducidad = document.getElementById('fechaCaducidadInput').value;
             
             var fechaFormato = formatoFecha();
+
+
+            // Validaciones
+            if (!validarEntradaTexto(sustanciaActiva)) {
+                alert('Por favor, ingrese texto válido en Sustancia Activa.');
+                return;
+            }
+
+            if (!validarEntradaTexto(enfermedad)) {
+                alert('Por favor, ingrese texto válido en Enfermedad.');
+                return;
+            }
+
+            if (!validarEntradaTexto(formula)) {
+                alert('Por favor, ingrese texto válido en Fórmula.');
+                return;
+            }
+
+            if (!validarEntradaTexto(laboratorio)) {
+                alert('Por favor, ingrese texto válido en Laboratorio.');
+                return;
+            }
+
+            if (!validarEntradaNumero(dosis)) {
+                alert('Por favor, ingrese un número válido en Dosis.');
+                return;
+            }
+
+            if (!validarEntradaNumero(gramaje)) {
+                alert('Por favor, ingrese un número válido en Gramaje.');
+                return;
+            }
+
+            if (!validarEntradaNumero(lote)) {
+                alert('Por favor, ingrese un número válido en Lote.');
+                return;
+            }
+
+
+            if (!validarFecha(fechaCaducidad)) {
+                alert('Por favor, ingrese una fecha válida en Fecha de Caducidad.');
+                return;
+            }
+
+
 
             fetch('../Vacunas/guardar.php', {
                 method: 'POST',
@@ -211,10 +269,20 @@
 
         }
     
-        buscar()
+    
         //document.getElementById("input-busqueda").addEventListener("keyup", buscar)
+        function botonBuscar(){
+            let input = document.getElementById("input-busqueda").value
+            console.log("Buscar por sustancia vacunas:", input);
+            if(input == ""){
+                alert("INGRESA LA SUSTANCIA A BUSCAR");
+            }else{
+                buscar();
+            }
+
+        }
+        buscar()
         function buscar() {
-  
             let input = document.getElementById("input-busqueda").value
             console.log("Buscar por sustancia vacunas:", input);
             let content = document.getElementById("content")
@@ -320,7 +388,51 @@
             const fechaAplicacion = document.getElementById('fechaAplicacionInputModificar').value;
             const fechaCaducidad = document.getElementById('fechaCaducidadInputModificar').value;
 
-        
+            // Validaciones
+            if (!validarEntradaTexto(sustanciaActiva)) {
+                alert('Por favor, ingrese texto válido en Sustancia Activa.');
+                return;
+            }
+
+            if (!validarEntradaTexto(enfermedad)) {
+                alert('Por favor, ingrese texto válido en Enfermedad.');
+                return;
+            }
+
+            if (!validarEntradaTexto(formula)) {
+                alert('Por favor, ingrese texto válido en Fórmula.');
+                return;
+            }
+
+            if (!validarEntradaTexto(laboratorio)) {
+                alert('Por favor, ingrese texto válido en Laboratorio.');
+                return;
+            }
+
+            if (!validarEntradaNumero(dosis)) {
+                alert('Por favor, ingrese un número válido en Dosis.');
+                return;
+            }
+
+            if (!validarEntradaNumero(gramaje)) {
+                alert('Por favor, ingrese un número válido en Gramaje.');
+                return;
+            }
+
+            if (!validarEntradaNumero(lote)) {
+                alert('Por favor, ingrese un número válido en Lote.');
+                return;
+            }
+
+            if (!validarFecha(fechaAplicacion)) {
+                alert('Por favor, ingrese una fecha válida en Fecha de Aplicación.');
+                return;
+            }
+
+            if (!validarFecha(fechaCaducidad)) {
+                alert('Por favor, ingrese una fecha válida en Fecha de Caducidad.');
+                return;
+            }
 
 
             fetch('../Vacunas/modificar.php', {
