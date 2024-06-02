@@ -175,6 +175,70 @@
             const circunferenciaDelCraneo = document.getElementById('circunferenciaDelCraneo').value;
             const evaluacion = document.getElementById('evaluacion').value;
             const fechaControl = document.getElementById('fechaControl').value;
+
+
+
+            // Validar campo obligatorio: Altura
+            if (!altura) {
+                alert('Por favor, ingrese la altura.');
+                return;
+            }
+
+            // Validar campo obligatorio: Peso
+            if (!peso) {
+                alert('Por favor, ingrese el peso.');
+                return;
+            }
+
+            // Validar campo obligatorio: Índice de Masa Corporal
+            if (!indiceMasaCorporal) {
+                alert('Por favor, ingrese el índice de masa corporal.');
+                return;
+            }
+
+            // Validar campo obligatorio: Circunferencia del Cráneo
+            if (!circunferenciaDelCraneo) {
+                alert('Por favor, ingrese la circunferencia del cráneo.');
+                return;
+            }
+
+            // Validar campo obligatorio: Evaluación
+            if (!evaluacion) {
+                alert('Por favor, ingrese la evaluación.');
+                return;
+            }
+
+            // Validar campo obligatorio: Fecha de Control
+            if (!fechaControl) {
+                alert('Por favor, ingrese la fecha de control.');
+                return;
+            }
+
+            // Validar formato de números: Altura
+            if (isNaN(altura)) {
+                alert('La altura debe ser un valor numérico.');
+                return;
+            }
+
+            // Validar formato de números: Peso
+            if (isNaN(peso)) {
+                alert('El peso debe ser un valor numérico.');
+                return;
+            }
+
+            // Validar formato de números: Índice de Masa Corporal
+            if (isNaN(indiceMasaCorporal)) {
+                alert('El índice de masa corporal debe ser un valor numérico.');
+                return;
+            }
+
+            // Validar formato de números: Circunferencia del Cráneo
+            if (isNaN(circunferenciaDelCraneo)) {
+                alert('La circunferencia del cráneo debe ser un valor numérico.');
+                return;
+            }
+
+
             
             //var fechaFormato = formatoFecha();
 
@@ -334,6 +398,32 @@
                 alert('Por favor, ingresa la evaluación.');
                 return; // Detener el proceso si el campo está vacío
             }
+
+
+            // Validar formato de números: Altura
+            if (isNaN(altura)) {
+                alert('La altura debe ser un valor numérico.');
+                return;
+            }
+
+            // Validar formato de números: Peso
+            if (isNaN(peso)) {
+                alert('El peso debe ser un valor numérico.');
+                return;
+            }
+
+            // Validar formato de números: Índice de Masa Corporal
+            if (isNaN(indiceMasaCorporal)) {
+                alert('El índice de masa corporal debe ser un valor numérico.');
+                return;
+            }
+
+            // Validar formato de números: Circunferencia del Cráneo
+            if (isNaN(circunferenciaDelCraneo)) {
+                alert('La circunferencia del cráneo debe ser un valor numérico.');
+                return;
+            }
+            
 
             fetch('../Control/modificar.php', {
                 method: 'POST',
