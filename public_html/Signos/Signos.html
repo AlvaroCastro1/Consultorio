@@ -33,7 +33,7 @@
         <h1 class="titulo-control mb-4">Signos</h1>
         
         <div class="input-group mb-3">
-            <input type="text" class="form-control" placeholder="Buscar por Fecha" id="input-busqueda">
+            <input type="text" class="form-control" placeholder="AAAA-MM-DD" id="input-busqueda">
             <button class="btn btn-outline-secondary" type="button" onclick="buscar()">Buscar</button>
             <button class="btn btn-outline-secondary" type="button" onclick="limpiar()">Limpiar</button>
 
@@ -79,7 +79,7 @@
                         <input type="number" class="form-control mb-3" id="frecuenciaRInput" placeholder="Frecuencia Respiratoria">
                         <input type="number" class="form-control mb-3" id="frecuenciaCInput" placeholder="Frecuencia Cardíaca">
                         <input type="number" class="form-control mb-3" id="oxigenacionInput" placeholder="Oxigenación">
-                        <input type="number" class="form-control mb-3" id="presionArterialInput" placeholder="Presión Arterial">
+                        <input type="text" class="form-control mb-3" id="presionArterialInput" placeholder="Presión Arterial">
                         <input type="text" class="form-control mb-3" id="edoHidratacionInput" placeholder="Estado de Hidratación">
                         <input type="text" class="form-control mb-3" id="edoConcienciaInput" placeholder="Estado de Conciencia">
                         <input type="text" class="form-control mb-3" id="edoNeurologicoInput" placeholder="Estado Neurologico">
@@ -150,6 +150,14 @@
                 window.location.href = '../index.php';
             }
         }
+
+        function validarPresionArterial(presionArterial) {
+            // Expresión regular para validar el formato de la presión arterial
+            const regexPresionArterial = /^\d{2,3}\/\d{2,3}$/;
+
+            // Verificar si la presión arterial coincide con el formato esperado
+            return regexPresionArterial.test(presionArterial);
+        }
         
         function agregarDesdeModal() {
             // Obtener los valores de los campos del formulario
@@ -185,6 +193,11 @@
             if (!presionArterial) {
                 alert('Por favor, ingresa la presion arterial.');
                 return; // Detener el proceso si el campo está vacío
+            }
+            // Validar el formato de la presión arterial
+            if (!validarPresionArterial(presionArterial)) {
+                alert('Por favor, ingrese una presión arterial en el formato correcto (ej. 120/80).');
+                return;
             }
             if (!edoHidratacion) {
                 alert('Por favor, ingresa el estado de hidratacion.');
