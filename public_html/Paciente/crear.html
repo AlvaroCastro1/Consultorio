@@ -161,6 +161,51 @@
             const codigoPostal = $('#cp').val();
             const tipoSangre = $('#tipo-sangre').val();
 
+
+            // Expresiones regulares para validaciones
+            const regexNombre = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ' ]+$/;
+            const regexTelefono = /^\d{10}$/;
+            const regexCodigoPostal = /^\d{5}$/;
+            const regexEmail = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+
+            // Validar nombre
+            if (!regexNombre.test(nombre)) {
+                alert("El nombre solo debe contener letras o letras con apóstrofes.");
+                return false;
+            }
+
+            // Validar apellido paterno
+            if (!regexNombre.test(apellidoPaterno)) {
+                alert("El apellido paterno solo debe contener letras o letras con apóstrofes.");
+                return false;
+            }
+
+            // Validar apellido materno
+            if (!regexNombre.test(apellidoMaterno)) {
+                alert("El apellido materno solo debe contener letras o letras con apóstrofes.");
+                return false;
+            }
+
+            // Validar teléfono
+            if (!regexTelefono.test(telefono)) {
+                alert("El número de teléfono debe contener exactamente 10 dígitos.");
+                return false;
+            }
+
+            // Validar correo electrónico
+            if (!regexEmail.test(email)) {
+                alert("El correo electrónico debe seguir el formato nombre@dominio.com.");
+                return false;
+            }
+
+            // Validar código postal
+            if (!regexCodigoPostal.test(codigoPostal)) {
+                alert("El código postal debe contener exactamente 5 dígitos.");
+                return false;
+            }
+
+
             // Realizar la solicitud AJAX para guardar los datos
             $.ajax({
                 type: 'POST',
@@ -188,9 +233,10 @@
                     if (data.success) {
                         console.log("Registro exitoso :)");
                         alert("Registro exitoso :)");
-                        window.location.href = "index.html"; 
+                        window.location.href = "../Paciente/index.html"; 
                     } else {
-                        alert(data.message);
+                        //alert(data.message);
+                        alert("error al intentar crear un nuevo registro");
                     }
                 },
                 error: function(error) {
