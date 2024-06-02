@@ -190,6 +190,10 @@
                         onClose: () => {
                             window.history.back();
                         }
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            window.location.href = "../Login/login.php";
+                        }
                     });
                 </script>';
         }

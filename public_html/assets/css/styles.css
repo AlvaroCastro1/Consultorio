@@ -2,52 +2,31 @@ body {
     font-family: Arial, sans-serif;
     background-color: #121212;
     color: #f1f1f1; /* Texto claro para buen contraste */
-    margin: 0;
-    padding: 0;
 }
-
 .card {
     border: none;
     background-color: #1f1f1f; /* Fondo más oscuro para las tarjetas */
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.5); /* Sombra más oscura */
     transition: 0.3s;
-    margin-bottom: 20px; /* Espacio entre las tarjetas */
 }
-
 .card:hover {
     box-shadow: 0 8px 16px 0 rgba(0,0,0,0.8); /* Sombra al mover el mouse */
 }
-
 .card-header {
     background-color: #3b3b3b; /* Fondo ligeramente más claro para el encabezado */
     color: white;
 }
-
 .btn-success {
     background-color: #388e3c; /* Verde más oscuro para los botones */
 }
-
 .btn-success:hover {
     background-color: #2e7d32; /* Color de hover más oscuro */
 }
-
 .form-control {
     border-radius: 5px;
     background-color: #2a2a2a; /* Fondo oscuro para los inputs */
     color: white; /* Texto blanco para contraste */
 }
-
 .form-control-file {
     color: white; /* Texto blanco para el input de archivos */
-}
-
-/* Media queries para pantallas más pequeñas */
-@media screen and (max-width: 767px) {
-    .card {
-        margin: 0 10px 20px; /* Margen en los lados y espacio inferior */
-    }
-
-    .form-control {
-        font-size: 14px; /* Tamaño de fuente más pequeño */
-    }
 }
