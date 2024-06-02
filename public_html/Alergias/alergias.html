@@ -81,7 +81,7 @@
                     <input type="text" class="form-control mb-3" id="alergenoInput" placeholder="Alergeno">
                     <input type="number" class="form-control mb-3" id="scoreInput" placeholder="Score">
                 </div>
-                <div class="modal-footer">
+                <div class="modal-footer"> 
                     <button type="button" class="btn btn-danger me-2" data-bs-dismiss="modal">Cerrar</button>
                     <button type="button" class="btn btn-primary" onclick="agregarDesdeModal()">Aceptar</button>
                 </div>
@@ -143,6 +143,33 @@
             const alergeno = document.getElementById('alergenoInput').value;
             const score = document.getElementById('scoreInput').value;
             // Realizar la solicitud AJAX para guardar los datos
+
+
+            // Validaciones
+            const wordPattern = /^[a-zA-ZÀ-ÿ\u00f1\u00d1\s']+$/;
+            const numberPattern = /^\d+$/;
+
+            if (!tipoAlergia || !alergeno || !score) {
+                alert("Todos los campos deben ser llenados.");
+                return;
+            }
+
+            if (!wordPattern.test(tipoAlergia)) {
+                alert("El campo 'Tipo de alergia' debe contener solo palabras.");
+                return;
+            }
+
+            if (!wordPattern.test(alergeno)) {
+                alert("El campo 'Alergeno' debe contener solo palabras.");
+                return;
+            }
+
+            if (!numberPattern.test(score)) {
+                alert("El campo 'Score' debe contener solo números enteros.");
+                return;
+            }
+
+
             fetch('../Alergias/Guardar.php', {
                 method: 'POST',
                 headers: {
@@ -260,6 +287,32 @@
             const alergeno = document.getElementById('alergenoInputModificar').value;
             const score = document.getElementById('scoreInputModificar').value;
 
+             // Validaciones
+             const wordPattern = /^[a-zA-ZÀ-ÿ\u00f1\u00d1\s']+$/;
+            const numberPattern = /^\d+$/;
+
+            if (!tipoAlergia || !alergeno || !score) {
+                alert("Todos los campos deben ser llenados.");
+                return;
+            }
+
+            if (!wordPattern.test(tipoAlergia)) {
+                alert("El campo 'Tipo de alergia' debe contener solo palabras.");
+                return;
+            }
+
+            if (!wordPattern.test(alergeno)) {
+                alert("El campo 'Alergeno' debe contener solo palabras.");
+                return;
+            }
+
+            if (!numberPattern.test(score)) {
+                alert("El campo 'Score' debe contener solo números enteros.");
+                return;
+            }
+
+            
+
             fetch('../Alergias/Modificar.php', {
                 method: 'POST',
                 headers: {
@@ -299,6 +352,12 @@
 
 
         }
+
+        document.getElementById('modalAgregar').addEventListener('hidden.bs.modal', function () {
+            document.getElementById('tipoAlergiaInput').value = '';
+            document.getElementById('alergenoInput').value = '';
+            document.getElementById('scoreInput').value = '';
+        }); 
     </script>
 </body>
 </html>

@@ -296,6 +296,14 @@
 
 
         }
+
+
+        document.getElementById('modalAgregar').addEventListener('hidden.bs.modal', function () {
+            document.getElementById('tipoAntecedenteInput').value = '';
+            document.getElementById('padecimientoInput').value = '';
+            document.getElementById('descripcionInput').value = '';
+        }); 
+        
     </script>
 </body>
 </html>
